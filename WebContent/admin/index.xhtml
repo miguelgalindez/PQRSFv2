@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+			
+	<h:body>
+		<ui:composition template="/template/admin/mainTemplate.xhtml">		
+			<ui:define name="content">
+				<div class="container">	
+					<div class="wrapper">	
+						<div class="arrow-steps clearfix">
+					          <div class="step current"> <span> Datos Personales</span> </div>
+					          <div class="step"> <span> Datos de contacto</span> </div>
+					          <div class="step"> <span> Confirmación</span> </div>						          
+						</div>							
+					</div>
+				</div>
+				<h:form id="personaWizard">																						
+						<p:growl id="growl" sticky="true" showDetail="true"></p:growl>
+						<p:wizard flowListener="#{wizard.progressHandler}" widgetVar="wiz" showNavBar="false" showStepStatus="false">
+							<p:tab id="datosPersonales" title="Datos Personales">
+								<p:panel>
+									<p:messages />
+									<div class="form-group">
+										<p:outputLabel for="tipoSolicitante" styleClass="col-sm-2 control-label" value="Tipo solicitante"/>					                  
+					                  	<div class="col-sm-10">
+					                  		<p:selectOneMenu value=""></p:selectOneMenu>
+					                    	<select class="form-control" id="tipoSolicitante" name="tipoSolicitante"></select>
+					                  	</div>
+					                </div>
+			
+					                <div class="form-group">
+					                  <label for="tipoIdentificacion" class="col-sm-2 control-label">Tipo de Identificación</label>
+					                  <div class="col-sm-10">
+					                    <select class="form-control" id="tipoIdentificacion" name="tipoIdentificacion"></select>
+					                  </div>
+					                </div>
+			
+									<div class="form-group">
+					                  <label for="identificacion" class="col-sm-2 control-label">Identificación</label>
+					                  <div class="col-sm-10">
+					                    <input class="form-control" type="text" id="identificacion" name="identificacion" />
+					                  </div>
+					                </div>		               
+					                
+					                <div class="form-group">
+					                  <label for="nombres" class="col-sm-2 control-label">Nombres</label>
+					                  <div class="col-sm-10">
+					                    <input type="text" class="form-control" id="nombres" name="nombres" />
+					                  </div>
+					                </div>
+			
+					                <div class="form-group">
+					                  <label for="apellidos" class="col-sm-2 control-label">Apellidos</label>
+					                  <div class="col-sm-10">
+					                    <input type="text" class="form-control" id="apellidos" name="apellidos" />
+					                  </div>
+					                </div>					            
+								</p:panel>			
+							</p:tab>
+							<p:tab id="datosContacto" title="Datos de Contacto">
+								<p:panel>
+									<p:messages />
+									<h:panelGrid columns="2" columnClasses="label, value">
+										<h:outputText value="Direccion"/>
+										<p:inputText value="#{wizard.persona.direccion}"/>
+										
+										<h:outputText value="Telefono"/>
+										<p:inputText value="#{wizard.persona.telefono}"/>									
+									</h:panelGrid>							
+								</p:panel>																
+							</p:tab>
+							<p:tab id="confirmacion" title="Proceso finalizado">
+								<p:panel>
+									<p:messages />
+										<h:outputText value="Asistente finalizado. Presione Guardar para terminar"/>													
+								</p:panel>																
+							</p:tab>
+						</p:wizard>
+						<h:panelGroup id="panelBotones">
+										
+										<!-- Para actualizar mas de un componente especificarlos separados por ESPACIOS -->
+							<p:commandButton value="Retroceder" styleClass="ui-btn-b" actionListener="#{wizard.back}" update="panelBotones" process="@this"/>
+							<p:commandButton id="btnContinuar" value="Continuar"  actionListener="#{wizard.next}" styleClass="ui-btn-b" rendered="#{wizard.isLastStep==false}" update="panelBotones" process="@this"/>
+							<p:commandButton id="btnGuardar" value="Guardar" actionListener="#{wizard.save}" rendered="#{wizard.isLastStep}" update="@(form)" process="@this"/>									
+						</h:panelGroup>			
+											
+				</h:form>										
+			</ui:define>
+		</ui:composition>	
+	</h:body>
+</html>
