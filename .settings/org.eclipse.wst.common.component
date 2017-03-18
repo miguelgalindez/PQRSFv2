@@ -8,6 +8,9 @@
         <dependent-module archiveName="bootstrap-1.0.10.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/E:/Entornos y servidores/javaplugins/bootstrap-1.0.10.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="javax.faces-2.2.9.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/E:/Entornos y servidores/javaplugins/javax.faces-2.2.9.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="PQRSFv2"/>
         <property name="java-output-path" value="/PQRSFv2/build/classes"/>
     </wb-module>

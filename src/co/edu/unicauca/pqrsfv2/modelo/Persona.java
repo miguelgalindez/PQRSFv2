@@ -2,7 +2,6 @@ package co.edu.unicauca.pqrsfv2.modelo;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -14,7 +13,7 @@ public class Persona implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@NotNull 
-	private String tiposSolicitante;
+	private String tipoSolicitante;
 	@NotNull
 	private String tipoIdentificacion;
 	@NotNull @Size(min=4)
@@ -36,12 +35,14 @@ public class Persona implements Serializable{
 	@NotNull @Size(min=3)
 	private String direccion;
 
-	public String getTiposSolicitante() {
-		return tiposSolicitante;
+	
+
+	public String getTipoSolicitante() {
+		return tipoSolicitante;
 	}
 
-	public void setTiposSolicitante(String tiposSolicitante) {
-		this.tiposSolicitante = tiposSolicitante;
+	public void setTipoSolicitante(String tipoSolicitante) {
+		this.tipoSolicitante = tipoSolicitante;
 	}
 
 	public String getTipoIdentificacion() {

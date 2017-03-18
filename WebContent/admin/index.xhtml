@@ -20,7 +20,7 @@
 						</div>							
 					</div>
 				</div>
-				<h:form id="personaWizard">																						
+				<h:form id="registroPqrsfForm">																						
 						<p:growl id="growl" sticky="true" showDetail="true"></p:growl>
 						<p:wizard flowListener="#{wizard.progressHandler}" widgetVar="wiz" showNavBar="false" showStepStatus="false">
 							<p:tab id="datosPersonales" title="Datos Personales">
@@ -29,26 +29,45 @@
 									<div class="form-group">
 										<p:outputLabel for="tipoSolicitante" styleClass="col-sm-2 control-label" value="Tipo solicitante"/>					                  
 					                  	<div class="col-sm-10">
-					                  		<p:selectOneMenu value=""></p:selectOneMenu>
-					                    	<select class="form-control" id="tipoSolicitante" name="tipoSolicitante"></select>
+					                  		<p:selectOneMenu id="tipoSolicitante" 
+					                  						value="#{registrarPqrsfControl.persona.tipoSolicitante}" 
+					                  						styleClass="form-control" 
+					                  						required="true">
+					                  			
+					                  			<f:selectItems value="#{registrarPqrsfControl.tiposPersona}"/>					                  											                  						
+					                  		</p:selectOneMenu>					                    	
 					                  	</div>
 					                </div>
 			
 					                <div class="form-group">
-					                  <label for="tipoIdentificacion" class="col-sm-2 control-label">Tipo de Identificación</label>
-					                  <div class="col-sm-10">
-					                    <select class="form-control" id="tipoIdentificacion" name="tipoIdentificacion"></select>
-					                  </div>
+						                <p:outputLabel for="tipoIdentificacion" styleClass="col-sm-2 control-label" value="Tipos de Identificación"/>					                  	
+					                  	<div class="col-sm-10">
+					                  		<p:selectOneMenu id="tipoIdentificacion" 
+					                  							value="#{registrarPqrsfControl.persona.tipoIdentificacion}"
+					                  							required="true"
+					                  							styleClass="form-control">
+					                  			<f:selectItems value="#{registrarPqrsfControl.tiposIdentificacion}" />
+					                  		</p:selectOneMenu>					                    
+					                  	</div>
 					                </div>
 			
 									<div class="form-group">
-					                  <label for="identificacion" class="col-sm-2 control-label">Identificación</label>
-					                  <div class="col-sm-10">
-					                    <input class="form-control" type="text" id="identificacion" name="identificacion" />
-					                  </div>
+										<p:outputLabel for="identificacion" value="Identificación" styleClass="col-sm-2 control-label" />
+															                  
+					                  	<div class="col-sm-10">
+						                  	<p:inputText id="identificacion" 
+						                  					value="#{registrarPqrsfControl.persona.identificacion}"
+						                  					required="true"
+						                  					styleClass="form-control">
+						                  		<f:validateRegex pattern="^[0-9]+$"/>
+						                  		<f:validateLength minimum="4" maximum="20"/>						                  		
+						                  		<p:watermark value="Número de identidad"></p:watermark>
+						                  	</p:inputText>					                    
+					                  	</div>
 					                </div>		               
 					                
 					                <div class="form-group">
+					                	<p:outputLabel for="nombres"/>
 					                  <label for="nombres" class="col-sm-2 control-label">Nombres</label>
 					                  <div class="col-sm-10">
 					                    <input type="text" class="form-control" id="nombres" name="nombres" />
@@ -82,9 +101,7 @@
 								</p:panel>																
 							</p:tab>
 						</p:wizard>
-						<h:panelGroup id="panelBotones">
-										
-										<!-- Para actualizar mas de un componente especificarlos separados por ESPACIOS -->
+						<h:panelGroup id="panelBotones">																		
 							<p:commandButton value="Retroceder" styleClass="ui-btn-b" actionListener="#{wizard.back}" update="panelBotones" process="@this"/>
 							<p:commandButton id="btnContinuar" value="Continuar"  actionListener="#{wizard.next}" styleClass="ui-btn-b" rendered="#{wizard.isLastStep==false}" update="panelBotones" process="@this"/>
 							<p:commandButton id="btnGuardar" value="Guardar" actionListener="#{wizard.save}" rendered="#{wizard.isLastStep}" update="@(form)" process="@this"/>									

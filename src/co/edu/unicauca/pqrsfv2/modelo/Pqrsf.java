@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
 
-public class Solicitud implements Serializable{
+public class Pqrsf implements Serializable{
 
 	/**
 	 * 
@@ -20,6 +20,7 @@ public class Solicitud implements Serializable{
 	private String asunto;
 	@NotNull
 	private String descripcion;
+	
 	public Persona getSolicitante() {
 		return solicitante;
 	}
@@ -49,8 +50,5 @@ public class Solicitud implements Serializable{
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-	
-	
-	
+	}			
 }
