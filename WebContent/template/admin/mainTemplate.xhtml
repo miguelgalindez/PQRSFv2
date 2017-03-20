@@ -303,23 +303,25 @@
 		  <!-- Content Wrapper. Contains page content -->
 		  	<div class="content-wrapper">
 			    <!-- Content Header (Page header) -->
-			    <section class="content-header">
-			      <h1>
-			        <!--  @yield('title') ** -->
-			      </h1>
-			      <ol class="breadcrumb">
-			        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			        <li class="active">Dashboard</li>
-			      </ol>
-			    </section>
+			    <div class="content-header">
+			    	
+					      <h1>
+					        <!--  @yield('title') ** -->
+					      </h1>
+					      <ol class="breadcrumb">
+					        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					        <li class="active">Dashboard</li>
+					      </ol>
+				      
+			    </div>
 			
 			    <!-- Main content -->
-			    <section class="content">
+			    <div class="content">
 			        <div class="row">
 			        	<ui:include src="/template/admin/menu.xhtml"></ui:include>
 			        	<ui:insert name="content"></ui:insert>			        	
 			        </div>
-			   	</section>			   	
+			   	</div>			   	
 		   	</div>
 		   	<ui:include src="/template/admin/footer.xhtml"></ui:include>
 	   </div>
