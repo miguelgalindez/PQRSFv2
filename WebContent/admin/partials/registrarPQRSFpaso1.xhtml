@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+xmlns:h="http://xmlns.jcp.org/jsf/html"
+xmlns:f="http://xmlns.jcp.org/jsf/core"
+xmlns:p="http://primefaces.org/ui"
+>
+
+<h:body>
+	<div class="form-group">
+		<p:outputLabel for="tipoSolicitante" styleClass="control-label col-sm-3" value="Tipo solicitante"/>					                  
+		<div class="col-sm-9">
+				<p:selectOneMenu id="tipoSolicitante" 
+				value="#{registrarPqrsfControl.persona.tipoSolicitante}" 
+				styleClass="form-control" 
+				required="true">							                  																	   														
+				<f:selectItems value="#{registrarPqrsfControl.tiposPersona}"/>					                  											                  						
+			</p:selectOneMenu>
+			<p:message for="tipoSolicitante"/>					                    	
+		</div>							                  	
+	</div>
+
+	<div class="form-group">
+		<p:outputLabel for="tipoIdentificacion" styleClass="control-label col-sm-3" value="Tipos de Identificación"/>					                  	
+		<div class="col-sm-9">
+				<p:selectOneMenu id="tipoIdentificacion" 
+				value="#{registrarPqrsfControl.persona.tipoIdentificacion}"
+				required="true"
+				styleClass="form-control">
+				<f:selectItems value="#{registrarPqrsfControl.tiposIdentificacion}" />
+			</p:selectOneMenu>
+			<p:messages for="tipoIdentificacion"/>					                    
+		</div>							                  	
+	</div>
+
+	<div class="form-group">
+		<p:outputLabel for="identificacion" value="Identificación" styleClass="control-label col-sm-3" />																	                
+		<div class="col-sm-9">
+				<p:inputText id="identificacion" 
+				value="#{registrarPqrsfControl.persona.identificacion}"
+				required="true"
+				styleClass="form-control">
+				<f:validateRegex pattern="^[0-9]+$"/>
+				<f:validateLength minimum="4" maximum="20"/>						                  								                  		
+			</p:inputText>
+			<p:message for="identificacion"/>					                    
+		</div>							                  	
+	</div>		               
+
+	<div class="form-group">					                	
+		<p:outputLabel for="nombres" styleClass="control-label col-sm-3" value="Nombres" ></p:outputLabel>
+		<div class="col-sm-9">
+				<p:inputText id="nombres"
+				value="#{registrarPqrsfControl.persona.nombres}"
+				required="true"
+				styleClass="form-control">
+				<f:validateLength minimum="4" />
+			</p:inputText>
+			<p:message for="nombres"/>
+		</div>							                	
+	</div>					                  
+
+	<div class="form-group">
+		<p:outputLabel for="apellidos" styleClass="control-label col-sm-3" value="Apellidos"/>					                  
+		<div class="col-sm-9">
+				<p:inputText id="apellidos"
+				value="#{registrarPqrsfControl.persona.apellidos}"
+				required="true"
+				styleClass="form-control">
+				<f:validateLength minimum="4"/>
+			</p:inputText>
+			<p:message for="apellidos"/>						                    
+		</div>							                 	
+	</div>
+</h:body>
+</html>																																				            				
