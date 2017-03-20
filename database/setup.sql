@@ -16,11 +16,11 @@ CREATE SEQUENCE Pqrsf_pqrsfCodigo_Sequence  MINVALUE 1 MAXVALUE 9999999999999999
 
 -- Cargando tipos de PQRSF
 
-INSERT INTO TIPOPQRSF VALUES(TipoPqrsf_tippqrsfId_Sequence.NEXTVAL,'Petición');
-INSERT INTO TIPOPQRSF VALUES(TipoPqrsf_tippqrsfId_Sequence.NEXTVAL,'Queja');
-INSERT INTO TIPOPQRSF VALUES(TipoPqrsf_tippqrsfId_Sequence.NEXTVAL,'Reclamo');
-INSERT INTO TIPOPQRSF VALUES(TipoPqrsf_tippqrsfId_Sequence.NEXTVAL,'Sugerencia');
-INSERT INTO TIPOPQRSF VALUES(TipoPqrsf_tippqrsfId_Sequence.NEXTVAL,'Felicitación');
+INSERT INTO TIPOPQRSF VALUES(TipoPqrsf_tippqrsfId_Sequence.NEXTVAL,'PETICIÓN');
+INSERT INTO TIPOPQRSF VALUES(TipoPqrsf_tippqrsfId_Sequence.NEXTVAL,'QUEJA');
+INSERT INTO TIPOPQRSF VALUES(TipoPqrsf_tippqrsfId_Sequence.NEXTVAL,'RECLAMO');
+INSERT INTO TIPOPQRSF VALUES(TipoPqrsf_tippqrsfId_Sequence.NEXTVAL,'SUGERENCIA');
+INSERT INTO TIPOPQRSF VALUES(TipoPqrsf_tippqrsfId_Sequence.NEXTVAL,'FELICITACIÓN');
 
 -- Cargando Medios de Recepcion
 
