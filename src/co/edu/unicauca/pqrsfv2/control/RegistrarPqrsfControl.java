@@ -12,10 +12,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import co.edu.unicauca.pqrsfv2.logica.PersonaBO;
-import co.edu.unicauca.pqrsfv2.logica.PqrsfBO;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 import co.edu.unicauca.pqrsfv2.modelo.Persona;
+import co.edu.unicauca.pqrsfv2.dao.PersonaDAO;
 
 @Named("registrarPqrsfControl")
 @SessionScoped
@@ -26,16 +25,15 @@ public class RegistrarPqrsfControl implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@EJB 
-	PqrsfBO pqrsfBO;
 	@EJB
-	PersonaBO personaBO;
+	PersonaDAO personaDAO;
 	private Pqrsf solicitud;
 	private Persona persona;
 	private ArrayList<SelectItem> tiposSolicitud;	
 	private ArrayList<SelectItem> mediosRecepcion;
 	private ArrayList<SelectItem> tiposIdentificacion;
-	private ArrayList<SelectItem> tiposPersona;
+	private ArrayList<SelectItem> tiposPersona;	
+	private Integer departamento;
 	
 	
 	boolean isLastStep;	
@@ -52,10 +50,10 @@ public class RegistrarPqrsfControl implements Serializable{
 		
 		// TODO colocar mensajes para cuando los listados sean null (problemas con la BD)
 		
-		tiposSolicitud=pqrsfBO.obtnTiposSolicitud();		
-		mediosRecepcion=pqrsfBO.obtnMediosRecepcion();		
-		tiposIdentificacion=personaBO.obtnTiposIdentificacion();
-		tiposPersona=personaBO.obtnTiposPersona();
+		//tiposSolicitud=pqrsfBO.obtnTiposSolicitud();		
+		//mediosRecepcion=pqrsfBO.obtnMediosRecepcion();		
+		tiposIdentificacion=personaDAO.obtnTiposIdentificacion();
+		tiposPersona=personaDAO.obtnTiposPersona();
 	}
 
 	
@@ -164,6 +162,13 @@ public class RegistrarPqrsfControl implements Serializable{
 	public void setPersona(Persona persona) {
 		this.persona = persona;
 	}
-	
+
+	public Integer getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Integer departamento) {
+		this.departamento = departamento;
+	}	
 	
 }

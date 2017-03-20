@@ -34,8 +34,9 @@ public class Persona implements Serializable{
 	
 	@NotNull @Size(min=3)
 	private String direccion;
-
 	
+	@NotNull
+	private Integer municipio;
 
 	public String getTipoSolicitante() {
 		return tipoSolicitante;
@@ -107,5 +108,15 @@ public class Persona implements Serializable{
 
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
-	}	
+	}
+
+	public Integer getMunicipio() {
+		return municipio;
+	}
+
+	public void setMunicipio(Integer municipio) {
+		this.municipio = municipio;
+	}
+	
+	
 }
