@@ -32,7 +32,9 @@ public class RegistrarPqrsfControl implements Serializable{
 	private ArrayList<SelectItem> tiposSolicitud;	
 	private ArrayList<SelectItem> mediosRecepcion;
 	private ArrayList<SelectItem> tiposIdentificacion;
-	private ArrayList<SelectItem> tiposPersona;	
+	private ArrayList<SelectItem> tiposPersona;
+	private ArrayList<SelectItem> departamentos;
+	private ArrayList<SelectItem> municipios;	
 	private Integer departamento;
 	
 	
@@ -43,6 +45,8 @@ public class RegistrarPqrsfControl implements Serializable{
 		lastMovementWasNext=false;		
 		persona=new Persona();
 		isLastStep=false;
+		departamento=null;
+		municipios=null;		
 	}
 	
 	@PostConstruct
@@ -50,14 +54,15 @@ public class RegistrarPqrsfControl implements Serializable{
 		
 		// TODO colocar mensajes para cuando los listados sean null (problemas con la BD)
 		
-		//tiposSolicitud=pqrsfBO.obtnTiposSolicitud();		
-		//mediosRecepcion=pqrsfBO.obtnMediosRecepcion();		
-		tiposIdentificacion=personaDAO.obtnTiposIdentificacion();
-		tiposPersona=personaDAO.obtnTiposPersona();
-	}
-
 	
-
+		tiposIdentificacion=personaDAO.obtnTiposIdentificacion();
+		tiposIdentificacion.add(0, new SelectItem(null, "Seleccione..."));	
+		tiposPersona=personaDAO.obtnTiposPersona();
+		tiposPersona.add(0, new SelectItem(null, "Seleccione..."));
+		departamentos=personaDAO.obtnDepartamentos();
+		departamentos.add(0, new SelectItem(null, "Seleccione..."));
+	}
+	
 	public String progressHandler(FlowEvent event){
 		isLastStep=event.getNewStep().equals("confirmacion");
 		RequestContext.getCurrentInstance().update("registroPqrsfForm:panelBotones");
@@ -67,6 +72,15 @@ public class RegistrarPqrsfControl implements Serializable{
 			RequestContext.getCurrentInstance().execute("back();");
 		
 		return event.getNewStep();
+	}
+	
+	public void departamentoStateListener(){		
+		if(departamento != null){			
+			municipios=personaDAO.obtnMunicipios(departamento);
+			municipios.add(0, new SelectItem(null, "Seleccione..."));
+		}
+		else			
+			municipios=null;
 	}
 	
 	public void save(ActionEvent actionEvent){		
@@ -163,12 +177,28 @@ public class RegistrarPqrsfControl implements Serializable{
 		this.persona = persona;
 	}
 
+	public ArrayList<SelectItem> getDepartamentos() {
+		return departamentos;
+	}
+
+	public void setDepartamentos(ArrayList<SelectItem> departamentos) {
+		this.departamentos = departamentos;
+	}
+
+	public ArrayList<SelectItem> getMunicipios() {
+		return municipios;
+	}
+
+	public void setMunicipios(ArrayList<SelectItem> municipios) {
+		this.municipios = municipios;
+	}
+
 	public Integer getDepartamento() {
 		return departamento;
 	}
 
 	public void setDepartamento(Integer departamento) {
 		this.departamento = departamento;
-	}	
-	
+	}
+		
 }

@@ -24,15 +24,14 @@ public class Persona implements Serializable{
 	private String apellidos;
 	
 	@NotNull @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
-	             message="Correo invï¿½lido")
+	             message="Correo electrónico no válido")
 	private String email;
-	
-	@NotNull @Size(min=3)
+		
 	private String telefono;
-	@NotNull @Size(min=3)
+	@NotNull @Size(min=10)
 	private String celular;
 	
-	@NotNull @Size(min=3)
+	@NotNull @Size(min=4)
 	private String direccion;
 	
 	@NotNull

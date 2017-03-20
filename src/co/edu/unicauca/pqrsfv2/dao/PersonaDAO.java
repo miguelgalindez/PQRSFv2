@@ -18,65 +18,45 @@ public class PersonaDAO {
 	@EJB
 	Conexion con;
 	public ArrayList<SelectItem> obtnTiposIdentificacion(){		
-		
 		String sql="SELECT * FROM TIPOIDENTIFICACION";						
-		return generarTiposIdentificacion(con.executeQueryRS(sql));		
+		return generarElementos(con.executeQueryRS(sql), "TIPIDEID", "TIPIDEDESCRIPCION");		
 	}
 	
 	public ArrayList<SelectItem> obtnTiposPersona() {
-		
 		String sql="SELECT * FROM TIPOPERSONA";				
-		return generarTiposPersona(con.executeQueryRS(sql));		
+		return generarElementos(con.executeQueryRS(sql), "TIPPERID", "TIPPERDESCRIPCION");		
+	}
+	
+	public ArrayList<SelectItem> obtnDepartamentos() {	
+		String sql="SELECT * FROM DEPARTAMENTO";				
+		return generarElementos(con.executeQueryRS(sql), "DEPTOID", "DEPTONOMBRE");	
+	}
+	
+	public ArrayList<SelectItem> obtnMunicipios(Integer idDepartamento) {
+		String sql="SELECT MUNID, MUNNOMBRE FROM MUNICIPIO WHERE DEPTOID="+idDepartamento+" ORDER BY MUNNOMBRE ASC";	
+		return generarElementos(con.executeQueryRS(sql), "MUNID", "MUNNOMBRE");
 	}
 	
 	
-	private ArrayList<SelectItem> generarTiposIdentificacion(ResultSet rs){
-		
+	private ArrayList<SelectItem> generarElementos(ResultSet rs, String value, String label){		
 		if(rs==null)
 			return null;
 		
-		ArrayList<SelectItem> tiposId=new ArrayList<SelectItem>();		
+		ArrayList<SelectItem> elementos=new ArrayList<SelectItem>();		
 		try {
 			while(rs.next()){
 				SelectItem tipoId=new SelectItem();
-				tipoId.setValue(rs.getInt("TIPIDEID"));
-				tipoId.setLabel(rs.getString("TIPIDEDESCRIPCION"));
-				tiposId.add(tipoId);
+				tipoId.setValue(rs.getInt(value));
+				tipoId.setLabel(rs.getString(label));
+				elementos.add(tipoId);
 			}
 		} catch (SQLException e) {
-			System.out.println("ERROR. NO SE PUDO GENERAR LOS TIPOS DE IDENTIFICACION");
+			System.out.println("ERROR. NO SE PUDO GENERAR LOS ELEMENTOS");
 			e.printStackTrace();
-			tiposId=null;
+			elementos=null;
 		} finally{
 			con.clean();
-		}
-			
-		return tiposId;
-	}
-	
-	private ArrayList<SelectItem> generarTiposPersona(ResultSet rs){
-		
-		if(rs==null)
-			return null;
-		
-		ArrayList<SelectItem> tiposPersona=new ArrayList<>();
-		
-		try {
-			while(rs.next()){
-				SelectItem tipoPersona=new SelectItem();
-				tipoPersona.setValue(rs.getInt("TIPPERID"));
-				tipoPersona.setLabel(rs.getString("TIPPERDESCRIPCION"));				
-				tiposPersona.add(tipoPersona);
-			}
-		} catch (SQLException e) {
-			System.out.println("ERROR. NO SE PUDO GENERAR LOS TIPOS DE PERSONAS");
-			e.printStackTrace();
-			tiposPersona=null;			
-		} finally {
-			con.clean();
-		}
-					
-		return tiposPersona;
-	}
-
+		}		
+		return elementos;
+	}	
 }

@@ -14,75 +14,84 @@ xmlns:p="http://primefaces.org/ui"
 		<p:outputLabel for="departamento" styleClass="control-label col-sm-3" value="Departamento"/>
 		<div class="col-sm-9">
 			<p:selectOneMenu id="departamento"
-								value="#{registrarPqrsfControl.persona.municipio}">
+								value="#{registrarPqrsfControl.departamento}"															
+								styleClass="form-control"
+								required="#{registrarPqrsfControl.municipios == null}"
+								requiredMessage="Especifique el departamento de su docimicilio">
+								
+					<f:selectItems value="#{registrarPqrsfControl.departamentos}"/>													
+					<p:ajax update="municipio" listener="#{registrarPqrsfControl.departamentoStateListener}"/>					
 			</p:selectOneMenu>
+			<p:message for="departamento" />
 		</div>
 	</div>
 	
 	<div class="form-group">
-		<p:outputLabel for="tipoSolicitante" styleClass="control-label col-sm-3" value="Tipo solicitante"/>					                  
+		<p:outputLabel for="municipio" styleClass="control-label col-sm-3" value="Municipio" />
 		<div class="col-sm-9">
-				<p:selectOneMenu id="tipoSolicitante" 
-				value="#{registrarPqrsfControl.persona.tipoSolicitante}" 
-				styleClass="form-control" 
-				required="true">							                  																	   														
-				<f:selectItems value="#{registrarPqrsfControl.tiposPersona}"/>					                  											                  						
+			<p:selectOneMenu id="municipio"
+								value="#{registrarPqrsfControl.persona.municipio}"
+								required="true"
+								requiredMessage="Especifique el municipio de su domicilio"
+								disabled="#{registrarPqrsfControl.municipios == null}"
+								styleClass="form-control">
+					<f:selectItems value="#{registrarPqrsfControl.municipios}" />					
 			</p:selectOneMenu>
-			<p:message for="tipoSolicitante"/>					                    	
-		</div>							                  	
+			<p:message for="municipio" />
+		</div>
 	</div>
-
+	
 	<div class="form-group">
-		<p:outputLabel for="tipoIdentificacion" styleClass="control-label col-sm-3" value="Tipos de Identificación"/>					                  	
+		<p:outputLabel for="direccion" styleClass="control-label col-sm-3" value="Dirección de residencia" />
 		<div class="col-sm-9">
-				<p:selectOneMenu id="tipoIdentificacion" 
-				value="#{registrarPqrsfControl.persona.tipoIdentificacion}"
-				required="true"
-				styleClass="form-control">
-				<f:selectItems value="#{registrarPqrsfControl.tiposIdentificacion}" />
-			</p:selectOneMenu>
-			<p:messages for="tipoIdentificacion"/>					                    
-		</div>							                  	
+			<p:inputText id="direccion"
+							value="#{registrarPqrsfControl.persona.direccion}"
+							required="true"
+							validatorMessage="Dirección demasiado corta"
+							styleClass="form-control">
+					<f:validateLength minimum="4"/>
+			</p:inputText>
+			<p:message for="direccion" />
+		</div>		
 	</div>
-
+	
 	<div class="form-group">
-		<p:outputLabel for="identificacion" value="Identificación" styleClass="control-label col-sm-3" />																	                
+		<p:outputLabel for="telefono" styleClass="control-label col-sm-3" value="Teléfono fijo" />
 		<div class="col-sm-9">
-				<p:inputText id="identificacion" 
-				value="#{registrarPqrsfControl.persona.identificacion}"
-				required="true"
-				styleClass="form-control">
-				<f:validateRegex pattern="^[0-9]+$"/>
-				<f:validateLength minimum="4" maximum="20"/>						                  								                  		
-			</p:inputText>
-			<p:message for="identificacion"/>					                    
-		</div>							                  	
-	</div>		               
-
-	<div class="form-group">					                	
-		<p:outputLabel for="nombres" styleClass="control-label col-sm-3" value="Nombres" ></p:outputLabel>
-		<div class="col-sm-9">
-				<p:inputText id="nombres"
-				value="#{registrarPqrsfControl.persona.nombres}"
-				required="true"
-				styleClass="form-control">
-				<f:validateLength minimum="4" />
-			</p:inputText>
-			<p:message for="nombres"/>
-		</div>							                	
-	</div>					                  
-
-	<div class="form-group">
-		<p:outputLabel for="apellidos" styleClass="control-label col-sm-3" value="Apellidos"/>					                  
-		<div class="col-sm-9">
-				<p:inputText id="apellidos"
-				value="#{registrarPqrsfControl.persona.apellidos}"
-				required="true"
-				styleClass="form-control">
-				<f:validateLength minimum="4"/>
-			</p:inputText>
-			<p:message for="apellidos"/>						                    
-		</div>							                 	
+			<p:inputText id="telefono" 
+							value="#{registrarPqrsfControl.persona.telefono}"
+							styleClass="form-control"/>			
+		</div>
 	</div>
+	
+	<div class="form-group">
+		<p:outputLabel for="celular" styleClass="control-label col-sm-3" value="Teléfono celular" />
+		<div class="col-sm-9">
+			<p:inputText id="celular"
+							value="#{registrarPqrsfControl.persona.celular}"
+							required="true"
+							validatorMessage="Teléfono celular inválido"
+							styleClass="form-control">
+							
+					<f:validateLength minimum="10"/>
+			</p:inputText>
+			<p:message for="celular" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<p:outputLabel for="email" styleClass="control-label col-sm-3" value="Correo electrónico" />		
+		<div class="col-sm-9">
+			<p:inputText id="email"
+							value="#{registrarPqrsfControl.persona.email}"
+							required="true"
+							validatorMessage="Correo electrónico no válido"
+							styleClass="form-control">
+					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]"/>
+			</p:inputText>
+			<p:message for="email" />
+		</div>
+	</div>
+		
 </h:body>
 </html>																																				            				
