@@ -4,8 +4,8 @@
 /*==============================================================*/
 
 
-alter table CIUDAD
-   drop constraint FK_CIUDAD_PERTENECE_DEPARTAM;
+alter table MUNICIPIO
+   drop constraint FK_MUNCIP_PERTENECE_DEPARTAM;
 
 alter table FUNCIONARIO
    drop constraint FK_FUNCIONA_PERTENECE_DEPENDEN;
@@ -20,7 +20,7 @@ alter table ORDEN
    drop constraint FK_ORDEN_GENERA_PQRSF;
 
 alter table PERSONA
-   drop constraint FK_PERSONA_HABITA_CIUDAD;
+   drop constraint FK_PERSONA_HABITA_MUNICIPIO;
 
 alter table PERSONA
    drop constraint FK_PERSONA_TIENETIPO_TIPOPERS;
@@ -48,7 +48,7 @@ alter table RADICADO
 
 drop index PERTENECEA_FK;
 
-drop table CIUDAD cascade constraints;
+drop table MUNICIPIO cascade constraints;
 
 drop table DEPARTAMENTO cascade constraints;
 
@@ -101,20 +101,20 @@ drop table TIPOPQRSF cascade constraints;
 drop table USUARIO cascade constraints;
 
 /*==============================================================*/
-/* Table: CIUDAD                                                */
+/* Table: MUNICIPIO                                                */
 /*==============================================================*/
-create table CIUDAD 
+create table MUNICIPIO 
 (
-   CIUID                NUMBER(4)            not null,
+   MUNID                NUMBER(4)            not null,
    DEPTOID              NUMBER(2)            not null,
-   CIUNOMBRE            VARCHAR2(64)         not null,
-   constraint PK_CIUDAD primary key (CIUID)
+   MUNNOMBRE            VARCHAR2(64)         not null,
+   constraint PK_MUNICIPIO primary key (MUNID)
 );
 
 /*==============================================================*/
 /* Index: PERTENECEA_FK                                         */
 /*==============================================================*/
-create index PERTENECEA_FK on CIUDAD (
+create index PERTENECEA_FK on MUNICIPIO (
    DEPTOID ASC
 );
 
@@ -212,12 +212,12 @@ create table PERSONA
 (
    PERIDENTIFICACION    VARCHAR2(32)         not null,
    TIPIDEID             NUMBER(2)            not null,
-   CIUID                NUMBER(4)            not null,
+   MUNID                NUMBER(4)            not null,
    TIPPERID             NUMBER(2)            not null,
    PERNOMBRES           VARCHAR2(64)         not null,
    PERAPELLIDOS         VARCHAR2(64)         not null,
    PERCORREO            VARCHAR2(64)         not null,
-   USUCIUDAD            INTEGER              not null,
+   USUMUNICIPIO            INTEGER              not null,
    PERDIRECCION         VARCHAR2(128)        not null,
    PERTELEFONO          VARCHAR2(32),
    PERCELULAR           VARCHAR2(16)         not null,
@@ -228,7 +228,7 @@ create table PERSONA
 /* Index: HABITA_FK                                             */
 /*==============================================================*/
 create index HABITA_FK on PERSONA (
-   CIUID ASC
+   MUNID ASC
 );
 
 /*==============================================================*/
@@ -366,8 +366,8 @@ create table USUARIO
    constraint PK_USUARIO primary key (USUUSUARIO)
 );
 
-alter table CIUDAD
-   add constraint FK_CIUDAD_PERTENECE_DEPARTAM foreign key (DEPTOID)
+alter table MUNICIPIO
+   add constraint FK_MUNCIP_PERTENECE_DEPARTAM foreign key (DEPTOID)
       references DEPARTAMENTO (DEPTOID);
 
 alter table FUNCIONARIO
@@ -387,8 +387,8 @@ alter table ORDEN
       references PQRSF (PQSRFCODIGO);
 
 alter table PERSONA
-   add constraint FK_PERSONA_HABITA_CIUDAD foreign key (CIUID)
-      references CIUDAD (CIUID);
+   add constraint FK_PERSONA_HABITA_MUNICIPIO foreign key (MUNID)
+      references MUNICIPIO (MUNID);
 
 alter table PERSONA
    add constraint FK_PERSONA_TIENETIPO_TIPOPERS foreign key (TIPPERID)
