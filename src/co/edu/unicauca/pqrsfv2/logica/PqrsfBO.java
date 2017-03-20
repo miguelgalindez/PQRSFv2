@@ -2,8 +2,12 @@ package co.edu.unicauca.pqrsfv2.logica;
 
 import java.util.ArrayList;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.faces.model.SelectItem;
 
+@Stateless
+@LocalBean
 public class PqrsfBO{
 
 	/**

@@ -1,0 +1,438 @@
+@CHARSET "utf-8";
+/***** Tipografías *****/
+@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Slab');
+
+/**
+  * Incluír con las siguientes líneas
+  * font-family: 'Roboto Slab', serif;
+  * font-family: 'Roboto', sans-serif;
+  */
+
+
+/***** Generales *****/
+
+/**
+  * Colores:
+  * Rojo oscuro:	#77160e
+  * Rojo claro:		#c8151f
+  * Azul claro:		#004b8a
+  * Azul oscuro:	#193257
+  * Gris:			#575756
+  */
+
+body {
+	font-family: 'Roboto', sans-serif !important;
+	color: #575756 !important;
+}
+h1 {
+	/*font-family: 'Source Sans Pro', sans-serif;/**/
+	font-family: 'Roboto Slab', serif;
+	font-weight: bold;
+	color: #77160e;
+}
+
+.header-title-blue span:first-child{
+	font-family: 'Roboto Slab', serif;
+	font-weight: bold;
+	color: #193257;
+}
+
+h2{
+	/*font-family: 'Source Sans Pro', sans-serif;/**/
+	font-family: 'Roboto Slab', serif;
+	font-weight: bold;
+	color: #193257;
+}
+body.front-page{
+	background: url("../images/background.png") no-repeat;
+	
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center center;
+	
+	background-color: #0D4185 !important;
+	background-size: 100%;
+}
+h3, h4, h5 {
+	/*font-family: 'Source Sans Pro', sans-serif;/**/
+	font-family: 'Roboto Slab', serif;
+	margin: 0 !important;
+	font-weight: normal !important;
+	color: #004b8a;
+}
+#antorcha {
+	position: fixed;
+	z-index: -1;
+	background: url("../images/antorcha.png") no-repeat;
+	height: 592px;
+    right: 15%;
+    top: 0;
+    width: 251px;
+}
+#bandera {
+	background: url("../images/bandera.png") no-repeat;
+	width: 345px;
+	height: 130px;
+	position: fixed;
+	z-index: -1;
+	left: 0;
+	bottom: 0;
+}
+
+/***** Header *****/
+header {
+	display: table !important;
+	margin: 30px auto 5px !important;
+}
+header .separador {
+	border-left:solid 1px #fff;
+	width: 2px;
+	height: 40px;
+	float: left;
+	margin: 25px 10px 0 0;
+}
+	#logoU {
+		background: url("../images/logo.png") no-repeat;
+		width: 188px;
+		height: 92px;
+		float: left;
+		margin-right: 10px;
+	}
+	#desc {
+		font-size: 16px;
+		font-weight: bold;
+		line-height: 17px;
+		color: #FFFFFF;
+		padding-top: 27px;
+    	width: 235px;
+    	float: left;
+    	text-shadow:1px 1px 1px rgba(0,0,0,0.7);
+	}
+
+#banderaHeader
+{
+	background: url(../images/bandera-head-int.png) no-repeat;
+	width: 195px;
+	height: 102px;
+	position: fixed;
+	right: 0;
+	z-index: -1;
+	top: 73px;	
+}
+
+footer {
+	margin: auto;
+	display: table;
+	margin-top: 10%;
+}
+footer p,
+footer p a,
+footer p a:hover,
+footer p a:visited
+{
+	font-size:0.9em;
+	color: #FFFFFF;
+	text-align:center;
+}
+
+#navbar{
+	height: 100px !important;
+}
+
+form#topMenu {
+    display: inline-block;
+    position: relative;
+    margin-top: 10px;
+    margin-right: auto;
+}
+
+.header-nav-menu{
+	/*background: url("../images/header2.png") no-repeat !important;/**/
+	/*background: url("../images/cabecera-01.png") no-repeat !important;/**/
+	background: url("../images/cabecera-large.png") no-repeat !important;/**/
+	background-repeat: no-repeat;
+	background-attachment: fixed;/**/
+	background-position: center center;
+	background-color: #1b3357 !important;
+	background-size: 100%;
+	height: 175px;
+}
+
+.contenido-sx-ppal{
+	/*margin-top: 50px !important;/**/
+	margin-top: 125px !important;/**//**/
+}
+
+.botonMenu {
+	-moz-box-shadow:inset 0px 1px 0px 0px #ffffff !important;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff !important;
+	box-shadow:inset 0px 1px 0px 0px #ffffff !important;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f9f9f9), color-stop(1, #e9e9e9)) !important;
+	background:-moz-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%) !important;
+	background:-webkit-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%)!important;
+	background:-o-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%) !important;
+	background:-ms-linear-gradient(top, #f9f9f9 5%, #e9e9e9 100%) !important;
+	background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%) !important;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#e9e9e9',GradientType=0) !important;
+	background-color:#f9f9f9 !important;
+	-moz-border-radius:4px !important;
+	-webkit-border-radius:4px !important;
+	border-radius:4px !important;
+	border:1px solid #dcdcdc !important;
+	display:inline-block !important;
+	cursor:pointer !important;
+	color:#666666 !important;
+	/*font-family: 'Source Sans Pro', sans-serif !important;*/
+	font-size:15px !important;
+	font-weight:bold !important;
+	padding:6px 24px  !important;
+	text-decoration:none !important;
+	text-shadow:0px 1px 0px #ffffff !important;
+	margin-left: 10px !important;
+}
+.botonMenu:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #e9e9e9), color-stop(1, #f9f9f9)) !important;
+	background:-moz-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%) !important;
+	background:-webkit-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%) !important;
+	background:-o-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%) !important;
+	background:-ms-linear-gradient(top, #e9e9e9 5%, #f9f9f9 100%) !important;
+	background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%) !important;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#e9e9e9', endColorstr='#f9f9f9',GradientType=0) !important;
+	background-color:#e9e9e9;
+}
+
+
+/* Corrección estilos de formulario */
+div.form-control{width:100%;padding-top:1px;}
+span.form-control{padding:1px;}
+span.form-control input {border-color: #fff;display: block;margin: 0 !important;width: 100%;}
+form.form-horizontal label.form-label{margin-top:10px;margin-bottom:2px;}
+
+/* Bloques */
+.bloque{background:#fff;border-radius:10px;padding:10px;margin:10px 0px}
+
+.form-signin {
+    margin: 0 auto;
+    max-width: 330px;
+    padding: 15px;
+}
+.form-signin .form-signin-heading{
+    margin-bottom: 10px !important;
+}
+.form-signin .form-control {
+    box-sizing: border-box;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    position: relative;
+}
+
+.form-signin input[type="text"] {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: -1px;
+}
+.form-signin input[type="password"] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-bottom: 10px;
+}
+.form-signin .olvido{margin-top:10px;text-align:right;margin-bottom:0px;}
+div.form-editor{height:auto;padding-top:6px}
+
+::-moz-selection{background:#73c9e3}
+
+ul.ui-tabs-nav li.ui-state-active {
+	background:#00A4E0 !important;
+}
+ul.ui-tabs-nav li.ui-state-active a{
+  color: #fff !important;
+  text-shadow: none;
+}
+
+h1 small button { margin-top: -5px !important;}
+
+/* Callout tomado de la documentación de Bootstrap */
+.bs-callout {-moz-border-bottom-colors: none;-moz-border-left-colors: none;-moz-border-right-colors: none;-moz-border-top-colors: none;border-color: #eee;border-image: none;border-radius: 3px;border-style: solid;border-width: 1px 1px 1px 5px;margin: 20px 0;padding: 20px;}
+.bs-callout h4 {margin-bottom: 5px;margin-top: 0;}
+.bs-callout p:last-child {margin-bottom: 0;}
+.bs-callout code {border-radius: 3px;}
+.bs-callout + .bs-callout {margin-top: -5px;}
+.bs-callout-danger {border-left-color: #ce4844;}
+.bs-callout-danger h4 {color: #ce4844;}
+.bs-callout-warning {border-left-color: #A62A16;}
+.bs-callout-warning h4 {color: #A62A16;}
+.bs-callout-info {border-left-color: #1b809e;}
+.bs-callout-info h4 {color: #1b809e;}
+.bs-callout-success {border-left-color: #3c763d;}
+.bs-callout-success h4 {color: #3c763d;}
+
+
+.btn-descarga{text-align: left !important;min-width: 260px;}
+
+/* Correccion de estilos selectlist Selector*/
+.ui-selectonemenu .ui-selectonemenu-trigger {width: 24px !important;}
+
+/* Correccion de estilos row margin*/
+.row {margin-bottom: 15px;}
+
+
+/* Control de selección radio */
+.ui-selectoneradio.nivel-idioma label, .ui-selectoneradio.trabaja label {
+    font-weight: normal;
+    line-height: 1;
+    padding: 0 15px 0 6px;
+}
+.trabaja {
+    margin-top: 5px;
+}
+
+.panel-deptos h3{font-size: 1.1em;padding: 4px 35px !important;}
+.panel-deptos h3 .ui-icon{display:block !important;}
+.panel-deptos label{font-size:0.8em;font-weight:normal;margin-left:5px}
+.panel-deptos .ui-chkbox-box{margin-top:2px}
+
+li.ui-separator{height:3px !important;}
+
+
+.labelRegionalizacion{
+    font-weight: 600 !important;
+    padding-right: 15px;
+}
+
+.ui-tabs .ui-tabs-nav.ui-widget-header li.ui-state-active a, .ui-tabs .ui-tabs-nav.ui-widget-header li.ui-state-active a{
+	background-color: #0F8DCC !important;
+}
+
+span.user-name-welcome {
+    float: right;
+    padding-bottom: 10px;
+    color: #fff;
+}
+
+
+.panel-info>.panel-heading {
+	color: #fff !important;
+	text-transform: uppercase;
+    font-size: 12px;
+	background: #154079; /* Old browsers */
+	background: -moz-linear-gradient(top,  #154079 0%, #496f90 44%, #204b87 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #154079 0%,#496f90 44%,#204b87 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #154079 0%,#496f90 44%,#204b87 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#154079', endColorstr='#204b87',GradientType=0 ); /* IE6-9 */
+	background-repeat: repeat-x;
+}
+
+
+/***** Diseños personalizados *****/
+
+/*De azul claro a oscuro*/
+.azulClaroAOscuro
+{
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#004b8a+0,193257+100 */
+	background: #004b8a; /* Old browsers */
+	background: -moz-linear-gradient(left,  #004b8a 0%, #193257 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left,  #004b8a 0%,#193257 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right,  #004b8a 0%,#193257 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#004b8a', endColorstr='#193257',GradientType=1 ); /* IE6-9 */
+}
+
+/*De rojo claro a oscuro*/
+.rojoClaroAOscuro
+{
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c8151f+0,77160e+100 */
+	background: #c8151f; /* Old browsers */
+	background: -moz-linear-gradient(left,  #c8151f 0%, #77160e 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left,  #c8151f 0%,#77160e 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right,  #c8151f 0%,#77160e 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c8151f', endColorstr='#77160e',GradientType=1 ); /* IE6-9 */
+}
+
+.sidebar
+{
+	/* Más aire en la barra */
+	padding-left: 18px;/**/
+	/* Para arreglar el menú de la izquierda, que en dashboard.css se está corriendo muy para arriba */
+	top: 155px;
+}
+
+.ui-icon, .ui-state-hover .ui-icon, .ui-state-focus .ui-icon
+{
+	/* Iconos que contrastan con los botones */
+    background-image: url(../images/primefaces-iconos-blancos.png);
+}
+
+
+/* Estilos para la interfaz de requisitos de inscripción*/
+.requisitos-inscripcion {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    background: #F9F9F9;
+}
+
+
+/***************   ESTILOS DE LA BARRA DEL PANEL DE INFORMACIÓN   *******************/
+
+.ui-panel-titlebar {
+    color: #fff !important;
+    font-size: 12px;
+    font-weight: 100 !important;
+    text-transform: uppercase;
+    background: #154079 !important;
+    background: -moz-linear-gradient(top, #154079 0%, #496f90 44%, #204b87 100%) !important;
+    background: -webkit-linear-gradient(top, #154079 0%,#496f90 44%,#204b87 100%) !important;
+    background: linear-gradient(to bottom, #154079 0%,#496f90 44%,#204b87 100%) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#154079', endColorstr='#204b87',GradientType=0 ) !important;
+    padding: 10px 10px 10px !important;
+}
+
+
+
+/******************   estilos de tablas posgrados *******************/
+
+/* Tablas */
+.posgrado table thead th{background:#17427a !important;color:#fff !important; text-transform:uppercase;padding:5px 5px !important;}
+.posgrado table tbody td{background:#fff !important;color:#3e3e3f !important;padding:3px 5px !important;border-left:none !important; border-right:none !important;border-width:1px;border-color:#808285 !important;}
+.posgrado table,.posgrado table tbody,.posgrado table tbody tr,.posgrado table tbody tr.ui-state-highlight{border:none !important;}
+
+/* radios and checks */
+.posgrado .ui-radiobutton-box{border-radius:10px}
+.posgrado .ui-chkbox-box{border-radius:2px}
+.posgrado .ui-chkbox-box,.posgrado .ui-radiobutton-box{background:#fff !important;border:solid 1px #3e3e3f !important;cursor:pointer !important;}
+.posgrado .ui-radiobutton-box.ui-state-active,.posgrado .ui-chkbox-box.ui-state-active{background:#3e3e3f !important;}
+.posgrado .ui-icon-bullet,.posgrado .ui-icon-check{display:none}
+
+
+
+/*********************    Estilos responsive para ajustes a pantallas de máximo 480px de ancho   ********************/
+@media all and (max-width: 480px) {
+    #desc {
+        font-size: 14px !important;
+        width: 158px !important;
+    }
+    
+    .h1, h1{font-size: 27px !important;}
+    .h2, h2{font-size: 23px !important;}
+    .h3, h3{font-size: 20px !important;}
+    
+}
+
+
+@media all and (max-width: 360px) {
+    #desc {width: 100px !important;}
+    
+	.h1, h1{font-size: 23px !important;}
+    .h2, h2{font-size: 20px !important;}
+    .h3, h3{font-size: 16px !important;}
+    
+    footer {
+	    padding: 10px;
+	    margin-top: 0 !important;
+	}
+}
+
+
+.textoMargen
+{
+	margin:18px;
+}

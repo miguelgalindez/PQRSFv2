@@ -2,26 +2,23 @@ package co.edu.unicauca.pqrsfv2.control;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import javax.faces.model.SelectItem;
-
+import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
-
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-
 import co.edu.unicauca.pqrsfv2.logica.PersonaBO;
 import co.edu.unicauca.pqrsfv2.logica.PqrsfBO;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 import co.edu.unicauca.pqrsfv2.modelo.Persona;
 
-
-@ManagedBean(name="registrarPqrsfControl")
-@ViewScoped()
+@Named("registrarPqrsfControl")
+@SessionScoped
 public class RegistrarPqrsfControl implements Serializable{
 	
 	/**
@@ -29,9 +26,10 @@ public class RegistrarPqrsfControl implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-
-	private PqrsfBO pqrsfBO;
-	private PersonaBO personaBO;
+	@EJB 
+	PqrsfBO pqrsfBO;
+	@EJB
+	PersonaBO personaBO;
 	private Pqrsf solicitud;
 	private Persona persona;
 	private ArrayList<SelectItem> tiposSolicitud;	
@@ -44,12 +42,18 @@ public class RegistrarPqrsfControl implements Serializable{
 	boolean lastMovementWasNext;
 	
 	public RegistrarPqrsfControl(){
-		lastMovementWasNext=false;
-		pqrsfBO=new PqrsfBO();
+		lastMovementWasNext=false;		
 		persona=new Persona();
+		isLastStep=false;
+	}
+	
+	@PostConstruct
+	private void init() {
 		
-		tiposSolicitud=pqrsfBO.obtnTiposSolicitud();
-		mediosRecepcion=pqrsfBO.obtnMediosRecepcion();
+		// TODO colocar mensajes para cuando los listados sean null (problemas con la BD)
+		
+		tiposSolicitud=pqrsfBO.obtnTiposSolicitud();		
+		mediosRecepcion=pqrsfBO.obtnMediosRecepcion();		
 		tiposIdentificacion=personaBO.obtnTiposIdentificacion();
 		tiposPersona=personaBO.obtnTiposPersona();
 	}
