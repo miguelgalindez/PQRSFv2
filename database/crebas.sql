@@ -164,7 +164,7 @@ create index PERTENECE_A_FK on FUNCIONARIO (
 create table MEDIORECEPCION 
 (
    MEDID                NUMBER(1)            not null,
-   MEDRECEPCION         VARCHAR2(64)         not null,
+   MEDDESCRIPCION         VARCHAR2(64)         not null,
    constraint PK_MEDIORECEPCION primary key (MEDID)
 );
 
