@@ -2,6 +2,7 @@ package co.edu.unicauca.pqrsfv2.modelo;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -12,29 +13,29 @@ public class Persona implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@NotNull 
+	@NotNull @Max(value=99)
 	private Integer tipoPersona;
-	@NotNull
+	@NotNull @Max(value=99)
 	private Integer tipoIdentificacion;
-	@NotNull @Size(min=4)
+	@NotNull @Size(min=4, max=32)
 	private String identificacion;
-	@NotNull @Size(min=4)
+	@NotNull @Size(min=4, max=64)
 	private String nombres;
-	@NotNull @Size(min=4)
+	@NotNull @Size(min=4, max=64)
 	private String apellidos;
 	
-	@NotNull @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
+	@NotNull @Size(max=64) @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
 	             message="Correo electrónico no válido")
 	private String email;
-		
+	@Size(max=32)	
 	private String telefono;
-	@NotNull @Size(min=10)
+	@NotNull @Size(min=10, max=16, message="Número de celular no válido. Debe tener de 10 a 16 dígitos.")
 	private String celular;
 	
-	@NotNull @Size(min=4)
+	@NotNull @Size(min=4, max=128)
 	private String direccion;
 	
-	@NotNull
+	@NotNull @Max(value=9999)
 	private Integer municipio;
 			
 	public Integer getTipoPersona() {

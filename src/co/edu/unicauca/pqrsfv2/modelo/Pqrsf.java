@@ -2,6 +2,7 @@ package co.edu.unicauca.pqrsfv2.modelo;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -11,16 +12,16 @@ public class Pqrsf implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	@Size(max=8)
 	private String codigo;
 	private Persona persona;
-	@NotNull
+	@NotNull @Max(value=9)
 	private Integer tipoPqrsf;
-	@NotNull
+	@NotNull @Max(value=9)
 	private Integer medioRecepcion;
-	@NotNull @Size(min=5)
+	@NotNull @Size(min=5, max=256)
 	private String asunto;
-	@NotNull @Size(min=10)
+	@NotNull @Size(min=10, max=1024)
 	private String descripcion;
 	
 	
