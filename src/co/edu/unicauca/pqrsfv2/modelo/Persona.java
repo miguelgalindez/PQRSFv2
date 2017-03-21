@@ -13,9 +13,9 @@ public class Persona implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@NotNull 
-	private String tipoSolicitante;
+	private Integer tipoPersona;
 	@NotNull
-	private String tipoIdentificacion;
+	private Integer tipoIdentificacion;
 	@NotNull @Size(min=4)
 	private String identificacion;
 	@NotNull @Size(min=4)
@@ -36,20 +36,20 @@ public class Persona implements Serializable{
 	
 	@NotNull
 	private Integer municipio;
-
-	public String getTipoSolicitante() {
-		return tipoSolicitante;
+			
+	public Integer getTipoPersona() {
+		return tipoPersona;
 	}
 
-	public void setTipoSolicitante(String tipoSolicitante) {
-		this.tipoSolicitante = tipoSolicitante;
+	public void setTipoPersona(Integer tipoPersona) {
+		this.tipoPersona = tipoPersona;
 	}
 
-	public String getTipoIdentificacion() {
+	public Integer getTipoIdentificacion() {
 		return tipoIdentificacion;
 	}
 
-	public void setTipoIdentificacion(String tipoIdentificacion) {
+	public void setTipoIdentificacion(Integer tipoIdentificacion) {
 		this.tipoIdentificacion = tipoIdentificacion;
 	}
 

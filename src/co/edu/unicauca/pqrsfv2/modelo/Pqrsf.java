@@ -3,6 +3,7 @@ package co.edu.unicauca.pqrsfv2.modelo;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class Pqrsf implements Serializable{
 
@@ -11,32 +12,28 @@ public class Pqrsf implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Persona solicitante;
+	private String codigo;
+	private Persona persona;
 	@NotNull
-	private String tipoSolicitud;
+	private Integer tipoPqrsf;
 	@NotNull
-	private String medioRecepcion;
-	@NotNull
+	private Integer medioRecepcion;
+	@NotNull @Size(min=5)
 	private String asunto;
-	@NotNull
+	@NotNull @Size(min=10)
 	private String descripcion;
 	
-	public Persona getSolicitante() {
-		return solicitante;
+	
+	public Integer getTipoPqrsf() {
+		return tipoPqrsf;
 	}
-	public void setSolicitante(Persona solicitante) {
-		this.solicitante = solicitante;
+	public void setTipoPqrsf(Integer tipoPqrsf) {
+		this.tipoPqrsf = tipoPqrsf;
 	}
-	public String getTipoSolicitud() {
-		return tipoSolicitud;
-	}
-	public void setTipoSolicitud(String tipoSolicitud) {
-		this.tipoSolicitud = tipoSolicitud;
-	}
-	public String getMedioRecepcion() {
+	public Integer getMedioRecepcion() {
 		return medioRecepcion;
 	}
-	public void setMedioRecepcion(String medioRecepcion) {
+	public void setMedioRecepcion(Integer medioRecepcion) {
 		this.medioRecepcion = medioRecepcion;
 	}
 	public String getAsunto() {
@@ -50,5 +47,18 @@ public class Pqrsf implements Serializable{
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}			
+	}
+	public Persona getPersona() {
+		return persona;
+	}
+	public void setPersona(Persona persona) {
+		this.persona = persona;
+	}
+	public String getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+	
 }

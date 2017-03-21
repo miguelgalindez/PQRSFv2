@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
+
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import javax.annotation.PostConstruct;
@@ -15,6 +16,7 @@ import javax.faces.event.ActionEvent;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 import co.edu.unicauca.pqrsfv2.modelo.Persona;
 import co.edu.unicauca.pqrsfv2.dao.PersonaDAO;
+import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
 
 @Named("registrarPqrsfControl")
 @SessionScoped
@@ -27,23 +29,24 @@ public class RegistrarPqrsfControl implements Serializable{
 
 	@EJB
 	PersonaDAO personaDAO;
-	private Pqrsf solicitud;
+	@EJB
+	PqrsfDAO pqrsfDAO;
+	private Pqrsf pqrsf;
 	private Persona persona;
-	private ArrayList<SelectItem> tiposSolicitud;	
+	private ArrayList<SelectItem> tiposPqrsf;	
 	private ArrayList<SelectItem> mediosRecepcion;
 	private ArrayList<SelectItem> tiposIdentificacion;
 	private ArrayList<SelectItem> tiposPersona;
 	private ArrayList<SelectItem> departamentos;
 	private ArrayList<SelectItem> municipios;	
-	private Integer departamento;
-	
-	
+	private Integer departamento;		
 	boolean isLastStep;	
 	boolean lastMovementWasNext;
 	
 	public RegistrarPqrsfControl(){
 		lastMovementWasNext=false;		
 		persona=new Persona();
+		pqrsf=new Pqrsf();
 		isLastStep=false;
 		departamento=null;
 		municipios=null;		
@@ -53,14 +56,18 @@ public class RegistrarPqrsfControl implements Serializable{
 	private void init() {
 		
 		// TODO colocar mensajes para cuando los listados sean null (problemas con la BD)
-		
-	
+			
 		tiposIdentificacion=personaDAO.obtnTiposIdentificacion();
 		tiposIdentificacion.add(0, new SelectItem(null, "Seleccione..."));	
 		tiposPersona=personaDAO.obtnTiposPersona();
 		tiposPersona.add(0, new SelectItem(null, "Seleccione..."));
 		departamentos=personaDAO.obtnDepartamentos();
 		departamentos.add(0, new SelectItem(null, "Seleccione..."));
+		
+		mediosRecepcion=pqrsfDAO.obtnMediosRecepcion();
+		mediosRecepcion.add(0, new SelectItem(null, "Seleccione..."));
+		tiposPqrsf=pqrsfDAO.obtnTiposPqrsf();
+		tiposPqrsf.add(0, new SelectItem(null, "Seleccione..."));
 	}
 	
 	public String progressHandler(FlowEvent event){
@@ -83,9 +90,16 @@ public class RegistrarPqrsfControl implements Serializable{
 			municipios=null;
 	}
 	
-	public void save(ActionEvent actionEvent){		
-		FacesMessage msg= new FacesMessage("Exito", "Usuario guardado con exito. Nombre: Telefono: ");		
-        FacesContext.getCurrentInstance().addMessage(null, msg);        
+	public void guardarPqrsf(ActionEvent actionEvent){
+		pqrsf.setPersona(persona);		
+		boolean success=pqrsfDAO.guardar(pqrsf);
+		FacesMessage msg;
+		if(success)
+			msg= new FacesMessage("Registro Exitoso", "La PQRSF ha sido registrada con el código "+ pqrsf.getCodigo());
+		else
+			msg= new FacesMessage("Error", "No se pudo registrar la PQRSF. Si el problema persiste, por favor comunicarse con la DivTIC.");
+        
+		FacesContext.getCurrentInstance().addMessage(null, msg);        
 	}
 	
 	public void next(){		
@@ -99,16 +113,15 @@ public class RegistrarPqrsfControl implements Serializable{
 		RequestContext.getCurrentInstance().execute("PF('wiz').back();");
 		
 	}	
-	
-	
-	
-	public Pqrsf getSolicitud() {
-		return solicitud;
+			
+	public Pqrsf getPqrsf() {
+		return pqrsf;
 	}
-	public void setSolicitud(Pqrsf solicitud) {
-		this.solicitud = solicitud;
+
+	public void setPqrsf(Pqrsf pqrsf) {
+		this.pqrsf = pqrsf;
 	}
-		
+
 	public boolean getIsLastStep() {
 		return isLastStep;
 	}
@@ -118,18 +131,13 @@ public class RegistrarPqrsfControl implements Serializable{
 	}
 
 
-
-	public ArrayList<SelectItem> getTiposSolicitud() {
-		return tiposSolicitud;
+	public ArrayList<SelectItem> getTiposPqrsf() {
+		return tiposPqrsf;
 	}
 
-
-
-	public void setTiposSolicitud(ArrayList<SelectItem> tiposSolicitud) {
-		this.tiposSolicitud = tiposSolicitud;
+	public void setTiposPqrsf(ArrayList<SelectItem> tiposPqrsf) {
+		this.tiposPqrsf = tiposPqrsf;
 	}
-
-
 
 	public ArrayList<SelectItem> getMediosRecepcion() {
 		return mediosRecepcion;
