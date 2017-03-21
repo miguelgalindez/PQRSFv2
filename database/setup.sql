@@ -1199,4 +1199,46 @@ SELECT * FROM dual;
 
 
 
--- SACAR EL PACKAGE
+-- PACKAGE CON PROCEDIMIENTOS Y FUNCIONES
+
+
+create or replace PACKAGE BODY PKG_PQRSFV2 AS
+
+  FUNCTION GENERAR_CODIGO_PQRSF RETURN VARCHAR2 AS     
+  BEGIN
+    DBMS_RANDOM.SEED(Pqrsf_pqrsfCodigo_Sequence.NEXTVAL);        
+    RETURN DBMS_RANDOM.STRING('X',5);  
+  END GENERAR_CODIGO_PQRSF;
+
+
+  FUNCTION REGISTRAR_PQRSF(tipoIdentificacion IN NUMBER, identificacion IN VARCHAR2,
+                          tipoPersona IN NUMBER, nombres IN VARCHAR2,
+                          apellidos IN VARCHAR2, correo IN VARCHAR2,
+                          direccion IN VARCHAR2, telefono IN VARCHAR2,
+                          celular IN VARCHAR2, idMunicipio IN NUMBER,
+                          medioRecepcion IN NUMBER, tipoPqrsf IN NUMBER,
+                          asunto IN VARCHAR2, descripcion IN VARCHAR2) RETURN VARCHAR2 AS  
+    codigo PQRSF.PQSRFCODIGO%TYPE;
+  BEGIN
+    codigo:=GENERAR_CODIGO_PQRSF();
+    MERGE INTO PERSONA USING DUAL ON (PERIDENTIFICACION = identificacion)
+        WHEN MATCHED THEN UPDATE SET 
+               TIPPERID=tipoPersona, PERNOMBRES=nombres, PERAPELLIDOS=apellidos,
+               PERCORREO=correo, PERDIRECCION=direccion, PERTELEFONO=telefono,
+               PERCELULAR=celular, MUNID=idMunicipio
+         WHEN NOT MATCHED THEN INSERT (TIPIDEID, PERIDENTIFICACION, TIPPERID, PERNOMBRES, 
+                        PERAPELLIDOS, PERCORREO, PERDIRECCION, PERTELEFONO,
+                        PERCELULAR, MUNID)                
+                VALUES (tipoIdentificacion, identificacion, tipoPersona,
+                        nombres, apellidos, correo, direccion, telefono,
+                        celular, idMunicipio);                        
+    
+    INSERT INTO PQRSF(PQSRFCODIGO, PERIDENTIFICACION, MEDID, TIPPQRSFID, 
+                    PQRSFASUNTO, PQRSFDESCRIPCION, PQRSFDIRECCIONADA, PQRSFESTADO,
+                    PQRSFFECHACREACION)
+                VALUES(codigo, identificacion, medioRecepcion, tipoPqrsf,
+                        asunto, descripcion, 0, 0, SYSDATE);                
+    RETURN codigo;
+  END REGISTRAR_PQRSF;
+
+END PKG_PQRSFV2;
