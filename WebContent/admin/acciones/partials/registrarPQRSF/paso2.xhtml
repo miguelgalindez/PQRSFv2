@@ -70,10 +70,8 @@ xmlns:p="http://primefaces.org/ui"
 			<p:inputText id="celular"
 							value="#{registrarPqrsfControl.persona.celular}"
 							required="true"
-							validatorMessage="Teléfono celular inválido"
-							styleClass="form-control">
-							
-					<f:validateLength minimum="10"/>
+							requiredMessage="Digite un número de celular"
+							styleClass="form-control">											
 			</p:inputText>
 			<p:message for="celular" />
 		</div>
