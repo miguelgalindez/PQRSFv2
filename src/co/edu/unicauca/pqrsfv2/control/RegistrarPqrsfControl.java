@@ -3,6 +3,7 @@ package co.edu.unicauca.pqrsfv2.control;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
@@ -10,8 +11,6 @@ import org.primefaces.event.FlowEvent;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 import co.edu.unicauca.pqrsfv2.modelo.Persona;
@@ -31,6 +30,8 @@ public class RegistrarPqrsfControl implements Serializable{
 	PersonaDAO personaDAO;
 	@EJB
 	PqrsfDAO pqrsfDAO;
+	@Inject
+	ModalRespuestaControl modalRespuestaControl;
 	private Pqrsf pqrsf;
 	private Persona persona;
 	private ArrayList<SelectItem> tiposPqrsf;	
@@ -44,12 +45,7 @@ public class RegistrarPqrsfControl implements Serializable{
 	boolean lastMovementWasNext;
 	
 	public RegistrarPqrsfControl(){
-		lastMovementWasNext=false;		
-		persona=new Persona();
-		pqrsf=new Pqrsf();
-		isLastStep=false;
-		departamento=null;
-		municipios=null;		
+		inicializarDatos();	
 	}
 	
 	@PostConstruct
@@ -91,17 +87,33 @@ public class RegistrarPqrsfControl implements Serializable{
 	}
 	
 	public void guardarPqrsf(ActionEvent actionEvent){
+		RequestContext ctx=RequestContext.getCurrentInstance();
+		
 		pqrsf.setPersona(persona);		
-		boolean success=pqrsfDAO.guardar(pqrsf);
-		FacesMessage msg;
-		if(success)
-			msg= new FacesMessage("Registro Exitoso", "La PQRSF ha sido registrada con el código "+ pqrsf.getCodigo());
+		boolean success=pqrsfDAO.guardar(pqrsf);					
+		modalRespuestaControl.operacionExitosa(success);
+		
+		if(success){			
+			modalRespuestaControl.configurar("Registro exitoso", "La PQRSF ha sido registrada con el cÃ³digo "+ pqrsf.getCodigo());
+			isLastStep=false;
+			//ctx.execute("$('#registroPqrsfForm').trigger('reset')");
+			inicializarDatos();
+		}
 		else
-			msg= new FacesMessage("Error", "No se pudo registrar la PQRSF. Si el problema persiste, por favor comunicarse con la DivTIC.");
-        
-		FacesContext.getCurrentInstance().addMessage(null, msg);        
+			modalRespuestaControl.configurar("Error", "No se pudo registrar la PQRSF. Si el problema persiste, por favor comunicarse con la DivTIC.");
+		
+		ctx.execute("$('#modalRespuesta').modal('toggle');");
 	}
 	
+	private void inicializarDatos() {
+		lastMovementWasNext=false;		
+		persona=new Persona();
+		pqrsf=new Pqrsf();
+		isLastStep=false;
+		departamento=null;
+		municipios=null;		
+	}
+
 	public void next(){		
 		lastMovementWasNext=true;
 		RequestContext.getCurrentInstance().execute("PF('wiz').next();");
@@ -112,6 +124,16 @@ public class RegistrarPqrsfControl implements Serializable{
 		lastMovementWasNext=false;
 		RequestContext.getCurrentInstance().execute("PF('wiz').back();");
 		
+	}
+	
+	public String obtnDescripcion(ArrayList<SelectItem> items, Integer idItem){
+		if(idItem!=null){
+			for(SelectItem item:items){
+				if(item.getValue()==idItem)
+					return item.getLabel();			
+			}
+		}					
+		return "";
 	}	
 			
 	public Pqrsf getPqrsf() {

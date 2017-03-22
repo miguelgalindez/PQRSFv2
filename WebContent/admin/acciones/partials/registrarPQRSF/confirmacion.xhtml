@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:body>
+	<div class="col-sm-offset-2 col-sm-8" >	
+		<table class="table table-responsive table-striped table-hover table-bordered">
+			<thead>
+				<tr class="bg-blue">
+					<th>Nombre del campo</th>
+					<th>Información suministrada</th>				
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Tipo solicitante</td>
+					<td>#{registrarPqrsfControl.obtnDescripcion(registrarPqrsfControl.tiposPersona, registrarPqrsfControl.persona.tipoPersona)}</td>
+				</tr>
+				<tr>
+					<td>Tipo de identificación</td>
+					<td>#{registrarPqrsfControl.obtnDescripcion(registrarPqrsfControl.tiposIdentificacion, registrarPqrsfControl.persona.tipoIdentificacion)}</td>
+				</tr>
+				<tr>
+					<td>Identificación</td>
+					<td>#{registrarPqrsfControl.persona.identificacion}</td>
+				</tr>
+				<tr>
+					<td>Nombres</td>
+					<td>#{registrarPqrsfControl.persona.nombres}</td>
+				</tr>
+				<tr>
+					<td>Apellidos</td>
+					<td>#{registrarPqrsfControl.persona.apellidos}</td>
+				</tr>
+				<tr>
+					<td>Municipio de residencia</td>
+					<td>#{registrarPqrsfControl.obtnDescripcion(registrarPqrsfControl.municipios, registrarPqrsfControl.persona.municipio)}</td>
+				</tr>
+				<tr>
+					<td>Dirección de residencia</td>
+					<td>#{registrarPqrsfControl.persona.direccion}</td>
+				</tr>
+				<tr>
+					<td>Teléfono fijo</td>
+					<td>#{registrarPqrsfControl.persona.telefono}</td>
+				</tr>
+				<tr>
+					<td>Teléfono celular</td>
+					<td>#{registrarPqrsfControl.persona.celular}</td>
+				</tr>
+				<tr>
+					<td>Correo electrónico</td>
+					<td>#{registrarPqrsfControl.persona.email}</td>
+				</tr>
+				<tr>
+					<td>Medio de recepción</td>
+					<td>#{registrarPqrsfControl.obtnDescripcion(registrarPqrsfControl.mediosRecepcion, registrarPqrsfControl.pqrsf.medioRecepcion)}</td>
+				</tr>
+				<tr>
+					<td>Tipo</td>
+					<td>#{registrarPqrsfControl.obtnDescripcion(registrarPqrsfControl.tiposPqrsf, registrarPqrsfControl.pqrsf.tipoPqrsf)}</td>
+				</tr>
+				<tr>
+					<td>Asunto</td>
+					<td>#{registrarPqrsfControl.pqrsf.asunto}</td>
+				</tr>
+				<tr>
+					<td>Descripción</td>
+					<td>#{registrarPqrsfControl.pqrsf.descripcion}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="clear"></div>
+</h:body>
+</html>

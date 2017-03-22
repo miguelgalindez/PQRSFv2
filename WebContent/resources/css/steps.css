@@ -7,6 +7,10 @@
     height: 0;
 }
 
+.clear{
+	clear: both;
+}
+
 .container {
 	font-family: 'Lato', sans-serif;
 	width: 1000px;

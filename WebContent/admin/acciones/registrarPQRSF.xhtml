@@ -25,7 +25,8 @@
 		            	</div>
 		            	<div class="box-body">
 							<h:form id="registroPqrsfForm" styleClass="form-horizontal">																						
-								<p:growl id="growl" sticky="true" showDetail="true"></p:growl>
+								
+								<ui:include src="/template/modalRespuesta.xhtml" />
 									
 								<p:wizard flowListener="#{registrarPqrsfControl.progressHandler}" widgetVar="wiz" showNavBar="false" showStepStatus="false">
 									<p:tab id="datosPersonales" title="Datos Personales">
@@ -41,15 +42,18 @@
 									<p:tab id="confirmacion" title="Proceso finalizado">
 										<p:panel>
 											<p:messages />
-											<h:outputText styleClass="lbl lbl-danger" value="TODO - Tabla resumen de la info ingresada"/>
-											<h:outputText value="Asistente finalizado. Presione Guardar para terminar"/>													
+											<ui:include src="partials/registrarPQRSF/confirmacion.xhtml" />																						
 										</p:panel>																
 									</p:tab>
 								</p:wizard>
-								<h:panelGroup id="panelBotones">																		
-									<p:commandButton value="Retroceder" styleClass="btn btn-large btn-danger" actionListener="#{registrarPqrsfControl.back()}" update="panelBotones" process="@this"/>
-									<p:commandButton id="btnContinuar" value="Continuar"  actionListener="#{registrarPqrsfControl.next()}" styleClass="btn btn-large btn-success" rendered="#{registrarPqrsfControl.isLastStep==false}" update="panelBotones" process="@this"/>
-									<p:commandButton id="btnGuardar" value="Guardar" actionListener="#{registrarPqrsfControl.guardarPqrsf}" rendered="#{registrarPqrsfControl.isLastStep}" update="@(form)" process="@this" styleClass="btn btn-large btn-info"/>									
+								<h:panelGroup id="panelBotones" class="col-sm-offset-4 col-sm-3">
+									<div class="pull-left">																		
+										<p:commandButton value="Retroceder" styleClass="btn btn-lg btn-danger" actionListener="#{registrarPqrsfControl.back()}" update="panelBotones" process="@this"/>
+									</div>
+									<div class="pull-right">
+										<p:commandButton id="btnContinuar" value="Continuar"  actionListener="#{registrarPqrsfControl.next()}" styleClass="btn btn-lg btn-success" rendered="#{registrarPqrsfControl.isLastStep==false}" update="panelBotones" process="@this"/>
+										<p:commandButton id="btnGuardar" value="Guardar" actionListener="#{registrarPqrsfControl.guardarPqrsf}" rendered="#{registrarPqrsfControl.isLastStep}" update="@(form)" process="@this" styleClass="btn btn-lg btn-info"/>
+									</div>									
 								</h:panelGroup>			
 														
 							</h:form>

@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+		
+<h:body>	
+	<div id="modalRespuesta" class="modal fade #{modalRespuestaControl.tipo}" role="dialog">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      	<h:button onclick="#{modalRespuestaControl.cerrar()}" class="close" data-dismiss="modal" aria-label="Close" value="X"/>	        
+	        <h4 class="modal-title">#{modalRespuestaControl.titulo}</h4>
+	      </div>
+	      <div class="modal-body">
+	        <p align="justify">#{modalRespuestaControl.mensaje}</p>
+	      </div>
+	      <div class="modal-footer">
+	      	<h:button onclick="#{modalRespuestaControl.cerrar()}" class="btn btn-outline" data-dismiss="modal" value="Cerrar" />
+	        
+	      </div>
+	    </div>          
+	  </div>  
+	</div>
+</h:body>
+</html>

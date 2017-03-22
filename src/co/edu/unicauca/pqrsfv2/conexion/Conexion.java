@@ -162,8 +162,6 @@ public class Conexion implements HttpSessionBindingListener {
 					cs.setFloat(i + 1, ((Float) parametros.get(i)));
 				} else if (aux == Types.DOUBLE) {
 					cs.setDouble(i + 1, ((Double) parametros.get(i)));
-				} else if (aux == Types.ARRAY) {
-					cs.setArray(i + 1, ((oracle.sql.ARRAY) parametros.get(i)));
 				} else if (aux == Types.DATE) {
 					if ((java.util.Date) parametros.get(i) != null) {
 						cs.setDate(i + 1, new java.sql.Date(
@@ -199,19 +197,22 @@ public class Conexion implements HttpSessionBindingListener {
 
   
 	public void clean(){
+		/*
 		try {
 			if(rs!=null)
 				rs.close();
 			if(stmt!=null)
 				stmt.close();
 			if(cs!=null)
-				cs.close();			
-			conn.close(); 			
+				cs.close();
+			if(conn!=null)
+				conn.close(); 			
 		}
 		catch(Exception e1){
 			System.out.println("ERROR. NO SE PUEDO LIMPIAR LA CONEXION (CERRRAR LOS RECURSOS)");
 			e1.printStackTrace();			
 		}
+	*/	
 	}
 
 	@Override
