@@ -18,11 +18,11 @@
 			<tbody>
 				<tr>
 					<td>Tipo solicitante</td>
-					<td>#{registrarPqrsfControl.obtnDescripcion(registrarPqrsfControl.tiposPersona, registrarPqrsfControl.persona.tipoPersona)}</td>
+					<td>#{valoresDAO.obtnDescripcion(valoresDAO.tiposPersona, registrarPqrsfControl.persona.tipoPersona)}</td>
 				</tr>
 				<tr>
 					<td>Tipo de identificación</td>
-					<td>#{registrarPqrsfControl.obtnDescripcion(registrarPqrsfControl.tiposIdentificacion, registrarPqrsfControl.persona.tipoIdentificacion)}</td>
+					<td>#{valoresDAO.obtnDescripcion(valoresDAO.tiposIdentificacion, registrarPqrsfControl.persona.tipoIdentificacion)}</td>
 				</tr>
 				<tr>
 					<td>Identificación</td>
@@ -38,7 +38,7 @@
 				</tr>
 				<tr>
 					<td>Municipio de residencia</td>
-					<td>#{registrarPqrsfControl.obtnDescripcion(registrarPqrsfControl.municipios, registrarPqrsfControl.persona.municipio)}</td>
+					<td>#{valoresDAO.obtenerNombreMunicipio(registrarPqrsfControl.persona.municipio)}</td>
 				</tr>
 				<tr>
 					<td>Dirección de residencia</td>
@@ -58,11 +58,11 @@
 				</tr>
 				<tr>
 					<td>Medio de recepción</td>
-					<td>#{registrarPqrsfControl.obtnDescripcion(registrarPqrsfControl.mediosRecepcion, registrarPqrsfControl.pqrsf.medioRecepcion)}</td>
+					<td>#{valoresDAO.obtnDescripcion(valoresDAO.mediosRecepcion, registrarPqrsfControl.pqrsf.medioRecepcion)}</td>
 				</tr>
 				<tr>
 					<td>Tipo</td>
-					<td>#{registrarPqrsfControl.obtnDescripcion(registrarPqrsfControl.tiposPqrsf, registrarPqrsfControl.pqrsf.tipoPqrsf)}</td>
+					<td>#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, registrarPqrsfControl.pqrsf.tipoPqrsf)}</td>
 				</tr>
 				<tr>
 					<td>Asunto</td>

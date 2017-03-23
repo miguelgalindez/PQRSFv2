@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+			
+	<h:body>
+		<p:dataTable id="pqrsfNR" value="#{radicarPqrsfControl.pqrsfNoRadicadas}"
+					var="pqrsf" 
+					rows="10"
+					paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="5,10,15,20,25,30,35,40,45,50"
+                    reflow="true"
+                    sortMode="multiple"
+					>
+			<f:facet name="header">		        	
+		        <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />
+		        <p:columnToggler datasource="pqrsfNR" trigger="toggler" />
+		        <div class="clear"></div>
+		    </f:facet>
+		 	
+			<p:column headerText="Codigo" sortBy="#{pqrsf.codigo}">
+				<h:outputText value="#{pqrsf.codigo}" />
+			</p:column>
+			<p:column headerText="Tipo" sortBy="#{pqrsf.tipoPqrsf}">
+				<h:outputText value="#{pqrsf.tipoPqrsf}" />
+			</p:column>
+			<p:column headerText="Asunto" sortBy="#{pqrsf.asunto}">
+				<h:outputText value="#{pqrsf.asunto}" />
+			</p:column>
+			<p:column headerText="Fecha" sortBy="#{pqrsf.fechaCreacion}">
+				<h:outputText value="#{pqrsf.fechaCreacion}" />
+			</p:column>
+			<p:column headerText="Solicitante" sortBy="#{pqrsf.persona.nombres}">
+				<h:outputText value="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}" />
+			</p:column>
+		</p:dataTable>
+	</h:body>
+</html>

@@ -16,7 +16,8 @@ xmlns:p="http://primefaces.org/ui"
 				value="#{registrarPqrsfControl.persona.tipoPersona}" 
 				styleClass="form-control" 
 				required="true">							                  																	   														
-				<f:selectItems value="#{registrarPqrsfControl.tiposPersona}"/>					                  											                  						
+				<f:selectItems value="#{valoresDAO.tiposPersona.entrySet()}" var="tipo" 
+     							itemValue="#{tipo.key}" itemLabel="#{tipo.value}" />					                  											                  						
 			</p:selectOneMenu>
 			<p:message for="tipoSolicitante"/>					                    	
 		</div>							                  	
@@ -29,7 +30,8 @@ xmlns:p="http://primefaces.org/ui"
 				value="#{registrarPqrsfControl.persona.tipoIdentificacion}"
 				required="true"
 				styleClass="form-control">
-				<f:selectItems value="#{registrarPqrsfControl.tiposIdentificacion}" />
+				<f:selectItems value="#{valoresDAO.tiposIdentificacion.entrySet()}" var="tipo" 
+     							itemValue="#{tipo.key}" itemLabel="#{tipo.value}" />
 			</p:selectOneMenu>
 			<p:message for="tipoIdentificacion"/>					                    
 		</div>							                  	

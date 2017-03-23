@@ -19,7 +19,8 @@ xmlns:p="http://primefaces.org/ui"
 								styleClass="form-control"
 								>
 								
-					<f:selectItems value="#{registrarPqrsfControl.mediosRecepcion}"/>																						
+					<f:selectItems value="#{valoresDAO.mediosRecepcion.entrySet()}" var="tipo"
+								itemValue="#{tipo.key}" itemLabel="#{tipo.value}"/>																						
 			</p:selectOneMenu>
 			<p:message for="medioRecepcion" />
 		</div>
@@ -33,7 +34,8 @@ xmlns:p="http://primefaces.org/ui"
 								required="true"																
 								styleClass="form-control"
 								>
-					<f:selectItems value="#{registrarPqrsfControl.tiposPqrsf}" />					
+					<f:selectItems value="#{valoresDAO.tiposPqrsf.entrySet()}" var="tipo"
+								itemValue="#{tipo.key}" itemLabel="#{tipo.value}"/>					
 			</p:selectOneMenu>
 			<p:message for="tipoPqrsf" />
 		</div>

@@ -3,12 +3,14 @@ package co.edu.unicauca.pqrsfv2.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.sql.Types;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.faces.model.SelectItem;
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
+import co.edu.unicauca.pqrsfv2.modelo.Persona;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 
 @Stateless
@@ -18,12 +20,51 @@ public class PqrsfDAO {
 	@EJB
 	Conexion con;
 	
-	public ArrayList<SelectItem> obtnMediosRecepcion(){
+	
+	public ArrayList<Pqrsf> obtnNoRadicadas() {
+		String sql="SELECT PQSRFCODIGO, PERNOMBRES, PERAPELLIDOS, TIPPQRSFID, "+ 
+					"PQRSFASUNTO, PQRSFDESCRIPCION, MEDID, PQRSFFECHACREACION "+ 
+					"FROM PQRSF NATURAL JOIN PERSONA";
+;
+		return cargarNoRadicadas(con.executeQueryRS(sql));		
+	}
+	
+	
+	private ArrayList<Pqrsf> cargarNoRadicadas(ResultSet rs) {
+		ArrayList<Pqrsf> pqrsfNoRadicadas=new ArrayList<>();
+		try {
+			while(rs.next()){
+				Pqrsf pqrsf=new Pqrsf();
+				Persona persona=new Persona();
+				
+				pqrsf.setCodigo(rs.getString("PQSRFCODIGO"));
+				persona.setNombres(rs.getString("PERNOMBRES"));
+				persona.setApellidos(rs.getString("PERAPELLIDOS"));				
+				pqrsf.setPersona(persona);
+				pqrsf.setTipoPqrsf(rs.getInt("TIPPQRSFID"));
+				pqrsf.setAsunto(rs.getString("PQRSFASUNTO"));
+				pqrsf.setDescripcion(rs.getString("PQRSFDESCRIPCION"));
+				pqrsf.setMedioRecepcion(rs.getInt("MEDID"));
+				pqrsf.setFechaCreacion(new Date(rs.getDate("PQRSFFECHACREACION").getTime()));
+				pqrsfNoRadicadas.add(pqrsf);
+			}
+		} catch (SQLException e) {
+			System.out.println("ERROR. NO SE PUDO CARGAR LAS PQRSF NO RADICADAS");
+			e.printStackTrace();
+			pqrsfNoRadicadas=null;
+		} finally{
+			con.clean();
+		}		
+		return pqrsfNoRadicadas;
+	}
+
+
+	public HashMap<Integer, String> obtnMediosRecepcion(){
 		String sql="SELECT * FROM MEDIORECEPCION";
 		return generarElementos(con.executeQueryRS(sql), "MEDID", "MEDDESCRIPCION");			
 	}
 	
-	public ArrayList<SelectItem> obtnTiposPqrsf() {
+	public HashMap<Integer, String> obtnTiposPqrsf() {
 		String sql="SELECT * FROM TIPOPQRSF";
 		return generarElementos(con.executeQueryRS(sql), "TIPPQRSFID", "TIPPQRSFDESCRIPCION");
 	}
@@ -57,18 +98,14 @@ public class PqrsfDAO {
 		return codigo!=null;
 	}	
 	
-	private ArrayList<SelectItem> generarElementos(ResultSet rs, String value, String label){		
+	private HashMap<Integer, String> generarElementos(ResultSet rs, String valueColumnName, String descriptionColumnName){		
 		if(rs==null)
 			return null;
 		
-		ArrayList<SelectItem> elementos=new ArrayList<SelectItem>();		
+		HashMap<Integer, String> elementos=new HashMap<Integer, String>();		
 		try {
-			while(rs.next()){
-				SelectItem tipoId=new SelectItem();
-				tipoId.setValue(rs.getInt(value));
-				tipoId.setLabel(rs.getString(label));
-				elementos.add(tipoId);
-			}
+			while(rs.next())
+				elementos.put(rs.getInt(valueColumnName), rs.getString(descriptionColumnName));			
 		} catch (SQLException e) {
 			System.out.println("ERROR. NO SE PUDO GENERAR LOS ELEMENTOS");
 			e.printStackTrace();

@@ -2,13 +2,10 @@ package co.edu.unicauca.pqrsfv2.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
+import java.util.HashMap;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.faces.model.SelectItem;
-
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
 
 @Stateless
@@ -17,39 +14,35 @@ public class PersonaDAO {
 	
 	@EJB
 	Conexion con;
-	public ArrayList<SelectItem> obtnTiposIdentificacion(){		
+	public HashMap<Integer, String> obtnTiposIdentificacion(){		
 		String sql="SELECT * FROM TIPOIDENTIFICACION";						
 		return generarElementos(con.executeQueryRS(sql), "TIPIDEID", "TIPIDEDESCRIPCION");		
 	}
 	
-	public ArrayList<SelectItem> obtnTiposPersona() {
+	public HashMap<Integer, String> obtnTiposPersona() {
 		String sql="SELECT * FROM TIPOPERSONA";				
 		return generarElementos(con.executeQueryRS(sql), "TIPPERID", "TIPPERDESCRIPCION");		
 	}
 	
-	public ArrayList<SelectItem> obtnDepartamentos() {	
+	public HashMap<Integer, String> obtnDepartamentos() {	
 		String sql="SELECT * FROM DEPARTAMENTO";				
 		return generarElementos(con.executeQueryRS(sql), "DEPTOID", "DEPTONOMBRE");	
 	}
 	
-	public ArrayList<SelectItem> obtnMunicipios(Integer idDepartamento) {
+	public HashMap<Integer, String> obtnMunicipios(Integer idDepartamento) {
 		String sql="SELECT MUNID, MUNNOMBRE FROM MUNICIPIO WHERE DEPTOID="+idDepartamento+" ORDER BY MUNNOMBRE ASC";	
 		return generarElementos(con.executeQueryRS(sql), "MUNID", "MUNNOMBRE");
 	}
 	
 	
-	private ArrayList<SelectItem> generarElementos(ResultSet rs, String value, String label){		
+	private HashMap<Integer, String> generarElementos(ResultSet rs, String valueColumnName, String descriptionColumnName){		
 		if(rs==null)
 			return null;
 		
-		ArrayList<SelectItem> elementos=new ArrayList<SelectItem>();		
+		HashMap<Integer, String> elementos=new HashMap<Integer, String>();		
 		try {
-			while(rs.next()){
-				SelectItem tipoId=new SelectItem();
-				tipoId.setValue(rs.getInt(value));
-				tipoId.setLabel(rs.getString(label));
-				elementos.add(tipoId);
-			}
+			while(rs.next())
+				elementos.put(rs.getInt(valueColumnName), rs.getString(descriptionColumnName));			
 		} catch (SQLException e) {
 			System.out.println("ERROR. NO SE PUDO GENERAR LOS ELEMENTOS");
 			e.printStackTrace();
@@ -58,5 +51,10 @@ public class PersonaDAO {
 			con.clean();
 		}		
 		return elementos;
+	}
+
+	public HashMap<Integer, String> obtnTodosMunicipios() {		
+		String sql="SELECT MUNID, MUNNOMBRE FROM MUNICIPIO";	
+		return generarElementos(con.executeQueryRS(sql), "MUNID", "MUNNOMBRE");
 	}	
 }

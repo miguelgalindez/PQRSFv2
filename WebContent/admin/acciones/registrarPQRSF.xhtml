@@ -8,59 +8,55 @@
 	xmlns:p="http://primefaces.org/ui"
 	>
 			
-	<h:body>
-		<ui:composition template="/template/admin/mainTemplate.xhtml">		
-			<ui:define name="content">						
-				<div class="col-lg-12">
-		        	<div class="box box-danger">
-			            <div class="box-header with-border">			    				        														
-				            <div class="arrow-steps clearfix">
-				            	<div class="col-sm-offset-2 col-sm-10">
-						          <div class="step current"> <span> Datos Personales</span> </div>
-						          <div class="step"> <span> Datos de contacto</span> </div>
-						          <div class="step"> <span> Datos de la PQRSF</span> </div>
-						          <div class="step"> <span> Confirmación</span> </div>
-					          	</div>							          
-							</div>								            							
-		            	</div>
-		            	<div class="box-body">
-							<h:form id="registroPqrsfForm" styleClass="form-horizontal">																						
-								
-								<ui:include src="/template/modalRespuesta.xhtml" />
-									
-								<p:wizard flowListener="#{registrarPqrsfControl.progressHandler}" widgetVar="wiz" showNavBar="false" showStepStatus="false">
-									<p:tab id="datosPersonales" title="Datos Personales">
-										<ui:include src="partials/registrarPQRSF/paso1.xhtml" />							
-									</p:tab>
-									
-									<p:tab id="datosContacto" title="Datos de Contacto">
-										<ui:include src="partials/registrarPQRSF/paso2.xhtml" />															
-									</p:tab>
-									<p:tab id="DatosPQRSF" title="Datos de la PQRSF">
-										<ui:include src="partials/registrarPQRSF/paso3.xhtml" />																
-									</p:tab>
-									<p:tab id="confirmacion" title="Proceso finalizado">
-										<p:panel>
-											<p:messages />
-											<ui:include src="partials/registrarPQRSF/confirmacion.xhtml" />																						
-										</p:panel>																
-									</p:tab>
-								</p:wizard>
-								<h:panelGroup id="panelBotones" class="col-sm-offset-4 col-sm-3">
-									<div class="pull-left">																		
-										<p:commandButton value="Retroceder" styleClass="btn btn-lg btn-danger" actionListener="#{registrarPqrsfControl.back()}" update="panelBotones" process="@this"/>
-									</div>
-									<div class="pull-right">
-										<p:commandButton id="btnContinuar" value="Continuar"  actionListener="#{registrarPqrsfControl.next()}" styleClass="btn btn-lg btn-success" rendered="#{registrarPqrsfControl.isLastStep==false}" update="panelBotones" process="@this"/>
-										<p:commandButton id="btnGuardar" value="Guardar" actionListener="#{registrarPqrsfControl.guardarPqrsf}" rendered="#{registrarPqrsfControl.isLastStep}" update="@(form)" process="@this" styleClass="btn btn-lg btn-info"/>
-									</div>									
-								</h:panelGroup>			
-														
-							</h:form>
-						</div>
-					</div>
-				</div>										
-			</ui:define>
-		</ui:composition>	
+	<h:body>						
+		<div class="col-lg-12">
+        	<div class="box box-danger">
+	            <div class="box-header with-border">			    				        														
+		            <div class="arrow-steps clearfix">
+		            	<div class="col-sm-offset-2 col-sm-10">
+				          <div class="step current"> <span> Datos Personales</span> </div>
+				          <div class="step"> <span> Datos de contacto</span> </div>
+				          <div class="step"> <span> Datos de la PQRSF</span> </div>
+				          <div class="step"> <span> Confirmación</span> </div>
+			          	</div>							          
+					</div>								            							
+            	</div>
+            	<div class="box-body">
+					<h:form id="registroPqrsfForm" styleClass="form-horizontal">																						
+						
+						<ui:include src="/template/modalRespuesta.xhtml" />
+							
+						<p:wizard flowListener="#{registrarPqrsfControl.progressHandler}" widgetVar="wiz" showNavBar="false" showStepStatus="false">
+							<p:tab id="datosPersonales" title="Datos Personales">
+								<ui:include src="partials/registrarPQRSF/paso1.xhtml" />							
+							</p:tab>
+							
+							<p:tab id="datosContacto" title="Datos de Contacto">
+								<ui:include src="partials/registrarPQRSF/paso2.xhtml" />															
+							</p:tab>
+							<p:tab id="DatosPQRSF" title="Datos de la PQRSF">
+								<ui:include src="partials/registrarPQRSF/paso3.xhtml" />																
+							</p:tab>
+							<p:tab id="confirmacion" title="Proceso finalizado">
+								<p:panel>
+									<p:messages />
+									<ui:include src="partials/registrarPQRSF/confirmacion.xhtml" />																						
+								</p:panel>																
+							</p:tab>
+						</p:wizard>
+						<h:panelGroup id="panelBotones" class="col-sm-offset-4 col-sm-3">
+							<div class="pull-left">																		
+								<p:commandButton value="Retroceder" styleClass="btn btn-lg btn-danger" actionListener="#{registrarPqrsfControl.back}" update="panelBotones" process="@this"/>
+							</div>
+							<div class="pull-right">
+								<p:commandButton id="btnContinuar" value="Continuar"  actionListener="#{registrarPqrsfControl.next}" styleClass="btn btn-lg btn-success" rendered="#{registrarPqrsfControl.isLastStep==false}" update="panelBotones" process="@this"/>
+								<p:commandButton id="btnGuardar" value="Guardar" actionListener="#{registrarPqrsfControl.guardarPqrsf}" rendered="#{registrarPqrsfControl.isLastStep}" update="@(form)" process="@this" styleClass="btn btn-lg btn-info"/>
+							</div>									
+						</h:panelGroup>			
+												
+					</h:form>
+				</div>
+			</div>
+		</div>												
 	</h:body>
 </html>

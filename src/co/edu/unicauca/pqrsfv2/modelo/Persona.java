@@ -25,11 +25,11 @@ public class Persona implements Serializable{
 	private String apellidos;
 	
 	@NotNull @Size(max=64) @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
-	             message="Correo electrónico no válido")
+	             message="Correo electrï¿½nico no vï¿½lido")
 	private String email;
 	@Size(max=32)	
 	private String telefono;
-	@NotNull @Size(min=10, max=16, message="Número de celular no válido. Debe tener de 10 a 16 dígitos.")
+	@NotNull @Size(min=10, max=16, message="Nï¿½mero de celular no vï¿½lido. Debe tener de 10 a 16 dï¿½gitos.")
 	private String celular;
 	
 	@NotNull @Size(min=4, max=128)
@@ -37,6 +37,11 @@ public class Persona implements Serializable{
 	
 	@NotNull @Max(value=9999)
 	private Integer municipio;
+	
+	public Persona(){
+		municipio=null;
+		tipoPersona=tipoIdentificacion=null;
+	}
 			
 	public Integer getTipoPersona() {
 		return tipoPersona;
