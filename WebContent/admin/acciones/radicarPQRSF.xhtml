@@ -8,39 +8,62 @@
 	xmlns:p="http://primefaces.org/ui"
 	>
 			
-	<h:body>
-		<p:dataTable id="pqrsfNR" value="#{radicarPqrsfControl.pqrsfNoRadicadas}"
-					var="pqrsf" 
-					rows="10"
-					paginator="true"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                    rowsPerPageTemplate="5,10,15,20,25,30,35,40,45,50"
-                    reflow="true"
-                    sortMode="multiple"
-					>
-			<f:facet name="header">
-				<h:form>						        
-		        	<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />		        
-		        	<p:columnToggler datasource="pqrsfNR" trigger="toggler" />
-		        </h:form>
-		        <div class="clear"></div>
-		    </f:facet>
-		 	
-			<p:column headerText="Codigo" sortBy="#{pqrsf.codigo}">
-				<h:outputText value="#{pqrsf.codigo}" />
-			</p:column>
-			<p:column headerText="Tipo" sortBy="#{pqrsf.tipoPqrsf}">
-				<h:outputText value="#{pqrsf.tipoPqrsf}" />
-			</p:column>
-			<p:column headerText="Asunto" sortBy="#{pqrsf.asunto}">
-				<h:outputText value="#{pqrsf.asunto}" />
-			</p:column>
-			<p:column headerText="Fecha" sortBy="#{pqrsf.fechaCreacion}">
-				<h:outputText value="#{pqrsf.fechaCreacion}" />
-			</p:column>
-			<p:column headerText="Solicitante" sortBy="#{pqrsf.persona.nombres}">
-				<h:outputText value="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}" />
-			</p:column>
-		</p:dataTable>
+	<h:body>		
+		<h:form>
+			<p:dataTable id="pqrsfNR" value="#{radicarPqrsfControl.pqrsfNoRadicadas}"
+						widgetVar="pqrsfNRTable"
+						var="pqrsf" 
+						rows="10"
+						paginator="true"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	                    rowsPerPageTemplate="5,10,15,20,25,30,35,40,45,50"
+	                    reflow="true"
+	                    sortMode="multiple"
+	                    resizableColumns="true"	                    
+						>				
+				<f:facet name="header">
+						<h:outputText value="Buscar: " />
+		                <p:inputText id="globalFilter" onkeyup="PF('pqrsfNRTable').filter()" style="width:150px"/>										        
+			        	<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />		        
+			        	<p:columnToggler datasource="pqrsfNR" trigger="toggler" />		        
+			        <div class="clear"></div>
+			    </f:facet>
+			 	
+				<p:column headerText="Codigo" sortBy="#{pqrsf.codigo}" filterBy="#{pqrsf.codigo}" filterMatchMode="contains">
+					<h:outputText value="#{pqrsf.codigo}" />
+				</p:column>
+				<p:column headerText="Tipo" sortBy="#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, pqrsf.tipoPqrsf)}" 
+							filterBy="#{pqrsf.tipoPqrsf}" filterMatchMode="exact">
+					<f:facet name="filter">
+		                <p:selectOneMenu onchange="PF('pqrsfNRTable').filter()" >
+		                    <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+		                    <f:selectItems value="#{valoresDAO.tiposPqrsf.entrySet()}" var="tipo"
+								itemValue="#{tipo.key}" itemLabel="#{tipo.value}"/>
+		                </p:selectOneMenu>
+		            </f:facet>
+					<h:outputText value="#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, pqrsf.tipoPqrsf)}" />
+				</p:column>			
+				<p:column headerText="Fecha" sortBy="#{pqrsf.fechaCreacion}"
+							filterBy="#{pqrsf.fechaCreacion}" filterMatchMode="exact">
+					<f:facet name="filter">						
+					    <p:calendar  pattern="dd-MMMM-yyyy" locale="es" effect="fold">
+					        <p:ajax event="dateSelect" oncomplete="PF('pqrsfNRTable').filter()" update="pqrsfNR"/>
+					        <p:ajax event="change" execute="@this" oncomplete="PF('pqrsfNRTable').filter()" update="pqrsfNR"/>					        					                                	
+					    </p:calendar>					    
+					</f:facet>
+					<h:outputText value="#{pqrsf.fechaCreacion}" >
+						<f:convertDateTime pattern="dd-MMMM-yyyy" locale="es"/>
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Solicitante" sortBy="#{pqrsf.persona.nombres}"
+						filterBy="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}" filterMatchMode="contains">
+					<h:outputText value="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}" />
+				</p:column>
+				<p:column headerText="Acciones">
+					
+				</p:column>
+			</p:dataTable>
+		</h:form>
 	</h:body>
 </html>
