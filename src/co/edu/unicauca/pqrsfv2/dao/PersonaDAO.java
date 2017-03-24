@@ -53,8 +53,19 @@ public class PersonaDAO {
 		return elementos;
 	}
 
-	public HashMap<Integer, String> obtnTodosMunicipios() {		
-		String sql="SELECT MUNID, MUNNOMBRE FROM MUNICIPIO";	
-		return generarElementos(con.executeQueryRS(sql), "MUNID", "MUNNOMBRE");
+	public String obtnNombreMunicipio(Integer idMunicipio) {
+		String sql="SELECT MUNNOMBRE FROM MUNICIPIO WHERE MUNID="+idMunicipio;
+		ResultSet rs=con.executeQueryRS(sql);
+		try {
+			while(rs.next()){
+				return rs.getString("MUNNOMBRE");
+			}
+		} catch (SQLException e) {
+			System.out.println("ERROR. NO SE PUDO CONSULTAR EL NOMBRE DEL MUNICIPIO");
+			e.printStackTrace();			
+		} finally{
+			con.clean();
+		}		
+		return "";
 	}	
 }

@@ -21,20 +21,20 @@ public class ValoresDAO implements Serializable {
 	@Inject
 	PersonaDAO personaDAO;
 	@Inject
-	PqrsfDAO pqrsfDAO;
-	@Inject
-	Ubicaciones ubicaciones;
+	PqrsfDAO pqrsfDAO;	
 	private HashMap<Integer, String> tiposPqrsf;	
 	private HashMap<Integer, String> mediosRecepcion;
 	private HashMap<Integer, String> tiposIdentificacion;
 	private HashMap<Integer, String> tiposPersona;
+	private HashMap<Integer, String> departamentos;
 	
 	@PostConstruct
 	private void init() {
 		tiposIdentificacion=personaDAO.obtnTiposIdentificacion();
 		tiposPersona=personaDAO.obtnTiposPersona();					
 		mediosRecepcion=pqrsfDAO.obtnMediosRecepcion();		
-		tiposPqrsf=pqrsfDAO.obtnTiposPqrsf();		
+		tiposPqrsf=pqrsfDAO.obtnTiposPqrsf();
+		departamentos=personaDAO.obtnDepartamentos();
 	}
 	
 	public HashMap<Integer, String> obtnMunicipios(Integer idDepartamento){
@@ -48,18 +48,10 @@ public class ValoresDAO implements Serializable {
 		return valores.get(idValor);
 	}
 	
-	public String obtenerNombreMunicipio(Integer idMunicipio){
-		return ubicaciones.obtnNombreMunicipio(idMunicipio);
+	public String obtnNombreMunicipio(Integer idMunicipio){
+		return personaDAO.obtnNombreMunicipio(idMunicipio);
 	}
 	
-	public String obtenerNombreDepartamento(Integer idDepartamento){
-		return ubicaciones.obtnNombreDepartamento(idDepartamento);
-	}
-	
-	public HashMap<Integer, String> obtenerDepartamentos() {
-		return ubicaciones.getTodosDepartamentos();
-	}
-
 	public HashMap<Integer, String> getTiposPqrsf() {
 		return tiposPqrsf;
 	}
@@ -91,4 +83,12 @@ public class ValoresDAO implements Serializable {
 	public void setTiposPersona(HashMap<Integer, String> tiposPersona) {
 		this.tiposPersona = tiposPersona;
 	}
+
+	public HashMap<Integer, String> getDepartamentos() {
+		return departamentos;
+	}
+
+	public void setDepartamentos(HashMap<Integer, String> departamentos) {
+		this.departamentos = departamentos;
+	}		
 }
