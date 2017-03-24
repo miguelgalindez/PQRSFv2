@@ -34,7 +34,7 @@
 		        	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/index.xhtml')}">		        	
 			            <i class="fa fa-dashboard"></i> 
 			            <span>Inicio</span>
-			            <f:ajax event="action" render="contenidoPrincipal"></f:ajax>		          
+			            <p:ajax event="action" update="contenidoPrincipal" />			            
 		          	</h:commandLink>
 		        </li>  
 		
@@ -66,14 +66,14 @@
 		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/acciones/registrarPQRSF.xhtml')}">		        				            
 			            	<i class="fa fa-circle-o"></i>
 			            	Registrar PQRSF
-			            	<f:ajax event="action" render="contenidoPrincipal"></f:ajax>				            		         
+			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
 		          		</h:commandLink>
 		            </li>
 		            <li>
 		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/acciones/radicarPQRSF.xhtml')}">		        				            
 			            	<i class="fa fa-circle-o"></i>
 			        		Radicar PQRSFs
-			            	<f:ajax event="action" render="contenidoPrincipal"></f:ajax>				            		         
+			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
 		          		</h:commandLink>
 		            </li>
 		            <li><a href="/admin/direccionarPqrsf"><i class="fa fa-circle-o"></i>Direccionar PQRSFs</a></li>                  

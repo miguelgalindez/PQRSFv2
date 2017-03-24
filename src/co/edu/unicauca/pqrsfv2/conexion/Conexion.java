@@ -197,7 +197,7 @@ public class Conexion implements HttpSessionBindingListener {
 
   
 	public void clean(){
-		/*
+		
 		try {
 			if(rs!=null)
 				rs.close();
@@ -212,7 +212,7 @@ public class Conexion implements HttpSessionBindingListener {
 			System.out.println("ERROR. NO SE PUEDO LIMPIAR LA CONEXION (CERRRAR LOS RECURSOS)");
 			e1.printStackTrace();			
 		}
-	*/	
+		
 	}
 
 	@Override

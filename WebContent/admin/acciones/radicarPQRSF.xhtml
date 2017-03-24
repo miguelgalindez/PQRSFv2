@@ -18,9 +18,11 @@
                     reflow="true"
                     sortMode="multiple"
 					>
-			<f:facet name="header">		        	
-		        <p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />
-		        <p:columnToggler datasource="pqrsfNR" trigger="toggler" />
+			<f:facet name="header">
+				<h:form>						        
+		        	<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />		        
+		        	<p:columnToggler datasource="pqrsfNR" trigger="toggler" />
+		        </h:form>
 		        <div class="clear"></div>
 		    </f:facet>
 		 	

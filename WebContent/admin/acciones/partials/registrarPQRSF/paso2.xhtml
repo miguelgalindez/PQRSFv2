@@ -19,7 +19,7 @@ xmlns:p="http://primefaces.org/ui"
 								required="#{registrarPqrsfControl.persona.municipio == null}"
 								requiredMessage="Especifique el departamento de su docimicilio">
 								
-					<f:selectItems value="#{valoresDAO.obtenerDepartamentos.entrySet()}" var="tipo"
+					<f:selectItems value="#{valoresDAO.obtenerDepartamentos().entrySet()}" var="tipo"
 								itemValue="#{tipo.key}" itemLabel="#{tipo.value}"/>													
 					<p:ajax update="municipio"/>					
 			</p:selectOneMenu>
