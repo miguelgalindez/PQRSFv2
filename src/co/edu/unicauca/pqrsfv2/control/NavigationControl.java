@@ -6,6 +6,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import co.edu.unicauca.pqrsfv2.modelo.Usuario;
+
 @SessionScoped
 @Named
 public class NavigationControl implements Serializable {
@@ -17,10 +19,15 @@ public class NavigationControl implements Serializable {
 	
 	@Inject
 	RadicarPqrsfControl radicarPqrsfControl;
+	private Usuario usuarioAutenticado;
 	private String viewToShow;
 	
 	public NavigationControl(){
 		viewToShow="/admin/index.xhtml";
+		
+		// TODO - Falta logica de autenticacion y autorizacion
+		usuarioAutenticado=new Usuario();
+		usuarioAutenticado.setUsername("miguelgalindez");
 	}
 
 	public String getViewToShow() {
@@ -41,4 +48,14 @@ public class NavigationControl implements Serializable {
 	public void logout(){
 		
 	}
+
+	public Usuario getUsuarioAutenticado() {
+		return usuarioAutenticado;
+	}
+
+	public void setUsuarioAutenticado(Usuario usuarioAutenticado) {
+		this.usuarioAutenticado = usuarioAutenticado;
+	}
+	
+	
 }

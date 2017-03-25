@@ -5,39 +5,57 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
-	<h:body>
-		<h:form class="form-horizontal" >		
-		<div class="form-group">
-			<p:outputLabel for="id" styleClass="control-label col-sm-3" value="ID Radicado"/>					                  
-			<div class="col-sm-9">
-				<p:inputText id="id" 
-					value="#{radicarPqrsfControl.radicado.id}" 
-					styleClass="form-control" 
-					required="true" />
-					 							                  																	   																								                  											                  									
-				<p:message for="id"/>					                    	
-			</div>							                  	
-		</div>
-		
-		<div class="form-group">
-			<p:outputLabel for="fechaRadicado" styleClass="control-label col-sm-3" value="Fecha del Radicado"/>					                  
-			<div class="col-sm-9">
-				<p:calendar id="fechaRadicado" value="#{radicarPqrsfControl.radicado.fecha}" 
-							required="true" effect="fold" styleClass="form-control"/>
-																																			   															
-				<p:message for="fechaRadicado"/>					                    	
-			</div>							                  	
-		</div>
-		
-		<div class="form-group">
-			<p:outputLabel for="fechaVencimientoPQRSF" styleClass="control-label col-sm-3" value="Vencimiento de la PQRSF"/>					                  
-			<div class="col-sm-9">
-				<p:calendar id="fechaVencimientoPQRSF" value="#{radicarPqrsfControl.selectedPqrsf.fechaVencimiento}" 
-							required="true" effect="fold" styleClass="form-control"/>
-																																			   															
-				<p:message for="fechaVencimientoPQRSF"/>					                    	
-			</div>							                  	
-		</div>
-		</h:form>
+	<h:body>		
+		<h:form class="form-horizontal" id="radicarForm">					
+			<div class="form-group">
+				<p:outputLabel for="id" styleClass="control-label col-sm-5" value="ID Radicado"/>					                  
+				<div class="col-sm-7">
+					<p:inputText id="id" 
+						value="#{radicarPqrsfControl.radicado.id}" 
+						styleClass="form-control" 
+						required="true" />
+						 							                  																	   																								                  											                  									
+					<p:message for="id"/>					                    	
+				</div>							                  	
+			</div>
+			
+			<div class="form-group">
+				<p:outputLabel for="fechaRadicado" styleClass="control-label col-sm-5" value="Fecha del Radicado"/>					                  
+				<div class="col-sm-7">
+					<p:calendar id="fechaRadicado" value="#{radicarPqrsfControl.radicado.fecha}" 
+								required="true" effect="fold" styleClass="form-control"/>
+																																				   															
+					<p:message for="fechaRadicado"/>					                    	
+				</div>							                  	
+			</div>
+			
+			<div class="form-group">
+				<p:outputLabel for="fechaVencimientoPQRSF" styleClass="control-label col-sm-5" value="Vencimiento de la PQRSF"/>					                  
+				<div class="col-sm-7">
+					<p:calendar id="fechaVencimientoPQRSF" value="#{radicarPqrsfControl.selectedPqrsf.fechaVencimiento}" 
+								required="true" effect="fold" styleClass="form-control"/>
+																																				   															
+					<p:message for="fechaVencimientoPQRSF"/>					                    	
+				</div>							                  	
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-1 col-sm-10">			
+					<div class="pull-left">	
+						<p:commandLink oncomplete="PF('dialog').hide()" actionListener="#{radicarPqrsfControl.resetForm()}" 
+										styleClass="btn btn-lg btn-danger">											
+							<i class="fa fa-times"/>			
+							<span>Cancelar</span>
+						</p:commandLink>									
+					</div>			
+					<div class="pull-right">
+						<p:commandLink actionListener="#{radicarPqrsfControl.radicarPQRSF()}"
+										styleClass="btn btn-lg btn-success">		        	
+					            <i class="fa fa-registered"/> 				            				           
+					            <span>Radicar</span>			            			           
+				        </p:commandLink>				        				        												 					
+					</div>
+				</div>														                 
+			</div>
+		</h:form>		
 	</h:body>
 </html>

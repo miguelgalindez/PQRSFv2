@@ -24,7 +24,7 @@ public class PqrsfDAO {
 	public ArrayList<Pqrsf> obtnNoRadicadas() {
 		String sql="SELECT PQSRFCODIGO, PERNOMBRES, PERAPELLIDOS, TIPPQRSFID, "+ 
 					"PQRSFASUNTO, PQRSFDESCRIPCION, MEDID, PQRSFFECHACREACION "+ 
-					"FROM PQRSF NATURAL JOIN PERSONA";
+					"FROM PQRSF NATURAL JOIN PERSONA WHERE RADID IS NULL";
 ;
 		return cargarNoRadicadas(con.executeQueryRS(sql));		
 	}
@@ -71,10 +71,7 @@ public class PqrsfDAO {
 	
 	public boolean guardar(Pqrsf pqrsf) {
 		ArrayList<Object> parameters=new ArrayList<>();
-		ArrayList<Integer> parametersTypes=new ArrayList<>();
-		
-		// Agregando el tipo del retorno de la funcion
-		parameters.add(""); parametersTypes.add(Types.VARCHAR);
+		ArrayList<Integer> parametersTypes=new ArrayList<>();			
 		
 		parameters.add(pqrsf.getPersona().getTipoIdentificacion()); parametersTypes.add(Types.NUMERIC);
 		parameters.add(pqrsf.getPersona().getIdentificacion()); parametersTypes.add(Types.VARCHAR);
@@ -91,12 +88,26 @@ public class PqrsfDAO {
 		parameters.add(pqrsf.getAsunto()); parametersTypes.add(Types.VARCHAR);
 		parameters.add(pqrsf.getDescripcion()); parametersTypes.add(Types.VARCHAR);
 		
-		Object codigo= con.executeFunction("REGISTRAR_PQRSF", parameters, parametersTypes);
+		Object codigo= con.executeFunction(Types.VARCHAR, "REGISTRAR_PQRSF", parameters, parametersTypes);
 		if(codigo!=null)
 			pqrsf.setCodigo((String)codigo);
 		
 		return codigo!=null;
 	}	
+	
+	public boolean guardarRadicado(Pqrsf pqrsf) {
+		ArrayList<Object> parameters=new ArrayList<>();
+		ArrayList<Integer> parametersTypes=new ArrayList<>();
+		
+		parameters.add(pqrsf.getCodigo()); parametersTypes.add(Types.VARCHAR);
+		parameters.add(pqrsf.getRadicado().getId()); parametersTypes.add(Types.VARCHAR);
+		parameters.add(pqrsf.getRadicado().getUsuarioQueRadica().getUsername()); parametersTypes.add(Types.VARCHAR);
+		parameters.add(pqrsf.getRadicado().getFecha()); parametersTypes.add(Types.DATE);
+		parameters.add(pqrsf.getFechaVencimiento()); parametersTypes.add(Types.DATE);
+				
+		return con.executeProcedure("REGISTRAR_RADICADO", parameters, parametersTypes);
+	}
+	
 	
 	private HashMap<Integer, String> generarElementos(ResultSet rs, String valueColumnName, String descriptionColumnName){		
 		if(rs==null)

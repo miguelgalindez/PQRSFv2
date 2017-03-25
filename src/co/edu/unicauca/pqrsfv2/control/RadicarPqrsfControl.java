@@ -8,6 +8,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
+
 import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 import co.edu.unicauca.pqrsfv2.modelo.Radicado;
@@ -24,6 +26,10 @@ public class RadicarPqrsfControl implements Serializable{
 	
 	@Inject
 	private PqrsfDAO pqrsfDAO;
+	@Inject
+	NavigationControl navigationControl;
+	@Inject
+	ModalRespuestaControl modalRespuestaControl;
 	private ArrayList<Pqrsf> pqrsfNoRadicadas;
 	private Pqrsf selectedPqrsf;
 	private String selectedAction;
@@ -42,6 +48,34 @@ public class RadicarPqrsfControl implements Serializable{
 	public void cargarPqrsfNoRadicadas(){
 		pqrsfNoRadicadas=pqrsfDAO.obtnNoRadicadas();
 	}
+	
+	public void radicarPQRSF(){
+		RequestContext ctx=RequestContext.getCurrentInstance();
+		radicado.setUsuarioQueRadica(navigationControl.getUsuarioAutenticado());
+		selectedPqrsf.setRadicado(radicado);
+		boolean success=pqrsfDAO.guardarRadicado(selectedPqrsf);
+		modalRespuestaControl.operacionExitosa(success);
+		if(success){
+			ctx.execute("PF('dialog').hide();");			
+			modalRespuestaControl.configurar("Operación exitosa", "La PQRSF ha sido radicada satisfactoriamente");			
+			//ctx.execute("$('#registroPqrsfForm').trigger('reset')");
+			inicializarDatos();
+		}
+		else
+			modalRespuestaControl.configurar("Error", "No se pudo radicar la PQRSF. Si el problema persiste, por favor comunicarse con la DivTIC.");
+		
+		ctx.execute("$('#modalRespuesta').modal('toggle');");
+		
+	}
+	
+	private void inicializarDatos() {
+		selectedPqrsf=new Pqrsf();
+		radicado=new Radicado();
+	}
+
+	public void resetForm() {
+        RequestContext.getCurrentInstance().reset("radicarPQRSFPanel");
+    }
 
 	public ArrayList<Pqrsf> getPqrsfNoRadicadas() {
 		return pqrsfNoRadicadas;

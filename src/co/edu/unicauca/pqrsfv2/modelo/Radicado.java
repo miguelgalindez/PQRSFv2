@@ -1,7 +1,9 @@
 package co.edu.unicauca.pqrsfv2.modelo;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
+
+import javax.validation.constraints.NotNull;
 
 public class Radicado implements Serializable{
 
@@ -10,8 +12,12 @@ public class Radicado implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@NotNull
 	private String id;
+	@NotNull
 	private Date fecha;
+	
+	private Usuario usuarioQueRadica;
 	
 	public String getId() {
 		return id;
@@ -25,6 +31,10 @@ public class Radicado implements Serializable{
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	
-	
+	public Usuario getUsuarioQueRadica() {
+		return usuarioQueRadica;
+	}
+	public void setUsuarioQueRadica(Usuario usuarioQueRadica) {
+		this.usuarioQueRadica = usuarioQueRadica;
+	}		
 }

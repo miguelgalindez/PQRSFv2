@@ -83,8 +83,8 @@ public class Conexion implements HttpSessionBindingListener {
 		iniciarDataSource();		
 
 		try {
-			conn = driverManagerDataSource.getConnection();
-			stmt = conn.createStatement();
+			conn = driverManagerDataSource.getConnection();	
+			stmt = conn.createStatement();			
 			rs = stmt.executeQuery(sql);
 			return rs;
 			
@@ -95,14 +95,14 @@ public class Conexion implements HttpSessionBindingListener {
 		}				
 	}
 	
-	public Object executeFunction(String functionName, ArrayList<Object> parameters, ArrayList<Integer> parametersTypes){
-		String sql="{?= call PKG_PQRSFV2."+functionName+" (?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+	public Object executeFunction(int returnType, String functionName, ArrayList<Object> parameters, ArrayList<Integer> parametersTypes){
+		String sql=getCallSignature(true, "PKG_PQRSFV2", functionName, parameters.size());		
 		Object retorno;
 		iniciarDataSource();
 		try{
 			conn=driverManagerDataSource.getConnection();
-			cs=conn.prepareCall(sql);					
-			cs.registerOutParameter(1, parametersTypes.get(0));						
+			cs=conn.prepareCall(sql);	
+			cs.registerOutParameter(1, returnType);			
 			applyParameters(cs, parameters, parametersTypes, true);
 			cs.execute();
 			retorno=cs.getObject(1);
@@ -119,8 +119,25 @@ public class Conexion implements HttpSessionBindingListener {
 		return retorno;
 	}
 	
-	public boolean executeCall(String sql, ArrayList<Object> parametros, ArrayList<Integer> tipos) {	
+	public String getCallSignature(boolean isFunction, String packageName, String objectName, int numberOfArgs){		
+		String callSignature;
+		if(isFunction)		
+			callSignature="{?= call "+packageName+"."+objectName+"(";
+		else
+			callSignature="{call "+packageName+"."+objectName+"(";
+		
+		String args="";
+		for(int i=0;i<numberOfArgs;i++)
+			args+="?,";
+		args=args.substring(0, args.length()-1);						
+		
+		callSignature+=args+")}";		
+		return callSignature;
+	}
+	
+	public boolean executeProcedure(String procedureName, ArrayList<Object> parametros, ArrayList<Integer> tipos) {	
 		iniciarDataSource();		
+		String sql=getCallSignature(false, "PKG_PQRSFV2", procedureName, parametros.size());
 		boolean successCall = false;
 
 		try {
@@ -138,50 +155,50 @@ public class Conexion implements HttpSessionBindingListener {
 		return successCall;
 	}
 	
-	private void applyParameters(CallableStatement cs, ArrayList<Object> parametros, ArrayList<Integer> tipos, boolean isFunctionCall){		
+	private void applyParameters(CallableStatement cs, ArrayList<Object> parametros, ArrayList<Integer> tipos, boolean isFunction){		
 		try{
-			int aux, initialIndex;
-			if(isFunctionCall)
-				initialIndex=1;
+			int aux, initialParameterIndex;			
+			if(isFunction)
+				initialParameterIndex=2;
 			else
-				initialIndex=0;
+				initialParameterIndex=1;
 			
-			for (int i = initialIndex; i < parametros.size(); i++) {
+			for (int i = 0; i < parametros.size(); i++) {
 				aux = (Integer) tipos.get(i);				
 				if (aux == Types.VARCHAR) {
-					cs.setString(i + 1, (String) parametros.get(i));
+					cs.setString(i+initialParameterIndex, (String) parametros.get(i));
 				} else if (aux == Types.INTEGER) {
-					cs.setInt(i + 1, (Integer) parametros.get(i));
+					cs.setInt(i+initialParameterIndex, (Integer) parametros.get(i));
 				} else if (aux == Types.NULL) {
-					cs.setNull(i + 1, Types.INTEGER);
+					cs.setNull(i+initialParameterIndex, Types.INTEGER);
 				} else if (aux == Types.NUMERIC) {
-					cs.setInt(i + 1, (Integer) parametros.get(i));
+					cs.setInt(i+initialParameterIndex, (Integer) parametros.get(i));
 				} else if (aux == Types.CHAR) {
-					cs.setInt(i + 1, ((String) parametros.get(i)).charAt(0));
+					cs.setInt(i+initialParameterIndex, ((String) parametros.get(i)).charAt(0));
 				} else if (aux == Types.FLOAT) {
-					cs.setFloat(i + 1, ((Float) parametros.get(i)));
+					cs.setFloat(i+initialParameterIndex, ((Float) parametros.get(i)));
 				} else if (aux == Types.DOUBLE) {
-					cs.setDouble(i + 1, ((Double) parametros.get(i)));
+					cs.setDouble(i+initialParameterIndex, ((Double) parametros.get(i)));
 				} else if (aux == Types.DATE) {
 					if ((java.util.Date) parametros.get(i) != null) {
-						cs.setDate(i + 1, new java.sql.Date(
+						cs.setDate(i+initialParameterIndex, new java.sql.Date(
 								((java.util.Date) parametros.get(i)).getTime()));
 					} else {
 						// Si es null, inserte null en la BD.
-						cs.setDate(i + 1, null);
+						cs.setDate(i+initialParameterIndex, null);
 					}
 				} else if (aux == Types.TIMESTAMP) {
 					if ((java.util.Date) parametros.get(i) != null) {
 						Timestamp x = new Timestamp(
 								((java.util.Date) parametros.get(i)).getTime());
-						cs.setTimestamp(i + 1, x);
+						cs.setTimestamp(i+initialParameterIndex, x);
 
 					} else {
-						cs.setTimestamp(i + 1, null);						
+						cs.setTimestamp(i+initialParameterIndex, null);						
 					}
 				} else if (aux == Types.CLOB) {					
 					StringReader sr = new StringReader((String)parametros.get(i));
-					cs.setClob(i + 1, sr);
+					cs.setClob(i+initialParameterIndex, sr);
 
 				} else if (aux == Types.OTHER) {
 					cs.registerOutParameter((String) parametros.get(i),

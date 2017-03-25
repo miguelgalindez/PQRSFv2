@@ -20,7 +20,9 @@
 	                    rowsPerPageTemplate="5,10,15,20,25,30,35,40,45,50"
 	                    reflow="true"
 	                    sortMode="multiple"
-	                    resizableColumns="true"		                                        	                  
+	                    resizableColumns="true"
+	                    emptyMessage=""
+	                    		                                        	                  
 						>				
 				<f:facet name="header">
 						<h:outputText value="Buscar: " />
@@ -65,24 +67,27 @@
 				<p:column headerText="Acciones" width="15%">
 					<p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-search" title="Ver"
 										actionListener="#{radicarPqrsfControl.changeSelectedAction('ver')}" >						
-		                <f:setPropertyActionListener value="#{car}" target="#{radicarPqrsfControl.selectedPqrsf}" />
+		                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
 		            </p:commandButton>
 		            <p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-print" title="Imprimir"
 		            					actionListener="#{radicarPqrsfControl.changeSelectedAction('imprimir')}">
-		                <f:setPropertyActionListener value="#{car}" target="#{radicarPqrsfControl.selectedPqrsf}" />
+		                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
 		            </p:commandButton>
 		            <p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-registered" title="Radicar"
 		            					actionListener="#{radicarPqrsfControl.changeSelectedAction('radicar')}">
-		                <f:setPropertyActionListener value="#{car}" target="#{radicarPqrsfControl.selectedPqrsf}" />
+		                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
 		            </p:commandButton>					
 				</p:column>
 			</p:dataTable>						
 		</h:form>
-		<p:dialog header="Radicar PQRSF" widgetVar="dialog" showEffect="fade" hideEffect="fade" 
-				resizable="false" modal="true" >
-				<h:panelGroup id="radicarPQRSFPanel">				       
-		            <ui:include src="partials/radicarPQRSF/#{radicarPqrsfControl.selectedAction}.xhtml" />            	                		 		         
-		        </h:panelGroup>
-		    </p:dialog>
+		<p:outputPanel autoUpdate="true" id="radicarPQRSFPanel">
+			<ui:include src="/template/modalRespuesta.xhtml" />		
+			<p:dialog header="Radicar PQRSF" widgetVar="dialog" showEffect="fade" hideEffect="fade" width="600" height="300" 
+					resizable="false" modal="true"  appendToBody="true" visible="#{facesContext.validationFailed}">
+								       
+			        <ui:include src="partials/radicarPQRSF/#{radicarPqrsfControl.selectedAction}.xhtml" />            	                		 		         
+			        
+			</p:dialog>
+		</p:outputPanel>
 	</h:body>
 </html>

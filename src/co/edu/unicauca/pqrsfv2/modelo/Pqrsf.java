@@ -27,8 +27,8 @@ public class Pqrsf implements Serializable{
 	private String descripcion;
 	
 	private Date fechaCreacion;
-	@Future
 	private Date fechaVencimiento;
+	private Radicado radicado;
 	
 	public Integer getTipoPqrsf() {
 		return tipoPqrsf;
@@ -77,5 +77,12 @@ public class Pqrsf implements Serializable{
 	}
 	public void setFechaVencimiento(Date fechaVencimiento) {
 		this.fechaVencimiento = fechaVencimiento;
-	}	
+	}
+	public Radicado getRadicado() {
+		return radicado;
+	}
+	public void setRadicado(Radicado radicado) {
+		this.radicado = radicado;
+	}
+	
 }
