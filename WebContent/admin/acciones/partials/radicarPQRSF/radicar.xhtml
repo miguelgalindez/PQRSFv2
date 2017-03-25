@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:body>
+		<h:form class="form-horizontal" >		
+		<div class="form-group">
+			<p:outputLabel for="id" styleClass="control-label col-sm-3" value="ID Radicado"/>					                  
+			<div class="col-sm-9">
+				<p:inputText id="id" 
+					value="#{radicarPqrsfControl.radicado.id}" 
+					styleClass="form-control" 
+					required="true" />
+					 							                  																	   																								                  											                  									
+				<p:message for="id"/>					                    	
+			</div>							                  	
+		</div>
+		
+		<div class="form-group">
+			<p:outputLabel for="fechaRadicado" styleClass="control-label col-sm-3" value="Fecha del Radicado"/>					                  
+			<div class="col-sm-9">
+				<p:calendar id="fechaRadicado" value="#{radicarPqrsfControl.radicado.fecha}" 
+							required="true" effect="fold" styleClass="form-control"/>
+																																			   															
+				<p:message for="fechaRadicado"/>					                    	
+			</div>							                  	
+		</div>
+		
+		<div class="form-group">
+			<p:outputLabel for="fechaVencimientoPQRSF" styleClass="control-label col-sm-3" value="Vencimiento de la PQRSF"/>					                  
+			<div class="col-sm-9">
+				<p:calendar id="fechaVencimientoPQRSF" value="#{radicarPqrsfControl.selectedPqrsf.fechaVencimiento}" 
+							required="true" effect="fold" styleClass="form-control"/>
+																																			   															
+				<p:message for="fechaVencimientoPQRSF"/>					                    	
+			</div>							                  	
+		</div>
+		</h:form>
+	</h:body>
+</html>

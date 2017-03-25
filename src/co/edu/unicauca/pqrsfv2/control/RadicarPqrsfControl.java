@@ -10,6 +10,7 @@ import javax.inject.Named;
 
 import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
+import co.edu.unicauca.pqrsfv2.modelo.Radicado;
 
 @SessionScoped
 @LocalBean
@@ -23,9 +24,19 @@ public class RadicarPqrsfControl implements Serializable{
 	
 	@Inject
 	private PqrsfDAO pqrsfDAO;
-	private ArrayList<Pqrsf> pqrsfNoRadicadas;	
+	private ArrayList<Pqrsf> pqrsfNoRadicadas;
+	private Pqrsf selectedPqrsf;
+	private String selectedAction;
+	private Radicado radicado;
+	
+	public void changeSelectedAction(String action){
+		selectedAction=action;
+	}
+	
 	public RadicarPqrsfControl(){
 		pqrsfNoRadicadas=new ArrayList<>();
+		selectedAction="radicar";
+		radicado=new Radicado();
 	}
 	
 	public void cargarPqrsfNoRadicadas(){
@@ -39,4 +50,29 @@ public class RadicarPqrsfControl implements Serializable{
 	public void setPqrsfNoRadicadas(ArrayList<Pqrsf> pqrsfNoRadicadas) {
 		this.pqrsfNoRadicadas = pqrsfNoRadicadas;
 	}
+
+	public Pqrsf getSelectedPqrsf() {
+		return selectedPqrsf;
+	}
+
+	public void setSelectedPqrsf(Pqrsf selectedPqrsf) {
+		this.selectedPqrsf = selectedPqrsf;
+	}
+
+	public Radicado getRadicado() {
+		return radicado;
+	}
+
+	public void setRadicado(Radicado radicado) {
+		this.radicado = radicado;
+	}
+
+	public String getSelectedAction() {
+		return selectedAction;
+	}
+
+	public void setSelectedAction(String selectedAction) {
+		this.selectedAction = selectedAction;
+	}
+		
 }

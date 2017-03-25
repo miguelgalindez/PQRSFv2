@@ -3,6 +3,7 @@ package co.edu.unicauca.pqrsfv2.modelo;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,6 +27,8 @@ public class Pqrsf implements Serializable{
 	private String descripcion;
 	
 	private Date fechaCreacion;
+	@Future
+	private Date fechaVencimiento;
 	
 	public Integer getTipoPqrsf() {
 		return tipoPqrsf;
@@ -68,5 +71,11 @@ public class Pqrsf implements Serializable{
 	}
 	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
-	}		
+	}
+	public Date getFechaVencimiento() {
+		return fechaVencimiento;
+	}
+	public void setFechaVencimiento(Date fechaVencimiento) {
+		this.fechaVencimiento = fechaVencimiento;
+	}	
 }
