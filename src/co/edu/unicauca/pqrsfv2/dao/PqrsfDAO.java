@@ -10,7 +10,6 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
-import co.edu.unicauca.pqrsfv2.modelo.Persona;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 
 @Stateless
@@ -25,7 +24,7 @@ public class PqrsfDAO {
 		String sql="SELECT PQRSFCODIGO, PERNOMBRES, PERAPELLIDOS, TIPPQRSFID, "+ 
 					"PQRSFASUNTO, PQRSFDESCRIPCION, MEDID, PQRSFFECHACREACION "+ 
 					"FROM PQRSF NATURAL JOIN PERSONA WHERE RADID IS NULL";
-;
+
 		return cargarNoRadicadas(con.executeQueryRS(sql));		
 	}
 	
@@ -34,18 +33,17 @@ public class PqrsfDAO {
 		ArrayList<Pqrsf> pqrsfNoRadicadas=new ArrayList<>();
 		try {
 			while(rs.next()){
-				Pqrsf pqrsf=new Pqrsf();
-				Persona persona=new Persona();
+				Pqrsf pqrsf=new Pqrsf();				
 				
 				pqrsf.setCodigo(rs.getString("PQRSFCODIGO"));
-				persona.setNombres(rs.getString("PERNOMBRES"));
-				persona.setApellidos(rs.getString("PERAPELLIDOS"));				
-				pqrsf.setPersona(persona);
+				pqrsf.getPersona().setNombres(rs.getString("PERNOMBRES"));
+				pqrsf.getPersona().setApellidos(rs.getString("PERAPELLIDOS"));								
 				pqrsf.setTipoPqrsf(rs.getInt("TIPPQRSFID"));
 				pqrsf.setAsunto(rs.getString("PQRSFASUNTO"));
 				pqrsf.setDescripcion(rs.getString("PQRSFDESCRIPCION"));
 				pqrsf.setMedioRecepcion(rs.getInt("MEDID"));
 				pqrsf.setFechaCreacion(new Date(rs.getDate("PQRSFFECHACREACION").getTime()));
+				
 				pqrsfNoRadicadas.add(pqrsf);
 			}
 		} catch (SQLException e) {
@@ -56,6 +54,43 @@ public class PqrsfDAO {
 			con.clean();
 		}		
 		return pqrsfNoRadicadas;
+	}
+	
+	public ArrayList<Pqrsf> obtnNoDireccionadas() {
+		String sql="SELECT PQRSFCODIGO, PERNOMBRES, PERAPELLIDOS, TIPPQRSFID, "+ 
+				"PQRSFASUNTO, PQRSFDESCRIPCION, MEDID, PQRSFFECHACREACION, RADFECHA"+ 
+				"FROM PQRSF NATURAL JOIN PERSONA NATURAL JOIN RADICADO "+
+				"WHERE RADID IS NOT NULL AND PQRSFDIRECCIONADA=0";
+		return cargarNoDireccionadas(con.executeQueryRS(sql));
+	}
+
+	private ArrayList<Pqrsf> cargarNoDireccionadas(ResultSet rs) {
+		ArrayList<Pqrsf> pqrsfNoDireccionadas=new ArrayList<>();
+		try {
+			while(rs.next()){
+				Pqrsf pqrsf=new Pqrsf();				
+				
+				pqrsf.setCodigo(rs.getString("PQRSFCODIGO"));
+				pqrsf.getPersona().setNombres(rs.getString("PERNOMBRES"));
+				pqrsf.getPersona().setApellidos(rs.getString("PERAPELLIDOS"));								
+				pqrsf.setTipoPqrsf(rs.getInt("TIPPQRSFID"));
+				pqrsf.setAsunto(rs.getString("PQRSFASUNTO"));
+				pqrsf.setDescripcion(rs.getString("PQRSFDESCRIPCION"));
+				pqrsf.setMedioRecepcion(rs.getInt("MEDID"));
+				pqrsf.setFechaCreacion(new Date(rs.getDate("PQRSFFECHACREACION").getTime()));
+				pqrsf.getRadicado().setFecha(new Date(rs.getDate("RADFECHA").getTime()));
+				
+				pqrsfNoDireccionadas.add(pqrsf);
+			}
+		} catch (SQLException e) {
+			System.err.println("ERROR. NO SE PUDO CARGAR LAS PQRSF NO DIRECCIONADAS");
+			e.printStackTrace();
+			pqrsfNoDireccionadas=null;
+		}finally{
+			con.clean();
+		}
+		
+		return pqrsfNoDireccionadas;
 	}
 
 
@@ -102,12 +137,10 @@ public class PqrsfDAO {
 		parameters.add(pqrsf.getCodigo()); parametersTypes.add(Types.VARCHAR);
 		parameters.add(pqrsf.getRadicado().getId()); parametersTypes.add(Types.VARCHAR);
 		parameters.add(pqrsf.getRadicado().getUsuarioQueRadica().getUsername()); parametersTypes.add(Types.VARCHAR);
-		parameters.add(pqrsf.getRadicado().getFecha()); parametersTypes.add(Types.DATE);
-		parameters.add(pqrsf.getFechaVencimiento()); parametersTypes.add(Types.DATE);
+		parameters.add(pqrsf.getRadicado().getFecha()); parametersTypes.add(Types.DATE);		
 				
 		return con.executeProcedure("REGISTRAR_RADICADO", parameters, parametersTypes);
-	}
-	
+	}	
 	
 	private HashMap<Integer, String> generarElementos(ResultSet rs, String valueColumnName, String descriptionColumnName){		
 		if(rs==null)

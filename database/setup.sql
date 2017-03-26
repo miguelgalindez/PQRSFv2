@@ -1243,9 +1243,8 @@ create or replace PACKAGE BODY PKG_PQRSFV2 AS
   END REGISTRAR_PQRSF;
   
   PROCEDURE REGISTRAR_RADICADO(codigoPqrsf IN VARCHAR2, idRadicado IN VARCHAR2, 
-                               usuarioQueRadica IN VARCHAR2, fechaRadicado IN DATE,
-                               fechaVencimientoPqrsf IN DATE) AS
-            
+                               usuarioQueRadica IN VARCHAR2, fechaRadicado IN DATE) AS
+                               
             radicadoActual RADICADO.RADID%TYPE;                        
       BEGIN
             SELECT RADID INTO radicadoActual FROM PQRSF WHERE PQRSFCODIGO=codigoPqrsf;
@@ -1253,13 +1252,12 @@ create or replace PACKAGE BODY PKG_PQRSFV2 AS
                 INSERT INTO RADICADO(RADID, PQRSFCODIGO, USUUSUARIO, RADFECHA)
                     VALUES(idRadicado, codigoPqrsf, usuarioQueRadica, fechaRadicado);
             
-                UPDATE PQRSF SET RADID=idRadicado, PQRSFFECHAVENCIMIENTO=fechaVencimientoPqrsf 
+                UPDATE PQRSF SET RADID=idRadicado 
                             WHERE PQRSFCODIGO=codigoPqrsf;
             END IF;                            
       END REGISTRAR_RADICADO;
 
 END PKG_PQRSFV2;
-
 --------------------------------------------------------------------------------------
 
 COMMIT;
