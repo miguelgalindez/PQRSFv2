@@ -53,6 +53,23 @@ INSERT INTO TIPOPERSONA VALUES(TipoPersona_tipperId_Sequence.NEXTVAL,'PERSONA EX
 INSERT INTO TIPOPERSONA VALUES(TipoPersona_tipperId_Sequence.NEXTVAL,'OTRO');
 
 
+-- CARGANDO DEPENDENCIAS Y FUNCIONARIOS
+
+insert into dependencia(depid, depnombre) values (Dependencia_depid_Sequence.nextval, 'Centro de Gestión de las Comunicaciones');
+INSERT INTO FUNCIONARIO VALUES(1084,1,'miguelgalindez@unicauca.edu.co', 'Alba Stella Rivera','2453');
+INSERT INTO FUNCIONARIO VALUES(1021,1,'miguelgalindez@unicauca.edu.co', 'Ana Milena López','2472');
+INSERT INTO FUNCIONARIO VALUES(1022,1,'miguelgalindez@unicauca.edu.co', 'Gerardo Martínez Martínez','Extensión: 2474');
+
+insert into dependencia(depid, depnombre) values (Dependencia_depid_Sequence.nextval, 'División de Admisiones, Registro y Control Académico');
+INSERT INTO FUNCIONARIO VALUES(2016,2,'miguelgalindez@unicauca.edu.co', 'Dokía Marysol Zúñiga Mosquera','8209800 Ext. 2191');
+INSERT INTO FUNCIONARIO VALUES(2002,2,'miguelgalindez@unicauca.edu.co', 'Julio César Diago Franco','8209800 Ext. 2192');
+INSERT INTO FUNCIONARIO VALUES(2010,2,'miguelgalindez@unicauca.edu.co', 'Yuli Andrea Ordoñez Guzmán','8209800 Ext. 2179');
+
+insert into dependencia(depid, depnombre) values (Dependencia_depid_Sequence.nextval, 'División de Tecnologías de la Información y Comunicaciones');
+INSERT INTO FUNCIONARIO VALUES(9912,3,'miguelgalindez@unicauca.edu.co', 'Juan Carlos Oidor González','(+57 2) 820 9800 ext. 2447');
+INSERT INTO FUNCIONARIO VALUES(9786,3,'miguelgalindez@unicauca.edu.co', 'Wilson Riascos','(+57 2) 820 9800 ext. 2525');
+INSERT INTO FUNCIONARIO VALUES(9199,3,'miguelgalindez@unicauca.edu.co', 'Luis Carlos Pito Díaz','(+57 2) 8209800 ext. 2180');
+
 -- Cargando Departamentos
 
 INSERT ALL
