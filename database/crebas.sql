@@ -255,9 +255,7 @@ create table PQRSF
    RADID                VARCHAR2(32),
    TIPPQRSFID           NUMBER(1)            not null,
    PQRSFASUNTO          VARCHAR2(256)        not null,
-   PQRSFDESCRIPCION     VARCHAR2(1024)       not null,
-   PQRSFDIRECCIONADA    NUMBER(1)            default 0 not null
-      constraint CKC_PQRSFDIRECCIONADA_PQRSF check (PQRSFDIRECCIONADA in (1,0)),
+   PQRSFDESCRIPCION     VARCHAR2(1024)       not null,   
    PQRSFESTADO          NUMBER(1)            default 0 not null
       constraint CKC_PQRSFESTADO_PQRSF check (PQRSFESTADO in (0,1,2)),
    PQRSFFECHACREACION   DATE                 not null,

@@ -28,6 +28,11 @@ public class OrdenDAO {
 		
 		return con.executeProcedure("DIRECCIONAR_PQRSF", parameters, parametersTypes);
 	}
+
+	public ArrayList<Orden> obtnTodasOrdenes() {
+		
+		return null;
+	}
 	
 	
 

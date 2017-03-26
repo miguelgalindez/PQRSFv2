@@ -1216,6 +1216,7 @@ INTO MUNICIPIO (MUNID,MUNNOMBRE,DEPTOID) VALUES (1102, 'Santa Rosalía', 32)
 SELECT * FROM dual;
 
 
+COMMIT;
 
 ---------------------------------------------------------------------------------------------------------
 
@@ -1253,10 +1254,9 @@ create or replace PACKAGE BODY PKG_PQRSFV2 AS
                         celular, idMunicipio);                        
     
     INSERT INTO PQRSF(PQRSFCODIGO, PERIDENTIFICACION, MEDID, TIPPQRSFID, 
-                    PQRSFASUNTO, PQRSFDESCRIPCION, PQRSFDIRECCIONADA, PQRSFESTADO,
-                    PQRSFFECHACREACION)
+                    PQRSFASUNTO, PQRSFDESCRIPCION, PQRSFESTADO, PQRSFFECHACREACION)
                 VALUES(codigo, identificacion, medioRecepcion, tipoPqrsf,
-                        asunto, descripcion, 0, 0, SYSDATE);                
+                        asunto, descripcion, 0, SYSDATE);                
     RETURN codigo;
   END REGISTRAR_PQRSF;
   
@@ -1282,12 +1282,10 @@ create or replace PACKAGE BODY PKG_PQRSFV2 AS
                               ORDFECHAASIGNACION, ORDESTADO)
                         VALUES(ORDEN_ORDID_SEQUENCE.NEXTVAL, usuarioQueDirecciona,
                                 codigoPqrsf, idFuncionario, SYSDATE, 0);
-            UPDATE PQRSF SET PQRSFDIRECCIONADA=1, PQRSFFECHAVENCIMIENTO=fechaVencimientoPqrsf 
+            UPDATE PQRSF SET PQRSFESTADO=1, PQRSFFECHAVENCIMIENTO=fechaVencimientoPqrsf 
                           WHERE PQRSFCODIGO=codigoPqrsf;            
   END DIRECCIONAR_PQRSF;                        
 
 END PKG_PQRSFV2;
 
 --------------------------------------------------------------------------------------
-
-COMMIT;
