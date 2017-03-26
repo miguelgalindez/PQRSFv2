@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
 
 	<h:body>		
-		<h:form class="form-horizontal" id="radicarForm">					
+		<h:form class="form-horizontal">					
 			<div class="form-group">
 				<p:outputLabel for="id" styleClass="control-label col-sm-5" value="ID Radicado"/>					                  
 				<div class="col-sm-7">
@@ -41,7 +41,7 @@
 			<div class="form-group">
 				<div class="col-sm-offset-1 col-sm-10">			
 					<div class="pull-left">	
-						<p:commandLink oncomplete="PF('dialog').hide()" actionListener="#{radicarPqrsfControl.resetForm()}" 
+						<p:commandLink oncomplete="PF('dialog').hide()" immediate="true"
 										styleClass="btn btn-lg btn-danger">											
 							<i class="fa fa-times"/>			
 							<span>Cancelar</span>
@@ -49,7 +49,7 @@
 					</div>			
 					<div class="pull-right">
 						<p:commandLink actionListener="#{radicarPqrsfControl.radicarPQRSF()}"
-										styleClass="btn btn-lg btn-success">		        	
+										styleClass="btn btn-lg btn-success" update="modalRespuestaPanel @form">		        	
 					            <i class="fa fa-registered"/> 				            				           
 					            <span>Radicar</span>			            			           
 				        </p:commandLink>				        				        												 					

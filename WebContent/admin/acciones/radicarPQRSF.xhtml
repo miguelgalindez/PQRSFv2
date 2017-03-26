@@ -80,8 +80,12 @@
 				</p:column>
 			</p:dataTable>						
 		</h:form>
-		<p:outputPanel autoUpdate="true" id="radicarPQRSFPanel">
-			<ui:include src="/template/modalRespuesta.xhtml" />		
+		
+		<p:outputPanel id="modalRespuestaPanel">
+			<ui:include src="/template/modalRespuesta.xhtml" />
+		</p:outputPanel>	
+					
+		<p:outputPanel autoUpdate="false" id="radicarPQRSFPanel">								
 			<p:dialog header="Radicar PQRSF" widgetVar="dialog" showEffect="fade" hideEffect="fade" width="600" height="300" 
 					resizable="false" modal="true"  appendToBody="true" visible="#{facesContext.validationFailed}">
 								       

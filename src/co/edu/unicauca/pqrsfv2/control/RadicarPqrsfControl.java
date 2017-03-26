@@ -2,14 +2,11 @@ package co.edu.unicauca.pqrsfv2.control;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import javax.ejb.LocalBean;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import org.primefaces.context.RequestContext;
-
 import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 import co.edu.unicauca.pqrsfv2.modelo.Radicado;
@@ -57,9 +54,9 @@ public class RadicarPqrsfControl implements Serializable{
 		modalRespuestaControl.operacionExitosa(success);
 		if(success){
 			ctx.execute("PF('dialog').hide();");			
-			modalRespuestaControl.configurar("Operación exitosa", "La PQRSF ha sido radicada satisfactoriamente");			
-			//ctx.execute("$('#registroPqrsfForm').trigger('reset')");
-			inicializarDatos();
+			modalRespuestaControl.configurar("Operación exitosa", "La PQRSF ha sido radicada satisfactoriamente");						
+			pqrsfNoRadicadas.remove(selectedPqrsf);
+			inicializarDatos();			
 		}
 		else
 			modalRespuestaControl.configurar("Error", "No se pudo radicar la PQRSF. Si el problema persiste, por favor comunicarse con la DivTIC.");
@@ -69,12 +66,13 @@ public class RadicarPqrsfControl implements Serializable{
 	}
 	
 	private void inicializarDatos() {
-		selectedPqrsf=new Pqrsf();
+		selectedPqrsf=null;
 		radicado=new Radicado();
 	}
 
 	public void resetForm() {
-        RequestContext.getCurrentInstance().reset("radicarPQRSFPanel");
+        radicado=new Radicado();
+        selectedPqrsf.setFechaVencimiento(null);
     }
 
 	public ArrayList<Pqrsf> getPqrsfNoRadicadas() {
