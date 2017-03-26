@@ -19,7 +19,7 @@ public class Persona implements Serializable{
 	private Integer tipoIdentificacion;
 	@NotNull @Size(min=4, max=32)
 	private String identificacion;
-	@NotNull @Size(min=4, max=64)
+	@NotNull @Size(min=2, max=64)
 	private String nombres;
 	@NotNull @Size(min=4, max=64)
 	private String apellidos;

@@ -44,16 +44,25 @@
 								</p:panel>																
 							</p:tab>
 						</p:wizard>
-						<h:panelGroup id="panelBotones" class="col-sm-offset-4 col-sm-3">
+						<h:panelGroup id="panelBotones" class="col-sm-offset-3 col-sm-5">
 							<div class="pull-left">																		
-								<p:commandButton value="Retroceder" styleClass="btn btn-lg btn-danger" actionListener="#{registrarPqrsfControl.back}" update="panelBotones" process="@this"/>
+								<p:commandLink styleClass="btn btn-lg btn-danger" actionListener="#{registrarPqrsfControl.back}" update="panelBotones" process="@this">
+									<i class="fa fa-arrow-circle-left"/> 				            				           
+					            	<span>Retroceder</span>
+								</p:commandLink>
 							</div>
 							<div class="pull-right">
-								<p:commandButton id="btnContinuar" value="Continuar"  actionListener="#{registrarPqrsfControl.next}" styleClass="btn btn-lg btn-success" rendered="#{registrarPqrsfControl.isLastStep==false}" update="panelBotones" process="@this"/>
-								<p:commandButton id="btnGuardar" value="Guardar" actionListener="#{registrarPqrsfControl.guardarPqrsf}" rendered="#{registrarPqrsfControl.isLastStep}" update="@(form)" process="@this" styleClass="btn btn-lg btn-info"/>
+								<p:commandLink id="btnContinuar" actionListener="#{registrarPqrsfControl.next}" styleClass="btn btn-lg btn-success" rendered="#{registrarPqrsfControl.isLastStep==false}" update="panelBotones" process="@this">
+									<span>Continuar</span>
+									<i class="fa fa-arrow-circle-right"/> 				            				           					            	
+								</p:commandLink>
+								<p:commandLink id="btnGuardar" actionListener="#{registrarPqrsfControl.guardarPqrsf}" rendered="#{registrarPqrsfControl.isLastStep}" update="@(form)" process="@this" styleClass="btn btn-lg btn-success">
+									<span>Guardar</span>
+									<i class="fa fa-floppy-o"/> 				            				           					            	
+								</p:commandLink>
 							</div>									
-						</h:panelGroup>			
-												
+						</h:panelGroup>						
+						<p:defaultCommand target="#{registrarPqrsfControl.isLastStep ? 'btnGuardar' : 'btnContinuar' }" />																	
 					</h:form>
 				</div>
 			</div>
