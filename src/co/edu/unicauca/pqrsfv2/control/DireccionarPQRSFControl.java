@@ -2,6 +2,7 @@ package co.edu.unicauca.pqrsfv2.control;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -83,7 +84,11 @@ public class DireccionarPQRSFControl implements Serializable{
 		ctx.execute("$('#modalRespuesta').modal('toggle');");			
 		
 	}
-	
+	/*
+	public int obtnDiasParaVencimiento(Pqrsf pqrsf){			
+		return (int)((pqrsf.getFechaVencimiento().getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+	}
+	*/
 	public void eventoDependenciaCambiada(){
 		if(idDependenciaSeleccionada==null){
 			orden.getFuncionario().setIdentificacion(null);

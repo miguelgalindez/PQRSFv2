@@ -41,6 +41,17 @@
 			</div>
 			
 			<div class="form-group">
+				<p:outputLabel for="fechaVencimientoPqrsf" styleClass="control-label col-sm-3" value="Vencimiento de la PQRSF"/>
+				<div class="col-sm-9">
+					<p:calendar id="fechaVencimientoPqrsf" styleClass="form-control"
+								value="#{direccionarPQRSFControl.selectedPqrsf.fechaVencimiento}"
+								required="true" effect="fold" locale="es" pattern="dd-MMMM-yyyy"/>
+					
+					<p:message for="fechaVencimientoPqrsf" />					
+				</div>
+			</div>
+			
+			<div class="form-group">
 				<div class="col-sm-offset-3 col-sm-7">			
 					<div class="pull-left">	
 						<p:commandLink oncomplete="PF('dialog').hide()" immediate="true"

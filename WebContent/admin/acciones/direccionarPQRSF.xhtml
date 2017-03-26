@@ -45,21 +45,9 @@
 		                </p:selectOneMenu>
 		            </f:facet>
 					<h:outputText value="#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, pqrsf.tipoPqrsf)}" />
-				</p:column>			
-				<p:column headerText="Fecha" sortBy="#{pqrsf.fechaCreacion}" width="20%" style="text-align: center;"
-							filterBy="#{pqrsf.fechaCreacion}" filterMatchMode="exact">
-					<f:facet name="filter">						
-					    <p:calendar  pattern="dd-MMMM-yyyy" locale="es" effect="fold">
-					        <p:ajax event="dateSelect" oncomplete="PF('pqrsfND').filter()" update="pqrsfNDTable"/>
-					        <p:ajax event="change" execute="@this" oncomplete="PF('pqrsfND').filter()" update="pqrsfNDTable"/>					        					                                	
-					    </p:calendar>					    
-					</f:facet>
-					<h:outputText value="#{pqrsf.fechaCreacion}" >
-						<f:convertDateTime pattern="dd-MMMM-yyyy" locale="es"/>
-					</h:outputText>
-				</p:column>
+				</p:column>							
 				
-				<p:column headerText="Fecha" sortBy="#{pqrsf.radicado.fecha}" width="20%" style="text-align: center;"
+				<p:column headerText="Fecha Radicado" sortBy="#{pqrsf.radicado.fecha}" width="20%" style="text-align: center;"
 							filterBy="#{pqrsf.radicado.fecha}" filterMatchMode="exact">
 					<f:facet name="filter">						
 					    <p:calendar  pattern="dd-MMMM-yyyy" locale="es" effect="fold">
@@ -95,7 +83,7 @@
 		</p:outputPanel>	
 					
 		<p:outputPanel autoUpdate="false" id="actionsPanel">								
-			<p:dialog header="Direccionar PQRSF" widgetVar="dialog" showEffect="fade" hideEffect="fade" width="600" height="200" 
+			<p:dialog header="Direccionar PQRSF" widgetVar="dialog" showEffect="fade" hideEffect="fade" width="600" height="250" 
 					resizable="false" modal="true"  appendToBody="true" visible="#{facesContext.validationFailed}">
 								       
 			        <ui:include src="partials/direccionarPQRSF/#{direccionarPQRSFControl.selectedAction}.xhtml" />            	                		 		         
