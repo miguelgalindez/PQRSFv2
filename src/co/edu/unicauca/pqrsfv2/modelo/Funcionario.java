@@ -2,13 +2,15 @@ package co.edu.unicauca.pqrsfv2.modelo;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 public class Funcionario implements Serializable{
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;	
+	@NotNull
 	private String identificacion;
 	private Dependencia dependencia;
 	private String correo;
@@ -18,7 +20,6 @@ public class Funcionario implements Serializable{
 	public Funcionario(){
 		identificacion=null;
 	}
-	
 	
 	public String getIdentificacion() {
 		return identificacion;

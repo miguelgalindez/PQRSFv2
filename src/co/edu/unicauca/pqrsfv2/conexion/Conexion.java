@@ -135,15 +135,15 @@ public class Conexion implements HttpSessionBindingListener {
 		return callSignature;
 	}
 	
-	public boolean executeProcedure(String procedureName, ArrayList<Object> parametros, ArrayList<Integer> tipos) {	
+	public boolean executeProcedure(String procedureName, ArrayList<Object> parameters, ArrayList<Integer> parametersTypes) {	
 		iniciarDataSource();		
-		String sql=getCallSignature(false, "PKG_PQRSFV2", procedureName, parametros.size());
+		String sql=getCallSignature(false, "PKG_PQRSFV2", procedureName, parameters.size());
 		boolean successCall = false;
 
 		try {
 			conn = driverManagerDataSource.getConnection();			
 			cs = conn.prepareCall(sql);
-			applyParameters(cs, parametros, tipos, false);
+			applyParameters(cs, parameters, parametersTypes, false);
 			cs.execute();			
 			successCall=true;
 		} catch (SQLException e) {
