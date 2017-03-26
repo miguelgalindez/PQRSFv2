@@ -1220,6 +1220,7 @@ SELECT * FROM dual;
 ---------------------------------------------------------------------------------------------------------
 
 -- PACKAGE CON PROCEDIMIENTOS Y FUNCIONES
+
 create or replace PACKAGE BODY PKG_PQRSFV2 AS
 
   FUNCTION GENERAR_CODIGO_PQRSF RETURN VARCHAR2 AS     
@@ -1273,8 +1274,20 @@ create or replace PACKAGE BODY PKG_PQRSFV2 AS
                             WHERE PQRSFCODIGO=codigoPqrsf;
             END IF;                            
       END REGISTRAR_RADICADO;
+      
+  PROCEDURE DIRECCIONAR_PQRSF(usuarioQueDirecciona IN VARCHAR2, codigoPqrsf IN VARCHAR2,
+                              fechaVencimientoPqrsf IN DATE, idFuncionario IN VARCHAR2) AS
+  BEGIN
+            INSERT INTO ORDEN(ORDID, USUUSUARIO, PQRSFCODIGO, FUNIDENTIFICACION, 
+                              ORDFECHAASIGNACION, ORDESTADO)
+                        VALUES(ORDEN_ORDID_SEQUENCE.NEXTVAL, usuarioQueDirecciona,
+                                codigoPqrsf, idFuncionario, SYSDATE, 0);
+            UPDATE PQRSF SET PQRSFDIRECCIONADA=1, PQRSFFECHAVENCIMIENTO=fechaVencimientoPqrsf 
+                          WHERE PQRSFCODIGO=codigoPqrsf;            
+  END DIRECCIONAR_PQRSF;                        
 
 END PKG_PQRSFV2;
+
 --------------------------------------------------------------------------------------
 
 COMMIT;

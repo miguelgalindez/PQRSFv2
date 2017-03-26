@@ -23,7 +23,8 @@ public class OrdenDAO {
 		
 		parameters.add(orden.getUsuario().getUsername()); parametersTypes.add(Types.VARCHAR);
 		parameters.add(orden.getPqrsf().getCodigo()); parametersTypes.add(Types.VARCHAR);
-		parameters.add(orden.getFuncionario().getIdentificacion()); parametersTypes.add(Types.VARCHAR);
+		parameters.add(orden.getPqrsf().getFechaVencimiento()); parametersTypes.add(Types.DATE);
+		parameters.add(orden.getFuncionario().getIdentificacion()); parametersTypes.add(Types.VARCHAR);		
 		
 		return con.executeProcedure("DIRECCIONAR_PQRSF", parameters, parametersTypes);
 	}
