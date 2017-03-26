@@ -1,3 +1,6 @@
+INSERT INTO USUARIO(USUUSUARIO, USUCONTRASENA, USUNOMBRE, USUROL, USUFECHAINICIO)
+        VALUES('miguelgalindez', 'asd', 'Miguel Angel Galindez', 'SUPERADMIN', SYSDATE);
+
 DROP SEQUENCE Dependencia_depId_Sequence;
 DROP SEQUENCE Orden_ordId_Sequence; 
 DROP SEQUENCE MedioRecepcion_medId_Sequence; 
@@ -1197,11 +1200,9 @@ SELECT * FROM dual;
 
 
 
-
+---------------------------------------------------------------------------------------------------------
 
 -- PACKAGE CON PROCEDIMIENTOS Y FUNCIONES
-
-
 create or replace PACKAGE BODY PKG_PQRSFV2 AS
 
   FUNCTION GENERAR_CODIGO_PQRSF RETURN VARCHAR2 AS     
@@ -1244,13 +1245,21 @@ create or replace PACKAGE BODY PKG_PQRSFV2 AS
   PROCEDURE REGISTRAR_RADICADO(codigoPqrsf IN VARCHAR2, idRadicado IN VARCHAR2, 
                                usuarioQueRadica IN VARCHAR2, fechaRadicado IN DATE,
                                fechaVencimientoPqrsf IN DATE) AS
+            
+            radicadoActual RADICADO.RADID%TYPE;                        
       BEGIN
-            INSERT INTO RADICADO(RADID, PQRSFCODIGO, USUUSUARIO, RADFECHA)
+            SELECT RADID INTO radicadoActual FROM PQRSF WHERE PQRSFCODIGO=codigoPqrsf;
+            IF(radicadoActual IS NULL) THEN
+                INSERT INTO RADICADO(RADID, PQRSFCODIGO, USUUSUARIO, RADFECHA)
                     VALUES(idRadicado, codigoPqrsf, usuarioQueRadica, fechaRadicado);
             
-            UPDATE PQRSF SET RADID=idRadicado, PQRSFFECHAVENCIMIENTO=fechaVencimientoPqrsf 
-                        WHERE PQRSFCODIGO=codigoPqrsf;
-                        
+                UPDATE PQRSF SET RADID=idRadicado, PQRSFFECHAVENCIMIENTO=fechaVencimientoPqrsf 
+                            WHERE PQRSFCODIGO=codigoPqrsf;
+            END IF;                            
       END REGISTRAR_RADICADO;
 
 END PKG_PQRSFV2;
+
+--------------------------------------------------------------------------------------
+
+COMMIT;
