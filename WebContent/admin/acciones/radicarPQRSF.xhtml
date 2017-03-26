@@ -85,13 +85,13 @@
 			<ui:include src="/template/modalRespuesta.xhtml" />
 		</p:outputPanel>	
 					
-		<p:outputPanel autoUpdate="false" id="radicarPQRSFPanel">								
-			<p:dialog header="Radicar PQRSF" widgetVar="dialog" showEffect="fade" hideEffect="fade" width="600" height="300" 
+		<h:panelGroup id="radicarPQRSFPanel">								
+			<p:dialog header="Radicar PQRSF" widgetVar="dialog" showEffect="fade" hideEffect="fade" width="600" height="225" 
 					resizable="false" modal="true"  appendToBody="true" visible="#{facesContext.validationFailed}">
 								       
-			        <ui:include src="partials/radicarPQRSF/#{radicarPqrsfControl.selectedAction}.xhtml" />            	                		 		         
-			        
+			        <ui:include src="partials/radicarPQRSF/#{radicarPqrsfControl.selectedAction}.xhtml" />
+			                    	                		 		         			        
 			</p:dialog>
-		</p:outputPanel>
+		</h:panelGroup> 
 	</h:body>
 </html>

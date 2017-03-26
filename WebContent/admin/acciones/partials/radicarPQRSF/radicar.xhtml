@@ -8,8 +8,8 @@
 	<h:body>		
 		<h:form class="form-horizontal">					
 			<div class="form-group">
-				<p:outputLabel for="id" styleClass="control-label col-sm-5" value="ID Radicado"/>					                  
-				<div class="col-sm-7">
+				<p:outputLabel for="id" styleClass="control-label col-sm-4" value="ID Radicado"/>					                  
+				<div class="col-sm-8">
 					<p:inputText id="id" 
 						value="#{radicarPqrsfControl.radicado.id}" 
 						styleClass="form-control" 
@@ -20,8 +20,8 @@
 			</div>
 			
 			<div class="form-group">
-				<p:outputLabel for="fechaRadicado" styleClass="control-label col-sm-5" value="Fecha del Radicado"/>					                  
-				<div class="col-sm-7">
+				<p:outputLabel for="fechaRadicado" styleClass="control-label col-sm-4" value="Fecha del Radicado"/>					                  
+				<div class="col-sm-8">
 					<p:calendar id="fechaRadicado" value="#{radicarPqrsfControl.radicado.fecha}" 
 								required="true" effect="fold" styleClass="form-control"/>
 																																				   															
@@ -30,7 +30,7 @@
 			</div>
 						
 			<div class="form-group">
-				<div class="col-sm-offset-1 col-sm-10">			
+				<div class="col-sm-offset-4 col-sm-6">			
 					<div class="pull-left">	
 						<p:commandLink oncomplete="PF('dialog').hide()" immediate="true"
 										styleClass="btn btn-lg btn-danger">											
