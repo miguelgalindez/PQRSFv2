@@ -175,7 +175,7 @@ create table ORDEN
 (
    ORDID                INTEGER              not null,
    USUUSUARIO           VARCHAR2(64)         not null,
-   PQSRFCODIGO          VARCHAR2(8)          not null,
+   PQRSFCODIGO          VARCHAR2(8)          not null,
    FUNIDENTIFICACION    VARCHAR2(32)         not null,
    ORDFECHAASIGNACION   DATE                 not null,
    ORDESTADO            NUMBER(1)            default 0 not null
@@ -195,7 +195,7 @@ create index ATIENDE_FK on ORDEN (
 /* Index: GENERA_FK                                             */
 /*==============================================================*/
 create index GENERA_FK on ORDEN (
-   PQSRFCODIGO ASC
+   PQRSFCODIGO ASC
 );
 
 /*==============================================================*/
@@ -249,7 +249,7 @@ create index TIENETIPOIDENTIFICACION_FK on PERSONA (
 /*==============================================================*/
 create table PQRSF 
 (
-   PQSRFCODIGO          VARCHAR2(8)          not null,
+   PQRSFCODIGO          VARCHAR2(8)          not null,
    PERIDENTIFICACION    VARCHAR2(32)         not null,
    MEDID                NUMBER(1)            not null,
    RADID                VARCHAR2(32),
@@ -263,7 +263,7 @@ create table PQRSF
    PQRSFFECHACREACION   DATE                 not null,
    PQRSFFECHAVENCIMIENTO DATE,
    PQRSFFECHACIERRE     DATE,
-   constraint PK_PQRSF primary key (PQSRFCODIGO)
+   constraint PK_PQRSF primary key (PQRSFCODIGO)
 );
 
 /*==============================================================*/
@@ -300,7 +300,7 @@ create index TIENEMEDIOR_FK on PQRSF (
 create table RADICADO 
 (
    RADID                VARCHAR2(32)         not null,
-   PQSRFCODIGO          VARCHAR2(8)          not null,
+   PQRSFCODIGO          VARCHAR2(8)          not null,
    USUUSUARIO           VARCHAR2(64)         not null,
    RADFECHA             DATE                 not null,
    constraint PK_RADICADO primary key (RADID)
@@ -317,7 +317,7 @@ create index REGISTRA_FK on RADICADO (
 /* Index: TIENE2_FK                                             */
 /*==============================================================*/
 create index TIENE2_FK on RADICADO (
-   PQSRFCODIGO ASC
+   PQRSFCODIGO ASC
 );
 
 /*==============================================================*/
@@ -382,8 +382,8 @@ alter table ORDEN
       references FUNCIONARIO (FUNIDENTIFICACION);
 
 alter table ORDEN
-   add constraint FK_ORDEN_GENERA_PQRSF foreign key (PQSRFCODIGO)
-      references PQRSF (PQSRFCODIGO);
+   add constraint FK_ORDEN_GENERA_PQRSF foreign key (PQRSFCODIGO)
+      references PQRSF (PQRSFCODIGO);
 
 alter table PERSONA
    add constraint FK_PERSONA_HABITA_MUNICIPIO foreign key (MUNID)
@@ -418,6 +418,6 @@ alter table RADICADO
       references USUARIO (USUUSUARIO);
 
 alter table RADICADO
-   add constraint FK_RADICADO_TIENE2_PQRSF foreign key (PQSRFCODIGO)
-      references PQRSF (PQSRFCODIGO);
+   add constraint FK_RADICADO_TIENE2_PQRSF foreign key (PQRSFCODIGO)
+      references PQRSF (PQRSFCODIGO);
 

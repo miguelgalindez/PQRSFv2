@@ -22,7 +22,7 @@ public class PqrsfDAO {
 	
 	
 	public ArrayList<Pqrsf> obtnNoRadicadas() {
-		String sql="SELECT PQSRFCODIGO, PERNOMBRES, PERAPELLIDOS, TIPPQRSFID, "+ 
+		String sql="SELECT PQRSFCODIGO, PERNOMBRES, PERAPELLIDOS, TIPPQRSFID, "+ 
 					"PQRSFASUNTO, PQRSFDESCRIPCION, MEDID, PQRSFFECHACREACION "+ 
 					"FROM PQRSF NATURAL JOIN PERSONA WHERE RADID IS NULL";
 ;
@@ -37,7 +37,7 @@ public class PqrsfDAO {
 				Pqrsf pqrsf=new Pqrsf();
 				Persona persona=new Persona();
 				
-				pqrsf.setCodigo(rs.getString("PQSRFCODIGO"));
+				pqrsf.setCodigo(rs.getString("PQRSFCODIGO"));
 				persona.setNombres(rs.getString("PERNOMBRES"));
 				persona.setApellidos(rs.getString("PERAPELLIDOS"));				
 				pqrsf.setPersona(persona);

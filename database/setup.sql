@@ -1218,7 +1218,7 @@ create or replace PACKAGE BODY PKG_PQRSFV2 AS
                           celular IN VARCHAR2, idMunicipio IN NUMBER,
                           medioRecepcion IN NUMBER, tipoPqrsf IN NUMBER,
                           asunto IN VARCHAR2, descripcion IN VARCHAR2) RETURN VARCHAR2 AS  
-    codigo PQRSF.PQSRFCODIGO%TYPE;
+    codigo PQRSF.PQRSFCODIGO%TYPE;
   BEGIN
     codigo:=GENERAR_CODIGO_PQRSF();
     MERGE INTO PERSONA USING DUAL ON (PERIDENTIFICACION = identificacion)
@@ -1233,12 +1233,24 @@ create or replace PACKAGE BODY PKG_PQRSFV2 AS
                         nombres, apellidos, correo, direccion, telefono,
                         celular, idMunicipio);                        
     
-    INSERT INTO PQRSF(PQSRFCODIGO, PERIDENTIFICACION, MEDID, TIPPQRSFID, 
+    INSERT INTO PQRSF(PQRSFCODIGO, PERIDENTIFICACION, MEDID, TIPPQRSFID, 
                     PQRSFASUNTO, PQRSFDESCRIPCION, PQRSFDIRECCIONADA, PQRSFESTADO,
                     PQRSFFECHACREACION)
                 VALUES(codigo, identificacion, medioRecepcion, tipoPqrsf,
                         asunto, descripcion, 0, 0, SYSDATE);                
     RETURN codigo;
   END REGISTRAR_PQRSF;
+  
+  PROCEDURE REGISTRAR_RADICADO(codigoPqrsf IN VARCHAR2, idRadicado IN VARCHAR2, 
+                               usuarioQueRadica IN VARCHAR2, fechaRadicado IN DATE,
+                               fechaVencimientoPqrsf IN DATE) AS
+      BEGIN
+            INSERT INTO RADICADO(RADID, PQRSFCODIGO, USUUSUARIO, RADFECHA)
+                    VALUES(idRadicado, codigoPqrsf, usuarioQueRadica, fechaRadicado);
+            
+            UPDATE PQRSF SET RADID=idRadicado, PQRSFFECHAVENCIMIENTO=fechaVencimientoPqrsf 
+                        WHERE PQRSFCODIGO=codigoPqrsf;
+                        
+      END REGISTRAR_RADICADO;
 
 END PKG_PQRSFV2;
