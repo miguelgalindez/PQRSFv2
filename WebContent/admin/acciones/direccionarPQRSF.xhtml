@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+			
+	<h:body>		
+		<h:form id="direccionarPQRSFForm">
+			<p:dataTable id="pqrsfNDTable" value="#{direccionarPQRSFControl.pqrsfNoDireccionadas}"
+						widgetVar="pqrsfND"
+						var="pqrsf" 
+						rows="10"
+						paginator="true"
+						paginatorPosition="bottom"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	                    rowsPerPageTemplate="5,10,15,20,25,30,35,40,45,50"
+	                    reflow="true"
+	                    sortMode="multiple"
+	                    resizableColumns="true"
+	                    emptyMessage=""	                    		                                        	                
+						>				
+				<f:facet name="header">
+						<h:outputText value="Buscar: " />
+		                <p:inputText id="globalFilter" onkeyup="PF('pqrsfND').filter()" style="width:150px"/>										        
+			        	<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />		        
+			        	<p:columnToggler datasource="pqrsfNDTable" trigger="toggler" />		        
+			        <div class="clear"></div>
+			    </f:facet>
+			 	
+				<p:column headerText="Codigo" sortBy="#{pqrsf.codigo}" width="15%" style="text-align: center;"
+						filterBy="#{pqrsf.codigo}" filterMatchMode="contains">
+					<h:outputText value="#{pqrsf.codigo}" />
+				</p:column>
+				<p:column headerText="Tipo" sortBy="#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, pqrsf.tipoPqrsf)}" 
+							filterBy="#{pqrsf.tipoPqrsf}" filterMatchMode="exact" width="15%" style="text-align: center;">
+					<f:facet name="filter">
+		                <p:selectOneMenu onchange="PF('pqrsfND').filter()" >
+		                    <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+		                    <f:selectItems value="#{valoresDAO.tiposPqrsf.entrySet()}" var="tipo"
+								itemValue="#{tipo.key}" itemLabel="#{tipo.value}"/>
+		                </p:selectOneMenu>
+		            </f:facet>
+					<h:outputText value="#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, pqrsf.tipoPqrsf)}" />
+				</p:column>			
+				<p:column headerText="Fecha" sortBy="#{pqrsf.fechaCreacion}" width="20%" style="text-align: center;"
+							filterBy="#{pqrsf.fechaCreacion}" filterMatchMode="exact">
+					<f:facet name="filter">						
+					    <p:calendar  pattern="dd-MMMM-yyyy" locale="es" effect="fold">
+					        <p:ajax event="dateSelect" oncomplete="PF('pqrsfND').filter()" update="pqrsfNDTable"/>
+					        <p:ajax event="change" execute="@this" oncomplete="PF('pqrsfND').filter()" update="pqrsfNDTable"/>					        					                                	
+					    </p:calendar>					    
+					</f:facet>
+					<h:outputText value="#{pqrsf.fechaCreacion}" >
+						<f:convertDateTime pattern="dd-MMMM-yyyy" locale="es"/>
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Fecha" sortBy="#{pqrsf.radicado.fecha}" width="20%" style="text-align: center;"
+							filterBy="#{pqrsf.radicado.fecha}" filterMatchMode="exact">
+					<f:facet name="filter">						
+					    <p:calendar  pattern="dd-MMMM-yyyy" locale="es" effect="fold">
+					        <p:ajax event="dateSelect" oncomplete="PF('pqrsfND').filter()" update="pqrsfNDTable"/>
+					        <p:ajax event="change" execute="@this" oncomplete="PF('pqrsfND').filter()" update="pqrsfNDTable"/>					        					                                	
+					    </p:calendar>					    
+					</f:facet>
+					<h:outputText value="#{pqrsf.radicado.fecha}" >
+						<f:convertDateTime pattern="dd-MMMM-yyyy" locale="es"/>
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Solicitante" sortBy="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}" width="35%"
+						filterBy="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}" filterMatchMode="contains" style="text-align: center;">
+					<h:outputText value="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}"/>
+				</p:column>
+				
+				<p:column headerText="Acciones" width="15%">
+					<p:commandButton update="actionsPanel" oncomplete="PF('dialog').show()" icon="fa fa-search" title="Ver"
+										actionListener="#{direccionarPqrsfControl.changeSelectedAction('ver')}" >						
+		                <f:setPropertyActionListener value="#{pqrsf}" target="#{direccionarPQRSFControl.selectedPqrsf}" />
+		            </p:commandButton>
+		            <p:commandButton update="actionsPanel" oncomplete="PF('dialog').show()" icon="fa fa-print" title="Imprimir"
+		            					actionListener="#{direccionarPqrsfControl.changeSelectedAction('direccionar')}">
+		                <f:setPropertyActionListener value="#{pqrsf}" target="#{direccionarPQRSFControl.selectedPqrsf}" />
+		            </p:commandButton>		            				
+				</p:column>
+			</p:dataTable>						
+		</h:form>
+		
+		<p:outputPanel id="modalRespuestaPanel">
+			<ui:include src="/template/modalRespuesta.xhtml" />
+		</p:outputPanel>	
+					
+		<p:outputPanel autoUpdate="false" id="actionsPanel">								
+			<p:dialog header="Direccionar PQRSF" widgetVar="dialog" showEffect="fade" hideEffect="fade" width="600" height="300" 
+					resizable="false" modal="true"  appendToBody="true" visible="#{facesContext.validationFailed}">
+								       
+			        <ui:include src="partials/direccionarPQRSF/#{direccionarPQRSFControl.selectedAction}.xhtml" />            	                		 		         
+			        
+			</p:dialog>
+		</p:outputPanel>
+	</h:body>
+</html>

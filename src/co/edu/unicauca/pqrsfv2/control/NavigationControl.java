@@ -19,6 +19,8 @@ public class NavigationControl implements Serializable {
 	
 	@Inject
 	RadicarPqrsfControl radicarPqrsfControl;
+	@Inject
+	DireccionarPQRSFControl direccionarPqrsfControl;
 	private Usuario usuarioAutenticado;
 	private String viewToShow;
 	
@@ -40,9 +42,15 @@ public class NavigationControl implements Serializable {
 	
 	public void changeViewToShow(String viewToShow) {
 		this.viewToShow = viewToShow;
-		if(viewToShow.equals("/admin/acciones/radicarPQRSF.xhtml")){
-			radicarPqrsfControl.cargarPqrsfNoRadicadas();
-		}
+		
+		switch(viewToShow){
+			case "/admin/acciones/radicarPQRSF.xhtml":
+				radicarPqrsfControl.cargarPqrsfNoRadicadas();
+				break;
+			case "/admin/acciones/direccionarPQRSF.xhtml":
+				direccionarPqrsfControl.cargarPQRSFNoDireccionadas();
+				break;
+		}		
 	}
 	
 	public void logout(){

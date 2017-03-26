@@ -21,12 +21,15 @@ public class ValoresDAO implements Serializable {
 	@Inject
 	PersonaDAO personaDAO;
 	@Inject
-	PqrsfDAO pqrsfDAO;	
+	PqrsfDAO pqrsfDAO;
+	@Inject
+	DependenciaDAO dependenciaDAO;
 	private HashMap<Integer, String> tiposPqrsf;	
 	private HashMap<Integer, String> mediosRecepcion;
 	private HashMap<Integer, String> tiposIdentificacion;
 	private HashMap<Integer, String> tiposPersona;
 	private HashMap<Integer, String> departamentos;
+	private HashMap<Integer, String> dependencias;
 	
 	@PostConstruct
 	private void init() {
@@ -35,6 +38,7 @@ public class ValoresDAO implements Serializable {
 		mediosRecepcion=pqrsfDAO.obtnMediosRecepcion();		
 		tiposPqrsf=pqrsfDAO.obtnTiposPqrsf();
 		departamentos=personaDAO.obtnDepartamentos();
+		dependencias=dependenciaDAO.obtnDependencias();
 	}
 	
 	public HashMap<Integer, String> obtnMunicipios(Integer idDepartamento){
@@ -90,5 +94,13 @@ public class ValoresDAO implements Serializable {
 
 	public void setDepartamentos(HashMap<Integer, String> departamentos) {
 		this.departamentos = departamentos;
-	}		
+	}
+
+	public HashMap<Integer, String> getDependencias() {
+		return dependencias;
+	}
+
+	public void setDependencias(HashMap<Integer, String> dependencias) {
+		this.dependencias = dependencias;
+	}
 }

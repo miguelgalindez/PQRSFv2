@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:body>		
+		<h:form class="form-horizontal">
+			dependencia, funcionario, fecha vencimiento
+								
+			<div class="form-group">
+				<p:outputLabel for="dependencia" styleClass="control-label col-sm-5" value="Dependencia"/>					                  
+				<div class="col-sm-7">
+					<p:selectOneMenu id="dependencia"
+										value="#{direccionarPQRSFControl.idDependenciaSeleccionada}"
+										required="#{direccionarPQRSFControl.orden.funcionario.identificacion == null}"										
+										styleClass="form-control">
+						<f:selectItem itemValue="null" itemLabel="Seleccione..." noSelectionOption="true" />
+						<f:selectItems value="#{valoresDAO.dependencias.entrySet()}" var="dep"
+										itemValue="#{dep.key}" itemLabel="#{dep.value}" />
+						<p:ajax update="funcionario" />
+					</p:selectOneMenu>	 							                  																	   																								                  											                  									
+					<p:message for="dependencia"/>					                    	
+				</div>							                  	
+			</div>
+			
+			<div class="form-group">
+				<p:outputLabel for="funcionario" styleClass="control-label col-sm-5" value="Funcionario"/>					                  
+				<div class="col-sm-7">
+					<p:selectOneMenu id="funcionario"									
+										value="#{direccionarPQRSFControl.orden.funcionario.identificacion}"
+										disabled="#{direccionarPQRSFControl.idDependenciaSeleccionada == null}"
+										styleClass="form-control">
+						<f:selectItem itemValue="null" itemLabel="Seleccione..." noSelectionOption="true" />
+						<f:selectItems value="#{direccionarPQRSFControl.obtnFuncionarios().entrySet()}" var="fun"
+											itemValue="#{fun.key}" itemLabel="#{fun.value}"/>
+					</p:selectOneMenu>																															   															
+					<p:message for="funcionario"/>					                    	
+				</div>							                  	
+			</div>
+			
+			<ui:remove>		
+				<div class="form-group">
+					<div class="col-sm-offset-1 col-sm-10">			
+						<div class="pull-left">	
+							<p:commandLink oncomplete="PF('dialog').hide()" immediate="true"
+											styleClass="btn btn-lg btn-danger">											
+								<i class="fa fa-times"/>			
+								<span>Cancelar</span>
+							</p:commandLink>									
+						</div>			
+						<div class="pull-right">
+							<p:commandLink actionListener="#{radicarPqrsfControl.radicarPQRSF()}"
+											styleClass="btn btn-lg btn-success" update="modalRespuestaPanel @form">		        	
+						            <i class="fa fa-registered"/> 				            				           
+						            <span>Radicar</span>			            			           
+					        </p:commandLink>				        				        												 					
+						</div>
+					</div>														                 
+				</div>
+			</ui:remove>
+		</h:form>		
+	</h:body>
+</html>
