@@ -23,14 +23,16 @@ public class Pqrsf implements Serializable{
 	private String asunto;
 	@NotNull @Size(min=10, max=1024)
 	private String descripcion;
-	
+	private int estado;
 	private Date fechaCreacion;
 	private Date fechaVencimiento;
+	private Date fechaCierre;
 	private Radicado radicado;
 	
 	public Pqrsf(){
 		persona=new Persona();
 		radicado=new Radicado();
+		fechaVencimiento=null;
 	}
 	
 	public Integer getTipoPqrsf() {
@@ -86,6 +88,22 @@ public class Pqrsf implements Serializable{
 	}
 	public void setRadicado(Radicado radicado) {
 		this.radicado = radicado;
+	}
+
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+	public Date getFechaCierre() {
+		return fechaCierre;
+	}
+
+	public void setFechaCierre(Date fechaCierre) {
+		this.fechaCierre = fechaCierre;
 	}
 	
 }

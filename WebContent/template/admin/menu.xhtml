@@ -46,8 +46,14 @@
 		              <i class="fa fa-angle-left pull-right"></i>
 		            </span>
 		          </a>
-		          <ul class="treeview-menu">
-		            <li><a href="/admin/consultas/todasPQRSF"><i class="fa fa-circle-o"></i>Todas las PQRSFs</a></li>
+		          <ul class="treeview-menu">		          
+		            <li>
+		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/consultas/todasPQRSF.xhtml')}">		        				            
+			            	<i class="fa fa-circle-o"></i>
+			        		Todas las PQRSFs
+			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
+		          		</h:commandLink>
+					</li>
 		            <li><a href="/admin/consultas/vencimientoPQRSF/8"><i class="fa fa-circle-o"></i>PQRSFs proximas a vencerse</a></li>
 		            <li><a href="/admin/consultas/vencimientoPQRSF/0"><i class="fa fa-circle-o"></i>PQRSFs vencidas</a></li>
 		          </ul>

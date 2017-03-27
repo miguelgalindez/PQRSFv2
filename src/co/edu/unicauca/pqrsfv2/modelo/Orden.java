@@ -19,7 +19,7 @@ public class Orden implements Serializable{
 	private Date fechaCierre;
 	
 	public Orden(){
-		funcionario=new Funcionario();
+		funcionario=new Funcionario();			
 	}
 	
 	public int getId() {

@@ -6,6 +6,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import co.edu.unicauca.pqrsfv2.consultas.control.TodasPqrsfControl;
 import co.edu.unicauca.pqrsfv2.modelo.Usuario;
 
 @SessionScoped
@@ -21,6 +22,8 @@ public class NavigationControl implements Serializable {
 	RadicarPqrsfControl radicarPqrsfControl;
 	@Inject
 	DireccionarPQRSFControl direccionarPqrsfControl;
+	@Inject
+	TodasPqrsfControl todasPqrsfControl;
 	private Usuario usuarioAutenticado;
 	private String viewToShow;
 	
@@ -47,8 +50,13 @@ public class NavigationControl implements Serializable {
 			case "/admin/acciones/radicarPQRSF.xhtml":
 				radicarPqrsfControl.cargarPqrsfNoRadicadas();
 				break;
+			
 			case "/admin/acciones/direccionarPQRSF.xhtml":
 				direccionarPqrsfControl.cargarPQRSFNoDireccionadas();
+				break;
+				
+			case "/admin/consultas/todasPQRSF.xhtml":
+				todasPqrsfControl.cargarTodasPqrf();
 				break;
 		}		
 	}

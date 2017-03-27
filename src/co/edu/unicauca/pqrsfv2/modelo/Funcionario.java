@@ -19,6 +19,7 @@ public class Funcionario implements Serializable{
 	
 	public Funcionario(){
 		identificacion=null;
+		dependencia=new Dependencia();
 	}
 	
 	public String getIdentificacion() {
