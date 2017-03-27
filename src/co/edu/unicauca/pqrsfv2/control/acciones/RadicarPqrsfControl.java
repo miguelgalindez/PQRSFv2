@@ -1,4 +1,4 @@
-package co.edu.unicauca.pqrsfv2.control;
+package co.edu.unicauca.pqrsfv2.control.acciones;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,6 +7,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
+
+import co.edu.unicauca.pqrsfv2.control.ModalRespuestaControl;
+import co.edu.unicauca.pqrsfv2.control.NavigationControl;
 import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 import co.edu.unicauca.pqrsfv2.modelo.Radicado;
@@ -38,7 +41,7 @@ public class RadicarPqrsfControl implements Serializable{
 	
 	public RadicarPqrsfControl(){
 		pqrsfNoRadicadas=new ArrayList<>();
-		selectedAction="radicar";
+		selectedAction="Radicar";
 		radicado=new Radicado();
 	}
 	

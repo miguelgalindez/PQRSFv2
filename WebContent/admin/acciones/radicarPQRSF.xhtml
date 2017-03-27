@@ -66,15 +66,15 @@
 				
 				<p:column headerText="Acciones" width="15%">
 					<p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-search" title="Ver"
-										actionListener="#{radicarPqrsfControl.changeSelectedAction('ver')}" >						
+										actionListener="#{radicarPqrsfControl.changeSelectedAction('Ver')}" >						
 		                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
 		            </p:commandButton>
 		            <p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-print" title="Imprimir"
-		            					actionListener="#{radicarPqrsfControl.changeSelectedAction('imprimir')}">
+		            					actionListener="#{radicarPqrsfControl.changeSelectedAction('Imprimir')}">
 		                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
 		            </p:commandButton>
 		            <p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-registered" title="Radicar"
-		            					actionListener="#{radicarPqrsfControl.changeSelectedAction('radicar')}">
+		            					actionListener="#{radicarPqrsfControl.changeSelectedAction('Radicar')}">
 		                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
 		            </p:commandButton>					
 				</p:column>
@@ -89,7 +89,7 @@
 			<p:dialog header="Radicar PQRSF" widgetVar="dialog" showEffect="fade" hideEffect="fade" width="600" height="225" 
 					resizable="false" modal="true"  appendToBody="true" visible="#{facesContext.validationFailed}">
 								       
-			        <ui:include src="partials/radicarPQRSF/#{radicarPqrsfControl.selectedAction}.xhtml" />
+			        <ui:include src="/admin/partials/modal#{radicarPqrsfControl.selectedAction}.xhtml" />
 			                    	                		 		         			        
 			</p:dialog>
 		</h:panelGroup> 

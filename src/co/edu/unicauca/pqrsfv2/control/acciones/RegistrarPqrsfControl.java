@@ -1,4 +1,4 @@
-package co.edu.unicauca.pqrsfv2.control;
+package co.edu.unicauca.pqrsfv2.control.acciones;
 
 import java.io.Serializable;
 import javax.inject.Inject;
@@ -10,6 +10,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 import co.edu.unicauca.pqrsfv2.modelo.Persona;
+import co.edu.unicauca.pqrsfv2.control.ModalRespuestaControl;
 import co.edu.unicauca.pqrsfv2.dao.PersonaDAO;
 import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
 import co.edu.unicauca.pqrsfv2.dao.ValoresDAO;

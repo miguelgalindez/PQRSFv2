@@ -1,4 +1,4 @@
-package co.edu.unicauca.pqrsfv2.consultas.control;
+package co.edu.unicauca.pqrsfv2.control.consultas;
 
 import java.io.Serializable;
 import java.util.ArrayList;

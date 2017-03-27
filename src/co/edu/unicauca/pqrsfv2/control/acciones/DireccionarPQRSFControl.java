@@ -1,4 +1,4 @@
-package co.edu.unicauca.pqrsfv2.control;
+package co.edu.unicauca.pqrsfv2.control.acciones;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,6 +7,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
+
+import co.edu.unicauca.pqrsfv2.control.ModalRespuestaControl;
+import co.edu.unicauca.pqrsfv2.control.NavigationControl;
 import co.edu.unicauca.pqrsfv2.dao.DependenciaDAO;
 import co.edu.unicauca.pqrsfv2.dao.OrdenDAO;
 import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
@@ -59,7 +62,7 @@ public class DireccionarPQRSFControl implements Serializable{
 	
 	private void inicializarDatos(){
 		orden=new Orden();		
-		selectedAction="direccionar";
+		selectedAction="Direccionar";
 		selectedPqrsf=null;		
 		idDependenciaSeleccionada=null;
 	}

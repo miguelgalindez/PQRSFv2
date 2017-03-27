@@ -5,8 +5,8 @@ import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import co.edu.unicauca.pqrsfv2.consultas.control.TodasPqrsfControl;
+import co.edu.unicauca.pqrsfv2.control.acciones.DireccionarPQRSFControl;
+import co.edu.unicauca.pqrsfv2.control.acciones.RadicarPqrsfControl;
 import co.edu.unicauca.pqrsfv2.modelo.Usuario;
 
 @SessionScoped
@@ -23,7 +23,7 @@ public class NavigationControl implements Serializable {
 	@Inject
 	DireccionarPQRSFControl direccionarPqrsfControl;
 	@Inject
-	TodasPqrsfControl todasPqrsfControl;
+	co.edu.unicauca.pqrsfv2.control.consultas.TodasPqrsfControl todasPqrsfControl;
 	private Usuario usuarioAutenticado;
 	private String viewToShow;
 	
