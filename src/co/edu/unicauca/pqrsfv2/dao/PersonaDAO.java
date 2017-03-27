@@ -3,7 +3,6 @@ package co.edu.unicauca.pqrsfv2.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
@@ -11,9 +10,13 @@ import co.edu.unicauca.pqrsfv2.conexion.Conexion;
 @Stateless
 @LocalBean
 public class PersonaDAO {
-	
-	@EJB
+		
 	Conexion con;
+	
+	public PersonaDAO(){
+		con=new Conexion();
+	}
+	
 	public HashMap<Integer, String> obtnTiposIdentificacion(){		
 		String sql="SELECT * FROM TIPOIDENTIFICACION";						
 		return generarElementos(con.executeQueryRS(sql), "TIPIDEID", "TIPIDEDESCRIPCION");		

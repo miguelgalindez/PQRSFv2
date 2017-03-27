@@ -5,15 +5,16 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
 
 @Stateless
 @LocalBean
 public class DependenciaDAO {
-	
-	@Inject
 	Conexion con;
+	
+	public DependenciaDAO(){
+		con=new Conexion();
+	}
 	
 	public HashMap<Integer, String> obtnDependencias(){
 		String sql="SELECT DEPID, DEPNOMBRE FROM DEPENDENCIA";		

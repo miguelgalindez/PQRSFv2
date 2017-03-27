@@ -6,7 +6,6 @@ import java.sql.Types;
 import java.util.ArrayList;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
 import co.edu.unicauca.pqrsfv2.modelo.Orden;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
@@ -14,9 +13,12 @@ import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 @Stateless
 @LocalBean
 public class OrdenDAO {
-	
-	@Inject
+		
 	Conexion con;
+	
+	public OrdenDAO(){
+		con=new Conexion();
+	}
 
 	public boolean direccionarPQRSF(Orden orden) {
 		ArrayList<Object> parameters=new ArrayList<>();

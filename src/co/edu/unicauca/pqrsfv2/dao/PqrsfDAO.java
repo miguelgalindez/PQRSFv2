@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.sql.Types;
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
@@ -14,10 +13,12 @@ import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 @Stateless
 @LocalBean
 public class PqrsfDAO {
-	
-	@EJB
+		
 	Conexion con;
 	
+	public PqrsfDAO(){
+		con=new Conexion();
+	}
 	
 	public ArrayList<Pqrsf> obtnNoRadicadas() {
 		String sql="SELECT PQRSFCODIGO, PERNOMBRES, PERAPELLIDOS, TIPPQRSFID, "+ 

@@ -10,8 +10,6 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.sql.Types;
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -27,8 +25,6 @@ import javax.sql.DataSource;
  * @version
  */
 
-@Stateless
-@LocalBean
 public class Conexion implements HttpSessionBindingListener {
 	private DataSource pool;
 	private Connection conn;
@@ -214,7 +210,6 @@ public class Conexion implements HttpSessionBindingListener {
 
   
 	public void clean(){
-		
 		try {
 			if(rs!=null)
 				rs.close();
@@ -228,8 +223,7 @@ public class Conexion implements HttpSessionBindingListener {
 		catch(Exception e1){
 			System.out.println("ERROR. NO SE PUEDO LIMPIAR LA CONEXION (CERRRAR LOS RECURSOS)");
 			e1.printStackTrace();			
-		}
-		
+		}		
 	}
 
 	@Override
