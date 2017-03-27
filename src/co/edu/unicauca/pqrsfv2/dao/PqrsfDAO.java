@@ -3,7 +3,6 @@ package co.edu.unicauca.pqrsfv2.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.sql.Types;
 import javax.ejb.EJB;
@@ -42,7 +41,7 @@ public class PqrsfDAO {
 				pqrsf.setAsunto(rs.getString("PQRSFASUNTO"));
 				pqrsf.setDescripcion(rs.getString("PQRSFDESCRIPCION"));
 				pqrsf.setMedioRecepcion(rs.getInt("MEDID"));
-				pqrsf.setFechaCreacion(new Date(rs.getDate("PQRSFFECHACREACION").getTime()));
+				pqrsf.setFechaCreacion(rs.getDate("PQRSFFECHACREACION"));
 				
 				pqrsfNoRadicadas.add(pqrsf);
 			}
@@ -77,8 +76,8 @@ public class PqrsfDAO {
 				pqrsf.setAsunto(rs.getString("PQRSFASUNTO"));
 				pqrsf.setDescripcion(rs.getString("PQRSFDESCRIPCION"));
 				pqrsf.setMedioRecepcion(rs.getInt("MEDID"));
-				pqrsf.setFechaCreacion(new Date(rs.getDate("PQRSFFECHACREACION").getTime()));
-				pqrsf.getRadicado().setFecha(new Date(rs.getDate("RADFECHA").getTime()));
+				pqrsf.setFechaCreacion(rs.getDate("PQRSFFECHACREACION"));
+				pqrsf.getRadicado().setFecha(rs.getDate("RADFECHA"));
 				
 				pqrsfNoDireccionadas.add(pqrsf);
 			}

@@ -1,14 +1,15 @@
 package co.edu.unicauca.pqrsfv2.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
 import co.edu.unicauca.pqrsfv2.modelo.Orden;
+import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 
 @Stateless
 @LocalBean
@@ -30,10 +31,49 @@ public class OrdenDAO {
 	}
 
 	public ArrayList<Orden> obtnTodasOrdenes() {
-		
-		return null;
+		String sql="SELECT PQRSF.PQRSFCODIGO, PQRSF.TIPPQRSFID, MEDID, PERNOMBRES, PERAPELLIDOS, PQRSFASUNTO, "+
+			        "PQRSFDESCRIPCION, RADFECHA, PQRSFESTADO, PQRSFFECHACREACION, "+
+			        "PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, FUNNOMBRE, DEPID "+      
+			        "FROM PQRSF NATURAL JOIN PERSONA "+
+			                    "LEFT OUTER JOIN RADICADO ON PQRSF.RADID=RADICADO.RADID "+
+			                    "LEFT OUTER JOIN ORDEN ON PQRSF.PQRSFCODIGO = ORDEN.PQRSFCODIGO "+
+			                    "LEFT OUTER JOIN FUNCIONARIO ON ORDEN.FUNIDENTIFICACION = FUNCIONARIO.FUNIDENTIFICACION";
+							
+		return cargarOrdenes(con.executeQueryRS(sql));
 	}
-	
-	
 
+	private ArrayList<Orden> cargarOrdenes(ResultSet rs) {
+		ArrayList<Orden> ordenes=new ArrayList<>();
+		
+		try {
+			while(rs.next()){
+				Orden orden=new Orden();
+				Pqrsf pqrsf=new Pqrsf();
+				pqrsf.setCodigo(rs.getString("PQRSFCODIGO"));
+				pqrsf.setTipoPqrsf(rs.getInt("TIPPQRSFID"));
+				pqrsf.setMedioRecepcion(rs.getInt("MEDID"));
+				pqrsf.getPersona().setNombres(rs.getString("PERNOMBRES"));
+				pqrsf.getPersona().setApellidos(rs.getString("PERAPELLIDOS"));
+				pqrsf.setAsunto(rs.getString("PQRSFASUNTO"));
+				pqrsf.setDescripcion(rs.getString("PQRSFDESCRIPCION"));
+				pqrsf.getRadicado().setFecha(rs.getDate("RADFECHA"));
+				pqrsf.setEstado(rs.getInt("PQRSFESTADO"));
+				pqrsf.setFechaCreacion(rs.getDate("PQRSFFECHACREACION"));
+				pqrsf.setFechaVencimiento(rs.getDate("PQRSFFECHAVENCIMIENTO"));
+				pqrsf.setFechaCierre(rs.getDate("PQRSFFECHACIERRE"));
+				orden.setPqrsf(pqrsf);				
+				orden.getFuncionario().setNombre(rs.getString("FUNNOMBRE"));
+				orden.getFuncionario().getDependencia().setId(rs.getInt("DEPID"));
+				
+				ordenes.add(orden);				
+			}
+		}catch (SQLException e) {
+			System.out.println("ERROR. NO SE PUDO CARGAR LAS ORDENES");
+			e.printStackTrace();
+			ordenes=null;
+		} finally{
+			con.clean();
+		}
+		return ordenes;
+	}
 }
