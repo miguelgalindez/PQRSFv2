@@ -41,8 +41,7 @@ public class RadicarPqrsfControl implements Serializable{
 	
 	public RadicarPqrsfControl(){
 		pqrsfNoRadicadas=new ArrayList<>();
-		selectedAction="Radicar";
-		radicado=new Radicado();
+		inicializarDatos();		
 	}
 	
 	public void cargarPqrsfNoRadicadas(){
@@ -71,12 +70,8 @@ public class RadicarPqrsfControl implements Serializable{
 	private void inicializarDatos() {
 		selectedPqrsf=null;
 		radicado=new Radicado();
-	}
-
-	public void resetForm() {
-        radicado=new Radicado();
-        selectedPqrsf.setFechaVencimiento(null);
-    }
+		selectedAction="Radicar";
+	}	
 
 	public ArrayList<Pqrsf> getPqrsfNoRadicadas() {
 		return pqrsfNoRadicadas;

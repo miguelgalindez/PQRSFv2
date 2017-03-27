@@ -42,6 +42,7 @@ public class DireccionarPQRSFControl implements Serializable{
 	private Integer idDependenciaSeleccionada;
 	
 	public DireccionarPQRSFControl(){
+		pqrsfNoDireccionadas=new ArrayList<>();
 		inicializarDatos();
 	}
 	
@@ -62,8 +63,7 @@ public class DireccionarPQRSFControl implements Serializable{
 	
 	private void inicializarDatos(){
 		orden=new Orden();		
-		selectedAction="Direccionar";
-		selectedPqrsf=null;		
+		selectedAction="Direccionar";			
 		idDependenciaSeleccionada=null;
 	}
 	
@@ -76,12 +76,17 @@ public class DireccionarPQRSFControl implements Serializable{
 		
 		if(success){
 			ctx.execute("PF('dialog').hide();");			
-			modalRespuestaControl.configurar("Operación exitosa", "La PQRSF ha sido direccionada satisfactoriamente");						
+			modalRespuestaControl.configurar("Operación exitosa", "La PQRSF ha sido direccionada satisfactoriamente");
+			// Para que funcionen las Tablas de las Consultas (todas, proximas y vencidas)
+			selectedPqrsf.setEstado(1);
 			pqrsfNoDireccionadas.remove(selectedPqrsf);
 			inicializarDatos();			
 		}
-		else
+		else{
+			// Para que funcionen las Tablas de las Consultas (todas, proximas y vencidas)
+			selectedPqrsf.setEstado(0);
 			modalRespuestaControl.configurar("Error", "No se pudo direccionar la PQRSF. Si el problema persiste, por favor comunicarse con la DivTIC.");
+		}
 		
 		ctx.execute("$('#modalRespuesta').modal('toggle');");			
 		

@@ -26,11 +26,19 @@ public class TodasPqrsfControl implements Serializable{
 	@Inject
 	OrdenDAO ordenDAO;
 	private ArrayList<Orden> ordenes;
+	private String selectedAction;
+	
+	public TodasPqrsfControl(){
+		selectedAction="Ver";
+	}
 
 	public void cargarTodasPqrf(){		
 		ordenes=ordenDAO.obtnTodasOrdenes();
 	}
 	
+	public void changeSelectedAction(String action){
+		selectedAction=action;
+	}
 	
 	public Integer obtnDiasParaVencimiento(Pqrsf pqrsf){
 		Date vencimiento=pqrsf.getFechaVencimiento();
@@ -68,4 +76,12 @@ public class TodasPqrsfControl implements Serializable{
 	public void setOrdenes(ArrayList<Orden> ordenes) {
 		this.ordenes = ordenes;
 	}
+
+	public String getSelectedAction() {
+		return selectedAction;
+	}
+
+	public void setSelectedAction(String selectedAction) {
+		this.selectedAction = selectedAction;
+	}	
 }
