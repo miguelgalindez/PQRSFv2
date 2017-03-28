@@ -1,5 +1,5 @@
-INSERT INTO USUARIO(USUUSUARIO, USUCONTRASENA, USUNOMBRE, USUROL, USUFECHAINICIO)
-        VALUES('miguelgalindez', 'asd', 'Miguel Angel Galindez', 'SUPERADMIN', SYSDATE);
+INSERT INTO USUARIO(USUUSUARIO, USUNOMBRE, USUROL, USUFECHAINICIO)
+        VALUES('miguelgalindez','Miguel Angel Galindez', 'SUPERADMIN', SYSDATE);
 
 DROP SEQUENCE Dependencia_depId_Sequence;
 DROP SEQUENCE Orden_ordId_Sequence; 
