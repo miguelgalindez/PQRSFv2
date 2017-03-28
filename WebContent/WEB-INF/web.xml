@@ -54,5 +54,12 @@
 		<extension>eot</extension>
 		<mime-type>application/x-font-eot</mime-type>
 	</mime-mapping>
-	
+	<filter>
+	    <filter-name>userFilter</filter-name>
+	    <filter-class>co.edu.unicauca.pqrsfv2.util.UserFilter</filter-class>
+	</filter>
+	<filter-mapping>
+	    <filter-name>userFilter</filter-name>
+	    <url-pattern>*.xhtml</url-pattern>
+	</filter-mapping>
 </web-app>
