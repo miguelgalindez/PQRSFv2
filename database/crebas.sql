@@ -353,9 +353,7 @@ create table TIPOPQRSF
 /*==============================================================*/
 create table USUARIO 
 (
-   USUUSUARIO           VARCHAR2(64)         not null,
-   USUFOTO              VARCHAR2(256),
-   USUENLACE            VARCHAR2(256),
+   USUUSUARIO           VARCHAR2(64)         not null,   
    USUROL               VARCHAR2(16)         not null
       constraint CKC_USUROL_USUARIO check (USUROL in ('SUPERADMIN','ADMIN','JUDICANTE')),
    USUFECHAINICIO       DATE                 not null,
