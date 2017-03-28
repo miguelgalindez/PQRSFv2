@@ -71,20 +71,23 @@ public class NavigationControl implements Serializable {
 	}
 	
 	public boolean isAuthorizedUser(String email, String name, String link, String picture){
-		
-		Usuario usuario=usuarioDAO.obtnUsuario(email.split("@")[0]);
-		Date now=new Date();		
-		if(usuario!=null && now.after(usuario.getFechaInicio())){		
-			Date fechaFin=usuario.getFechaFin();
-			if(fechaFin==null || now.before(fechaFin)){
-				usuario.setNombre(name);						
-				usuario.setFoto(picture);				
-				usuario.setEnlace(link);
-				
-				this.usuarioAutenticado=usuario;
-				return true;
-			}			
-		}
+		String data[]=email.split("@");
+		String username=data[0], domain=data[1];
+		if(domain.equals("unicauca.edu.co")){
+			Usuario usuario=usuarioDAO.obtnUsuario(username);
+			Date now=new Date();		
+			if(usuario!=null && now.after(usuario.getFechaInicio())){		
+				Date fechaFin=usuario.getFechaFin();
+				if(fechaFin==null || now.before(fechaFin)){
+					usuario.setNombre(name);						
+					usuario.setFoto(picture);				
+					usuario.setEnlace(link);
+					
+					this.usuarioAutenticado=usuario;
+					return true;
+				}			
+			}
+		}		
 		this.usuarioAutenticado=null;
 		return false;
 	}
