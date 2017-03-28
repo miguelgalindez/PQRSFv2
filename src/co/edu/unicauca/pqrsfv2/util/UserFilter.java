@@ -2,7 +2,6 @@ package co.edu.unicauca.pqrsfv2.util;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -12,10 +11,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import org.primefaces.json.JSONObject;
 import co.edu.unicauca.pqrsfv2.control.NavigationControl;
-import co.edu.unicauca.pqrsfv2.modelo.Usuario;
 
 /**
  * Clase que determina la redireccion de la navegacion en caso de que expire la sesion
@@ -58,86 +55,73 @@ public class UserFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) res;
-        HttpSession session = request.getSession();
-        
-        //Con esta l�nea se pone todo el contenido en UTF-8
+        HttpServletResponse response = (HttpServletResponse) res;                       
         request.setCharacterEncoding("UTF-8");
                
-        String principalURL = googleAuthHelper.getCallbackUri();
+        String principalURI = "/admin/principal.xhtml";
         String url = request.getRequestURL().toString();
+        String urlForbidden=request.getContextPath()+"/forbidden.xhtml";
         
-        /*
-         * Listado de URLs a las que se puede acceder sin que se haya iniciado sesi�n.
-         * Si un usuario registrado intenta ingresar a una de esta URLs ser� redireccionado a principal.xhtml
-         */
-        ArrayList<String> urlsAnomimas = new ArrayList<String>();
-        
+        ArrayList<String> urlsAnomimas = new ArrayList<String>();       
         urlsAnomimas.add(request.getContextPath()+"/index.xhtml");
-        //urlsAnomimas.add(request.getContextPath()+"/recuperarClave.xhtml");
+        urlsAnomimas.add(urlForbidden);       
         
-        if (	navigationControl.getUsuarioAutenticado()==null &&
-        		request.getParameter("code") == null &&         	  		        						
-	    		(!request.getRequestURI().equals(loginURL)) &&													//Y no est� en login...
-	    		(!this.contains(urlsAnomimas, request.getRequestURI()))                                      // Y no es una URL permitida        		
-        	){
-        	
-        	String googleError=request.getParameter("error");
-    		if (googleError!=null){
-    			System.err.println("Autenticacion fallida. Error reportado por Google: "+googleError);
-    			response.sendRedirect(loginURL);
-    		}
-        	        	        
-        	
-        	if ("partial/ajax".equals(request.getHeader("Faces-Request"))) {
-        	    // Entra a esta condici�n si es una petici�n AJAX, y redirige con XML.        		        	
-        		response.setContentType("text/xml");
-            	response.getWriter()
-            		.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-            	    .printf("<partial-response><redirect url=\""+loginURL+"\"></redirect></partial-response>", url);
-        	}
-        	else
-        	{
-        		//Entra a esta condici�n si es una petici�n normal, y redirige.
-        		response.sendRedirect(loginURL); // No encontr� usuario logueado.
-        	}        
-        }
+        if(request.getRequestURI().equals(loginURL) || this.contains(urlsAnomimas, request.getRequestURI())){
+    		chain.doFilter(req, res);
+    	}
         else{
-        	if (	navigationControl.getUsuarioAutenticado()!=null
-        			|| (request.getParameter("code") != null					
-				)){
-        		
-	        	if(navigationControl.getUsuarioAutenticado()==null){
-	        			        		
-	    			System.out.println("Autenticacion exitosa");
-	    			System.out.println(googleAuthHelper.getUserInfoJson(request.getParameter("code")));
-	    			boolean authorizedUser=navigationControl.isAuthorizedUser(email, name, link, picture);
-	    			if(authorizedUser)
-	    				System.out.println("Usuario Autorizado");
-	    			else
-	    				System.err.println("ERROR. Usuario no autorizado");
+        	if (navigationControl.getUsuarioAutenticado()==null && request.getParameter("code") == null){        		        
+            	if ("partial/ajax".equals(request.getHeader("Faces-Request"))) {
+            	    // Entra a esta condici�n si es una petici�n AJAX, y redirige con XML.        		        	
+            		response.setContentType("text/xml");
+                	response.getWriter()
+                		.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
+                	    .printf("<partial-response><redirect url=\""+loginURL+"\"></redirect></partial-response>", url);
+            	}
+            	else{            
+            		response.sendRedirect(loginURL);
+            	}        
+            }
+        	else{
+        		if(navigationControl.getUsuarioAutenticado()==null){
+	        			    			
+	    			JSONObject jsonObject = new JSONObject(googleAuthHelper.getUserInfoJson(request.getParameter("code")));
+	    			boolean authorizedUser=navigationControl.isAuthorizedUser(jsonObject.getString("email"), jsonObject.getString("name"), jsonObject.getString("link"), jsonObject.getString("picture"));
 	    			
-	    			if (!request.getRequestURI().equals(principalURL) && !(this.contains(urlsAnomimas, request.getRequestURI()))){
-						
-						// Encontr� usuario logueado, pero est� en index (O ALG�N OTRO LUGAR QUE NO SEA PRINCIPAL): redirige a /principal.xhtml				
-						if ("partial/ajax".equals(request.getHeader("Faces-Request"))){
-						    // Entra a esta condici�n si es una petici�n AJAX, y redirige con XML.
-							response.setContentType("text/xml");
-					    	response.getWriter()
-					    		.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-					    	    .printf("<partial-response><redirect url=\""+principalURL+"\"></redirect></partial-response>", url);
-						}
-						else{
-			        		//Entra a esta condici�n si es una petici�n normal y redirige.
-			        		response.sendRedirect(principalURL);
-			        	}
+	    			if(authorizedUser == false)	    				
+	    				response.sendRedirect(urlForbidden);
+	    			
+	    			else{
+	    				
+	    				if (!request.getRequestURI().equals(principalURI) && !(this.contains(urlsAnomimas, request.getRequestURI()))){
+							
+							// Encontr� usuario logueado, pero est� en index (O ALG�N OTRO LUGAR QUE NO SEA PRINCIPAL): redirige a /principal.xhtml				
+							if ("partial/ajax".equals(request.getHeader("Faces-Request"))){
+							    // Entra a esta condici�n si es una petici�n AJAX, y redirige con XML.
+								response.setContentType("text/xml");
+						    	response.getWriter()
+						    		.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
+						    	    .printf("<partial-response><redirect url=\""+request.getContextPath()+principalURI+"\"></redirect></partial-response>", url);
+							}
+							else{
+				        		//Entra a esta condici�n si es una petici�n normal y redirige.
+				        		response.sendRedirect(request.getContextPath() +principalURI);
+				        	}
+	    				}	    				    			    			
 					}	    				    				    				
 	        	}
-	        	chain.doFilter(req, res); // Encontr� usuario logueado (o es una URL permitida) y continua.
-        	}        	        	        
+        		chain.doFilter(req, res);
+        	}               
         }    
     }
     
+    
+	/*String googleError=request.getParameter("error");
+	if (googleError!=null){
+		System.err.println("Autenticacion fallida. Error reportado por Google: "+googleError);
+		response.sendRedirect(loginURL);
+	}
+	  */
 
     @Override
     public void destroy() {

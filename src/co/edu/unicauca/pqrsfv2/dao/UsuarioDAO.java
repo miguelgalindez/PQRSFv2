@@ -19,26 +19,25 @@ public class UsuarioDAO {
 		con=new Conexion();
 	}
 	public Usuario obtnUsuario(String username){
-		String sql="SELECT USUROL, USUFECHAINICIO, USUFECHAFIN, USUFOTO, USUENLACE "+
-				"FROM USUARIO WHERE USUUSUARIO="+username;
+		String sql="SELECT USUROL, USUFECHAINICIO, USUFECHAFIN "+
+				"FROM USUARIO WHERE LOWER(USUUSUARIO)='"+username.toLowerCase()+"'";
 		Usuario usuario=null;
 		ResultSet rs=con.executeQueryRS(sql);
-		try {
-			if(rs.next()){				
-				usuario=new Usuario();
-				usuario.setUsername(username);
-				usuario.setRol(rs.getString("USUROL"));
-				usuario.setFechaInicio(rs.getDate("USUFECHAINICIO"));
-				usuario.setFechaFin(rs.getDate("USUFECHAFIN"));
-				usuario.setFoto(rs.getString("USUFOTO"));
-				usuario.setEnlace(rs.getString("USUENLACE"));				
-			}			
-		} catch (SQLException e) {
-			System.out.println("ERROR. NO SE PUDO GENERAR LOS ELEMENTOS");
-			e.printStackTrace();			
-		} finally{
-			con.clean();
-		}		
+		if(rs!=null){
+			try {
+				if(rs.next()){				
+					usuario=new Usuario();					
+					usuario.setRol(rs.getString("USUROL"));
+					usuario.setFechaInicio(rs.getDate("USUFECHAINICIO"));
+					usuario.setFechaFin(rs.getDate("USUFECHAFIN"));								
+				}			
+			} catch (SQLException e) {
+				System.out.println("ERROR. NO SE PUDO GENERAR LOS ELEMENTOS");
+				e.printStackTrace();			
+			} finally{
+				con.clean();
+			}
+		}
 		return usuario;		
 	}
 }

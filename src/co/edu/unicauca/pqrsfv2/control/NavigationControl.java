@@ -1,6 +1,7 @@
 package co.edu.unicauca.pqrsfv2.control;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -64,24 +65,27 @@ public class NavigationControl implements Serializable {
 		}		
 	}
 	
-	public void logout(){
-		
+	public String logout(){
+		this.usuarioAutenticado=null;
+		return "/index.xhtml?faces-redirect=true";
 	}
 	
 	public boolean isAuthorizedUser(String email, String name, String link, String picture){
 		
 		Usuario usuario=usuarioDAO.obtnUsuario(email.split("@")[0]);
-		if(usuario!=null){
-			usuario.setNombre(name);			
-			
-			if(usuario.getFoto()==null || usuario.getEnlace()==null){
-				usuario.setFoto(picture);
-				usuario.setEnlace(link);				
-				// TODO - Guardar cambios en la BD
-			}
-			this.usuarioAutenticado=usuario;
-			return true;
+		Date now=new Date();		
+		if(usuario!=null && now.after(usuario.getFechaInicio())){		
+			Date fechaFin=usuario.getFechaFin();
+			if(fechaFin==null || now.before(fechaFin)){
+				usuario.setNombre(name);						
+				usuario.setFoto(picture);				
+				usuario.setEnlace(link);
+				
+				this.usuarioAutenticado=usuario;
+				return true;
+			}			
 		}
+		this.usuarioAutenticado=null;
 		return false;
 	}
 

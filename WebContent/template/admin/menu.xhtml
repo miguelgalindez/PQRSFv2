@@ -16,11 +16,10 @@
 		      <!-- Sidebar user panel -->
 		      <div class="user-panel">
 		        <div class="pull-left image">
-		        	<h:graphicImage library="img" name="user-default.png" styleClass="img-circle"></h:graphicImage>		          
+		        	<h:graphicImage value="#{navigationControl.usuarioAutenticado.foto}" styleClass="img-circle"></h:graphicImage>		          
 		        </div>
-		        <div class="pull-left info">
-		        <!-- Nombre del usuario ** -->		    
-		          <!-- <p></p> -->
+		        <div class="pull-left info">		          
+		          <p>#{navigationControl.usuarioAutenticado.nombre.split(" ")[0]}</p>
 		          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 		        </div>
 		      </div>		      

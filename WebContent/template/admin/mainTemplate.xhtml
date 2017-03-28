@@ -261,27 +261,23 @@
 			          <!-- User Account: style can be found in dropdown.less -->
 			          <li class="dropdown user user-menu">
 			            <a href="#" class="dropdown-toggle" data-toggle="dropdown">			              
-			              <h:graphicImage library="img" name="user-default.png" styleClass="user-image"></h:graphicImage>			                        
-			              <!-- Nombre del usuario **
-			              	<span class="hidden-xs">{!! Auth::user()->name !!}</span>
-			              	 -->
+			              <h:graphicImage value="#{navigationControl.usuarioAutenticado.foto}" styleClass="user-image" />			                        			              
+			              	<span class="hidden-xs">#{navigationControl.usuarioAutenticado.nombre}</span>			              	 
 			            </a>
 			            <ul class="dropdown-menu">
 			              <!-- User image -->
 			              <li class="user-header">
-			                <h:graphicImage library="img" name="user-default.png" styleClass="img-circle"></h:graphicImage>			                        
+			                <h:graphicImage value="#{navigationControl.usuarioAutenticado.foto}" styleClass="img-circle" />			                        
 			
-			                <p>
-			                <!-- Nombre del usuario **
-			                  {!! Auth::user()->name !!}
-			                  <small>{!! Auth::user()->id !!}</small>
-			                   -->
+			                <p>			                
+			                  #{navigationControl.usuarioAutenticado.nombre}			                  			                 
+			                  <small>#{navigationControl.usuarioAutenticado.rol}</small>
 			                </p>
 			              </li>
 			              <!-- Menu Footer-->
 			              <li class="user-footer">
 			                <div class="pull-left">
-			                  <a href="#" class="btn btn-default btn-flat">Ver perfil</a>
+			                  <a href="#{navigationControl.usuarioAutenticado.enlace}" class="btn btn-default btn-flat">Ver perfil</a>
 			                </div>
 			                <div class="pull-right">
 			                	<p:commandLink action="#{navigationControl.logout()}"  update="contenidoPrincipal" styleClass="btn btn-default btn-flat" value="Cerrar sesión"/>			                  
