@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import co.edu.unicauca.pqrsfv2.control.NavigationControl;
+import co.edu.unicauca.pqrsfv2.modelo.Usuario;
+
 /**
  * Clase que determina la redireccion de la navegacion en caso de que expire la sesion
  * 
@@ -27,6 +30,8 @@ public class UserFilter implements Filter {
 	
 	@Inject
 	GoogleAuthHelper googleAuthHelper;
+	@Inject
+	NavigationControl navigationControl;
 	String loginURL;
 	
     @Override
@@ -36,13 +41,13 @@ public class UserFilter implements Filter {
     	loginURL=googleAuthHelper.buildLoginUrl();
     }
     /**
-     * <p>Indica si la url recibida como parámetro está contenida en alguna de
-     * las urls que forman parte del arreglo de urls que se reciben como parámetro.</p>
-     * <p>De una forma más genérica, éste método retorna verdadero si al menos uno de los elementos
-     * del arreglo de urls está contenida en la url recibida como parámetro.</p>
-     * @param urls arreglo que contiene las urls que se compararán con la url actual 
-     * @param url url actual contra la que se comparará cada una de las urls del arreglo
-     * @return true si alguna de las cadenas de texto del arreglo <code>urls</code> está contenida en la cadena <code>url</code>. falso en otro caso
+     * <p>Indica si la url recibida como parï¿½metro estï¿½ contenida en alguna de
+     * las urls que forman parte del arreglo de urls que se reciben como parï¿½metro.</p>
+     * <p>De una forma mï¿½s genï¿½rica, ï¿½ste mï¿½todo retorna verdadero si al menos uno de los elementos
+     * del arreglo de urls estï¿½ contenida en la url recibida como parï¿½metro.</p>
+     * @param urls arreglo que contiene las urls que se compararï¿½n con la url actual 
+     * @param url url actual contra la que se compararï¿½ cada una de las urls del arreglo
+     * @return true si alguna de las cadenas de texto del arreglo <code>urls</code> estï¿½ contenida en la cadena <code>url</code>. falso en otro caso
      */
     private boolean contains(ArrayList<String> urls, String url){
     	if(urls == null || url==null) return false;
@@ -56,36 +61,36 @@ public class UserFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession();
         
-        //Con esta línea se pone todo el contenido en UTF-8
+        //Con esta lï¿½nea se pone todo el contenido en UTF-8
         request.setCharacterEncoding("UTF-8");
                
         String principalURL = googleAuthHelper.getCallbackUri();
         String url = request.getRequestURL().toString();
         
         /*
-         * Listado de URLs a las que se puede acceder sin que se haya iniciado sesión.
-         * Si un usuario registrado intenta ingresar a una de esta URLs será redireccionado a principal.xhtml
+         * Listado de URLs a las que se puede acceder sin que se haya iniciado sesiï¿½n.
+         * Si un usuario registrado intenta ingresar a una de esta URLs serï¿½ redireccionado a principal.xhtml
          */
         ArrayList<String> urlsAnomimas = new ArrayList<String>();
         
         urlsAnomimas.add(request.getContextPath()+"/index.xhtml");
         //urlsAnomimas.add(request.getContextPath()+"/recuperarClave.xhtml");
         
-        if (
-        	  (request.getParameter("code") == null || request.getParameter("state") == null) &&					//Si no hay sesión...
-        		(!request.getRequestURI().equals(loginURL)) &&													//Y no está en login...
-        		(!this.contains(urlsAnomimas, request.getRequestURI())) &&                                      // Y no es una URL permitida
-        		!(url.indexOf(".css.xhtml") > 0) &&																//Y no es ni css ni js ni png.
-        		!(url.indexOf(".js.xhtml") > 0) &&
-        		!(url.indexOf(".png.xhtml") > 0) &&
-        		!(url.indexOf(".jpg.xhtml") > 0) &&
-        		!(url.indexOf(".gif.xhtml") > 0)
-        	)
-        {
-        	session.setAttribute("state", googleAuthHelper.getStateToken());
+        if (	navigationControl.getUsuarioAutenticado()==null &&
+        		request.getParameter("code") == null &&         	  		        						
+	    		(!request.getRequestURI().equals(loginURL)) &&													//Y no estï¿½ en login...
+	    		(!this.contains(urlsAnomimas, request.getRequestURI()))                                      // Y no es una URL permitida        		
+        	){
+        	
+        	String googleError=request.getParameter("error");
+    		if (googleError!=null){
+    			System.err.println("Autenticacion fallida. Error reportado por Google: "+googleError);
+    			response.sendRedirect(loginURL);
+    		}
+        	        	        
         	
         	if ("partial/ajax".equals(request.getHeader("Faces-Request"))) {
-        	    // Entra a esta condición si es una petición AJAX, y redirige con XML.        		        	
+        	    // Entra a esta condiciï¿½n si es una peticiï¿½n AJAX, y redirige con XML.        		        	
         		response.setContentType("text/xml");
             	response.getWriter()
             		.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
@@ -93,65 +98,44 @@ public class UserFilter implements Filter {
         	}
         	else
         	{
-        		//Entra a esta condición si es una petición normal, y redirige.
-        		response.sendRedirect(loginURL); // No encontró usuario logueado.
+        		//Entra a esta condiciï¿½n si es una peticiï¿½n normal, y redirige.
+        		response.sendRedirect(loginURL); // No encontrï¿½ usuario logueado.
         	}        
         }
-        else if (request.getParameter("code") != null && request.getParameter("state") != null && 
-        			request.getParameter("state").equals(session.getAttribute("state")
-        		) &&
-        		!request.getRequestURI().equals(principalURL) &&
-        		!(this.contains(urlsAnomimas, request.getRequestURI())) &&
-                !(url.indexOf(".css.xhtml") > 0) &&					
-                !(url.indexOf(".js.xhtml") > 0) &&
-                !(url.indexOf(".png.xhtml") > 0) &&
-                !(url.indexOf(".jpg.xhtml") > 0) &&
-        		!(url.indexOf(".gif.xhtml") > 0) 
-            )
-        {
-        	session.removeAttribute("state");
-        	System.out.println("Autenticacion exitosa");
-        	System.out.println(googleAuthHelper.getUserInfoJson(request.getParameter("code")));
-        	// Encontró usuario logueado, pero está en index (O ALGÚN OTRO LUGAR QUE NO SEA PRINCIPAL): redirige a /principal.xhtml
-        	if ("partial/ajax".equals(request.getHeader("Faces-Request")))
-        	{
-        	    // Entra a esta condición si es una petición AJAX, y redirige con XML.
-        		response.setContentType("text/xml");
-            	response.getWriter()
-            		.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
-            	    .printf("<partial-response><redirect url=\""+principalURL+"\"></redirect></partial-response>", url);
-        	}
-        	else
-        	{
-        		//Entra a esta condición si es una petición normal y redirige.
-        		response.sendRedirect(principalURL);
-        	}
-        }
-        else
-        {
-        	if ((url.indexOf(".css.xhtml") > 0) ||					
-                (url.indexOf(".js.xhtml") > 0) ||
-                (url.indexOf(".png.xhtml") > 0) ||
-                (url.indexOf(".jpg.xhtml") > 0) ||
-        		(url.indexOf(".gif.xhtml") > 0))
-        	{
-        		//Cachea los archivos estáticos
-        		response.setHeader("Cache-Control", "public"); // HTTP 1.1.
-                response.setHeader("Pragma", "cache"); // HTTP 1.0.
-                response.setDateHeader("Expires", System.currentTimeMillis() + 900000L); // Expira en 15 minutos
-        	}
-        	else
-        	{
-        		//No cachea los archivos XHTML
-        		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        		response.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-        		response.setHeader("Connection", "Keep-Alive");
-        		response.setDateHeader("Expires", 0); // Proxies.
-        	}
-        	session.removeAttribute("state");
-       		chain.doFilter(req, res); // Encontró usuario logueado (o es un archivo js/css/png) (o es una URL permitida) y continua.
-        }
-    
+        else{
+        	if (	navigationControl.getUsuarioAutenticado()!=null
+        			|| (request.getParameter("code") != null					
+				)){
+        		
+	        	if(navigationControl.getUsuarioAutenticado()==null){
+	        			        		
+	    			System.out.println("Autenticacion exitosa");
+	    			System.out.println(googleAuthHelper.getUserInfoJson(request.getParameter("code")));
+	    			boolean authorizedUser=navigationControl.isAuthorizedUser(email, name, link, picture);
+	    			if(authorizedUser)
+	    				System.out.println("Usuario Autorizado");
+	    			else
+	    				System.err.println("ERROR. Usuario no autorizado");
+	    			
+	    			if (!request.getRequestURI().equals(principalURL) && !(this.contains(urlsAnomimas, request.getRequestURI()))){
+						
+						// Encontrï¿½ usuario logueado, pero estï¿½ en index (O ALGï¿½N OTRO LUGAR QUE NO SEA PRINCIPAL): redirige a /principal.xhtml				
+						if ("partial/ajax".equals(request.getHeader("Faces-Request"))){
+						    // Entra a esta condiciï¿½n si es una peticiï¿½n AJAX, y redirige con XML.
+							response.setContentType("text/xml");
+					    	response.getWriter()
+					    		.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
+					    	    .printf("<partial-response><redirect url=\""+principalURL+"\"></redirect></partial-response>", url);
+						}
+						else{
+			        		//Entra a esta condiciï¿½n si es una peticiï¿½n normal y redirige.
+			        		response.sendRedirect(principalURL);
+			        	}
+					}	    				    				    				
+	        	}
+	        	chain.doFilter(req, res); // Encontrï¿½ usuario logueado (o es una URL permitida) y continua.
+        	}        	        	        
+        }    
     }
     
 

@@ -12,6 +12,8 @@ public class Usuario implements Serializable{
 	
 	private String username;
 	private String nombre;
+	private String foto;
+	private String enlace;
 	private String rol;
 	private Date fechaInicio;
 	private Date fechaFin;
@@ -44,5 +46,17 @@ public class Usuario implements Serializable{
 	}
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
-	}		
+	}
+	public String getFoto() {
+		return foto;
+	}
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+	public String getEnlace() {
+		return enlace;
+	}
+	public void setEnlace(String enlace) {
+		this.enlace = enlace;
+	}	
 }
