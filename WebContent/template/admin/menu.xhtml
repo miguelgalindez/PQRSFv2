@@ -53,8 +53,20 @@
 			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
 		          		</h:commandLink>
 					</li>
-		            <li><a href="/admin/consultas/vencimientoPQRSF/8"><i class="fa fa-circle-o"></i>PQRSFs proximas a vencerse</a></li>
-		            <li><a href="/admin/consultas/vencimientoPQRSF/0"><i class="fa fa-circle-o"></i>PQRSFs vencidas</a></li>
+		            <li>
+		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/consultas/pqrsfProximasaVencerse.xhtml')}">		        				            
+			            	<i class="fa fa-circle-o"></i>
+			        		PQRSFs próximas a vencerse
+			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
+		          		</h:commandLink>
+					</li>
+		            <li>
+		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/consultas/pqrsfVencidas.xhtml')}">		        				            
+			            	<i class="fa fa-circle-o"></i>
+			        		PQRSFs vencidas
+			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
+		          		</h:commandLink>
+		            </li>
 		          </ul>
 		        </li>
 		

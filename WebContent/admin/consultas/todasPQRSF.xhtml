@@ -48,7 +48,8 @@
 					<h:outputText value="#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, orden.pqrsf.tipoPqrsf)}" />
 				</p:column>
 				
-				<p:column headerText="Estado" sortBy="#{valoresDAO.obtnDescripcion(valoresDAO.estados, orden.pqrsf.estado)}" 
+				<p:column headerText="#{todasPqrsfControl.diasParaVencimiento lt 0 ? 'Último estado' : 'Estado'}" 
+							sortBy="#{valoresDAO.obtnDescripcion(valoresDAO.estados, orden.pqrsf.estado)}" 
 							filterBy="#{orden.pqrsf.estado}" filterMatchMode="exact" style="text-align: center;">
 					<f:facet name="filter">
 		                <p:selectOneMenu onchange="PF('todasPqrsf').filter()" >
@@ -60,7 +61,7 @@
 					<h:outputText value="#{valoresDAO.obtnDescripcion(valoresDAO.estados, orden.pqrsf.estado)}" />
 				</p:column>							
 				
-				<p:column headerText="Vencimiento" sortBy="#{todasPqrsfControl.obtnDiasParaVencimiento(orden.pqrsf)}"
+				<p:column rendered="#{todasPqrsfControl.diasParaVencimiento==null || todasPqrsfControl.diasParaVencimiento ge 0}" headerText="Vencimiento" sortBy="#{todasPqrsfControl.obtnDiasParaVencimiento(orden.pqrsf)}"
 								filterBy="#{todasPqrsfControl.obtnDiasParaVencimiento(orden.pqrsf)}" filterMatchMode="exact" 
 								style="text-align: center;">												
 						<f:facet name="filter">
@@ -69,6 +70,11 @@
 			                </p:spinner>
 			            </f:facet>
 					<h:outputText value="#{todasPqrsfControl.obtnLeyendaDiasParaVencimiento(orden.pqrsf)} "/>
+				</p:column>
+				
+				<p:column rendered="#{todasPqrsfControl.diasParaVencimiento lt 0}" headerText="Responsable" sortBy="#{orden.funcionario.nombre}"
+						filterBy="#{orden.funcionario.nombre}" filterMatchMode="contains" style="text-align: center;">
+					<h:outputText value="#{orden.funcionario.nombre}"/>
 				</p:column>
 				
 				<ui:remove>				

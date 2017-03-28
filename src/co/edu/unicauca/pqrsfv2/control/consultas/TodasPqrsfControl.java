@@ -25,6 +25,7 @@ public class TodasPqrsfControl implements Serializable{
 	
 	@Inject
 	OrdenDAO ordenDAO;
+	private Integer diasParaVencimiento;
 	private ArrayList<Orden> ordenes;
 	private String selectedAction;
 	
@@ -33,7 +34,7 @@ public class TodasPqrsfControl implements Serializable{
 	}
 
 	public void cargarTodasPqrf(){		
-		ordenes=ordenDAO.obtnTodasOrdenes();
+		ordenes=ordenDAO.obtnTodasOrdenes(diasParaVencimiento);
 	}
 	
 	public void changeSelectedAction(String action){
@@ -59,9 +60,9 @@ public class TodasPqrsfControl implements Serializable{
 					return "VENCE HOY";
 				else{
 					if(diasRestantes==1)
-						return "En 1 día";
+						return "En 1 dÃ­a";
 					else
-						return "En "+diasRestantes+" días";
+						return "En "+diasRestantes+" dÃ­as";
 				}
 			}
 		}
@@ -83,5 +84,14 @@ public class TodasPqrsfControl implements Serializable{
 
 	public void setSelectedAction(String selectedAction) {
 		this.selectedAction = selectedAction;
-	}	
+	}
+
+	public Integer getDiasParaVencimiento() {
+		return diasParaVencimiento;
+	}
+
+	public void setDiasParaVencimiento(Integer diasParaVencimiento) {
+		this.diasParaVencimiento = diasParaVencimiento;
+	}
+	
 }

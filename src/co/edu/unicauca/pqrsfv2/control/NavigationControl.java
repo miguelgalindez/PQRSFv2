@@ -47,7 +47,7 @@ public class NavigationControl implements Serializable {
 		this.viewToShow = viewToShow;
 	}
 	
-	public void changeViewToShow(String viewToShow) {
+	public void changeViewToShow(String viewToShow) {		
 		this.viewToShow = viewToShow;
 		
 		switch(viewToShow){
@@ -59,7 +59,20 @@ public class NavigationControl implements Serializable {
 				direccionarPqrsfControl.cargarPQRSFNoDireccionadas();
 				break;
 				
-			case "/admin/consultas/todasPQRSF.xhtml":
+			case "/admin/consultas/todasPQRSF.xhtml":				
+				todasPqrsfControl.setDiasParaVencimiento(null);
+				todasPqrsfControl.cargarTodasPqrf();
+				break;
+			
+			case "/admin/consultas/pqrsfProximasaVencerse.xhtml":
+				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
+				todasPqrsfControl.setDiasParaVencimiento(3);
+				todasPqrsfControl.cargarTodasPqrf();
+				break;
+			
+			case "/admin/consultas/pqrsfVencidas.xhtml":
+				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
+				todasPqrsfControl.setDiasParaVencimiento(-1);
 				todasPqrsfControl.cargarTodasPqrf();
 				break;
 		}		
@@ -79,6 +92,7 @@ public class NavigationControl implements Serializable {
 			if(usuario!=null && now.after(usuario.getFechaInicio())){		
 				Date fechaFin=usuario.getFechaFin();
 				if(fechaFin==null || now.before(fechaFin)){
+					usuario.setUsername(username);
 					usuario.setNombre(name);						
 					usuario.setFoto(picture);				
 					usuario.setEnlace(link);
