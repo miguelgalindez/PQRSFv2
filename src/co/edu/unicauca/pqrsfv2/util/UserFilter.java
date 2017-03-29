@@ -63,6 +63,7 @@ public class UserFilter implements Filter {
         String urlForbidden=request.getContextPath()+"/forbidden.xhtml";
         
         ArrayList<String> urlsAnomimas = new ArrayList<String>();       
+        urlsAnomimas.add(request.getContextPath()+"/index.html");
         urlsAnomimas.add(request.getContextPath()+"/index.xhtml");
         urlsAnomimas.add(urlForbidden);       
         

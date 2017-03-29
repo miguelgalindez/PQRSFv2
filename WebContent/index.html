@@ -1,31 +1,24 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	>
-  <h:head>    
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+  <head>
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>PQRSF - Universidad del Cauca</title>
+    <title>AMBIXO - HTML5 Parallax One Page Portfolio Responsive Template</title>
         
     <link href="resources/css/bootstrap.min.css" rel="stylesheet"/>    
-    <link href="resources/css/ambixo.css" rel="stylesheet"/>      
-    <h:outputStylesheet library="css" name="AdminLTE.min.css"></h:outputStylesheet> 
-    <h:outputStylesheet library="css" name="steps.css"></h:outputStylesheet>    
-    <h:outputStylesheet library="css" name="font-awesome.min.css"></h:outputStylesheet>
-    
-        
+    <link href="resources/css/ambixo.css" rel="stylesheet"/>
+    <link href="resources/css/font-awesome.min.css" rel="stylesheet"/>        
     <!-- Google Fonts -->
-	    <link href='http://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet' type='text/css' />
-	    <link href='http://fonts.googleapis.com/css?family=Nothing+You+Could+Do' rel='stylesheet' type='text/css' />
-	    <link href='http://fonts.googleapis.com/css?family=Signika' rel='stylesheet' type='text/css' />
-	    <link href='http://fonts.googleapis.com/css?family=Signika:300' rel='stylesheet' type='text/css' />
-    
+    <link href='http://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Nothing+You+Could+Do' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Signika' rel='stylesheet' type='text/css' />
+    <link href='http://fonts.googleapis.com/css?family=Signika:300' rel='stylesheet' type='text/css' />
               
-	
+	<script src="resources/js/jquery-3.1.1.min.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>    
     <script src="resources/js/modernizr.custom.js"></script>
     <script src="resources/js/jquery.quovolver.min.js" ></script>
@@ -38,10 +31,6 @@
     <script src="resources/js/jquery.localscroll-1.2.7-min.js"></script>
     <script src="resources/js/jquery.scrollTo-min.js"></script>
     <script src="resources/js/ambixo.js"></script>
-    <h:outputScript library="js" name="steps.js"></h:outputScript>
-    
-    <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
-	<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
 
     <script>
       $('.easy-pie-chart').easyPieChart({
@@ -54,86 +43,169 @@
         barColor: '#D0C5BF',
       });
     </script>
-</h:head>
-  
+
+  </head>
   <body data-spy="scroll" data-target=".header">
     <header>
       <div id="header" class="header">
         <div class="container">
-        	<div class="col-sm-3">
-        		<img src="resources/img/logo-s.svg" height="85" width="120" title="Logo" />
-        	</div>
-        	<div class="col-sm-9">        		
-        		<nav id="main-nav">
-		          <div class="navbar navbar-default" role="navigation">
-		            <div class="container">
-		              <div class="navbar-header">
-		                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		                  <span class="sr-only">Toggle navigation</span>
-		                  <span class="icon-bar"></span>
-		                  <span class="icon-bar"></span>
-		                  <span class="icon-bar"></span>
-		                </button>
-		              </div>
-		              <div class="collapse navbar-collapse">
-		                <ul class="nav navbar-nav">		                	                 
-		                  <li><a href="#services">Crear PQRSF</a></li>
-		                  <li><a href="#portfolio">Buscar PQRSF</a></li>		                  
-		                  <li><a href="#contact">Contacto</a></li>   
-		                </ul>
-		              </div>
-		            </div>
-		          </div>
-		        </nav>
-        	</div>                    
-        </div>               
-      </div>      
+          <h1 class="logo"><a href="#"><span>A</span>mbixo</a></h1>
+          <h2 class="tagline hidden-xs"><span>HTML5</span> Parallax <span>One Page</span> Portfolio <span>Responsive</span> Template</h2>
+        </div>
+        <a href="#about" class="sr-only">Skip to main content</a>
+        <nav id="main-nav">
+          <div class="navbar navbar-default" role="navigation">
+            <div class="container">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                  <li><a href="#about-1">About</a></li>
+                  <li><a href="#services">Services</a></li>
+                  <li><a href="#portfolio">Portfolio</a></li>
+                  <li><a href="#skills">Skills</a></li>
+                  <li><a href="#education">Education</a></li>
+                  <li><a href="#contact">Contact</a></li>   
+                </ul>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <svg class="decor" height="100" preserveaspectratio="none" version="1.1" viewbox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 100 L100 0 L0 0" stroke-width="0"></path>
+      </svg>
     </header>
 
-    <!-- inicio -->
-    <section id="main-img" class="section-page">
-      <section class="container">
-        	<div class="col-xs-6">
-				<div class="tile">
-					<h:graphicImage library="img" name="invite.svg" styleClass="tile-image" style="width:50%;" />				     
-				     <h3 class="tile-title">CREAR PQRS</h3>
-				     <p>Puedes ingresar tu PQRS al sistema.</p>
-				     <button class="btn btn-info btn-large btn-block">CREAR PQRS</button>
-				 </div>
-			  </div>
-			  <div class="col-xs-6">
-			      <div class="tile">
-			      	<h:graphicImage library="img" name="search.svg" styleClass="tile-image" style="width:50%;" />			          
-			          <h3 class="tile-title">BUSCAR PQRS</h3>
-			          <p>Utiliza el codigo para verificar el estado de tu PQRS.</p>
-			          <button class="btn btn-primary btn-large btn-block btn-buscarpqrs" href="#">BUSCAR</button>
-			      </div>
-			  </div>
-      </section>
-    </section>
-    
-	
-    <!-- Registrar PQRSF -->
-    <section id="services" class="section-page">
-      <section class="container">
-        <h3 class="text-center">Crear PQRSF</h3>
-         <div>
-          <div class="col-sm-12">
-          		<ui:include src="#{indexControl.selectedAction}" />
-          </div>
-        </div>
-      </section>
+    <section id="main-img">
+         <img class="img-responsive" src="resources/img/main-img.jpg" alt="" />
     </section>
 
-    <!-- Parallax 2 -->
-    <section id="parallax-2" class="container-fluid parallax fixed" style="background-image: url(resources/parallax/2.jpg)">
-      <p class="parallax-text">Usable</p> 
+    <!-- About -->
+    <section id="about-1" class="section-page">
+      <div class="container-fluid">
+        <div class="container">
+           <div>
+            <div class="about col-sm-6">
+              <div class="wrap-about">
+                <h3>About</h3>
+                <p>
+                  Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo. Praesent eu elit. Ut eu ligula.
+                  Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos.
+                  Maecenas elementum augue nec nisl. Proin auctor lorem at nibh. Curabitur nulla purus, feugiat id, elementum in, lobortis quis, pede. Vivamus sodales adipiscing sapien.
+                </p>
+                <ul class="social-account container-fluid">
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Facebook"><i class="fa fa-facebook"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Google+"><i class="fa fa-google-plus"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Twitter"><i class="fa fa-twitter"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on LinkedIn"><i class="fa fa-linkedin"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on YouTube"><i class="fa fa-youtube"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Vimeo"><i class="fa fa-vimeo-square"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Pinterest"><i class="fa fa-pinterest"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Instagram"><i class="fa fa-instagram"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Flickr"><i class="fa fa-flickr"></i></a></address></li>  
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Dribbble"><i class="fa fa-dribbble"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow my Feeds"><i class="fa fa-rss"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="My e-mail"><i class="fa fa-envelope-o"></i></a></address></li>
+                 </ul>
+              </div>
+            </div>
+            <div class="about col-sm-6"><img class="img-responsive" src="resources/img/man.png" alt="" /></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about-2" class="section-page hidden-xs">
+      <div class="container-fluid">
+        <div class="container">
+           <div>
+            <div class="about col-sm-6"><img class="img-responsive" src="resources/img/woman.png" alt="" /></div>
+            <div class="about col-sm-6">
+              <div class="wrap-about">
+                <h3>About</h3>
+                <p>
+                  Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo. Praesent eu elit. Ut eu ligula.
+                  Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos.
+                  Maecenas elementum augue nec nisl. Proin auctor lorem at nibh. Curabitur nulla purus, feugiat id, elementum in, lobortis quis, pede. Vivamus sodales adipiscing sapien.
+                </p>
+                <ul class="social-account container-fluid">
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Facebook"><i class="fa fa-facebook"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Google+"><i class="fa fa-google-plus"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Twitter"><i class="fa fa-twitter"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on LinkedIn"><i class="fa fa-linkedin"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on YouTube"><i class="fa fa-youtube"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Vimeo"><i class="fa fa-vimeo-square"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Pinterest"><i class="fa fa-pinterest"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Instagram"><i class="fa fa-instagram"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Flickr"><i class="fa fa-flickr"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow me on Dribbble"><i class="fa fa-dribbble"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="Follow my Feeds"><i class="fa fa-rss"></i></a></address></li>
+                  <li><address><a class="tool" data-placement="bottom" rel="me" href="#" title="My e-mail"><i class="fa fa-envelope-o"></i></a></address></li>
+                 </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Parallax 1 -->
     <section id="parallax-1" class="container-fluid parallax fixed" style="background-image: url(resources/img/parallax/1.jpg)">
       <p class="parallax-text">Just for Ambitious</p>
-    </section>  
+    </section> 
+
+    <!-- Services -->
+    <section id="services" class="section-page">
+      <div class="container">
+        <h3 class="text-center">Services</h3>
+         <div>
+          <div class="col-sm-12">
+            <div class="about col-sm-4">
+              <h4 class="text-center text-uppercase"><i class="fa fa-desktop"></i> Web Design</h4>
+                <div class="easy-pie-chart" data-percent="100">
+                  <span>100<sup>%</sup></span>
+                </div>
+              <p class="text-center">
+                Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo. Praesent eu elit. Ut eu ligula.
+                Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo. Praesent eu elit. Ut eu ligula.
+              </p>
+            </div>
+            <div class="about col-sm-4">
+              <h4 class="text-center text-uppercase"><i class="fa fa-search"></i> SEO</h4>
+                <div class="easy-pie-chart" data-percent="90">
+                  <span>90<sup>%</sup></span>
+                </div>
+              <p class="text-center">
+                Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo. Praesent eu elit. Ut eu ligula.
+                Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo. Praesent eu elit. Ut eu ligula.
+              </p>
+            </div>
+            <div class="about col-sm-4">
+              <h4 class="text-center text-uppercase"><i class="fa fa-bullhorn"></i> Web Marketing</h4>
+               <div class="easy-pie-chart" data-percent="80">
+                  <span>80<sup>%</sup></span>
+               </div>
+              <p class="text-center">
+                Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo. Praesent eu elit. Ut eu ligula.
+                Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo. Praesent eu elit. Ut eu ligula.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Parallax 2 -->
+    <section id="parallax-2" class="container-fluid parallax fixed" style="background-image: url(resources/parallax/2.jpg)">
+      <p class="parallax-text">Usable</p> 
+    </section> 
 
     <!-- Portfolio -->
     <section id="portfolio" class="section-page">
