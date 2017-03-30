@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:body>
+			<h:panelGrid columns="1" width="100%">					            
+              <div class="col-sm-offset-2 col-sm-8">
+              	<table class="table table-responsive table-striped table-hover table-bordered">										
+				<tbody>
+					<tr>
+						<td>Nombre del responsable</td>
+						<td>#{todasPqrsfControl.orden.funcionario.nombre}</td>
+					</tr>
+					
+					<tr>
+						<td>Fecha de asignación</td>	
+						<td>												
+							#{todasPqrsfControl.formatearFecha(todasPqrsfControl.orden.fechaAsignacion)}
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Dependencia</td>
+						<td>#{valoresDAO.obtnDescripcion(valoresDAO.dependencias, todasPqrsfControl.orden.funcionario.dependencia.id)}</td>
+					</tr>	
+					
+					<tr>
+						<td>Correo funcionario</td>
+						<td>#{todasPqrsfControl.orden.funcionario.correo}</td>
+					</tr>
+					
+					<tr>
+						<td>Teléfono funcionario</td>
+						<td>#{todasPqrsfControl.orden.funcionario.telefono}</td>
+					</tr>
+																																						
+				</tbody>
+			</table>
+              </div>
+            </h:panelGrid>
+</h:body>
+</html>

@@ -35,7 +35,7 @@ public class OrdenDAO {
 	public ArrayList<Orden> obtnTodasOrdenes(Integer diasParaVencimiento) {
 		String sql="SELECT PQRSF.PQRSFCODIGO, PQRSF.TIPPQRSFID, MEDID, PERNOMBRES, PERAPELLIDOS, PQRSFASUNTO, "+
 		        "PQRSFDESCRIPCION, RADFECHA, PQRSFESTADO, PQRSFFECHACREACION, "+
-		        "PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, FUNNOMBRE, DEPID "+      
+		        "PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, FUNNOMBRE, ORDFECHAASIGNACION, FUNCORREO, FUNTELEFONO, DEPID "+      
 		        "FROM PQRSF NATURAL JOIN PERSONA "+
 		                    "LEFT OUTER JOIN RADICADO ON PQRSF.RADID=RADICADO.RADID "+
 		                    "LEFT OUTER JOIN ORDEN ON PQRSF.PQRSFCODIGO = ORDEN.PQRSFCODIGO "+
@@ -53,7 +53,7 @@ public class OrdenDAO {
 	public Orden obtnOrden(String pqrsfCodigo, String perIdentificacion){		
 		String sql="SELECT PQRSF.PQRSFCODIGO, PQRSF.TIPPQRSFID, MEDID, PERNOMBRES, PERAPELLIDOS, PQRSFASUNTO, "+
 					"PQRSFDESCRIPCION, RADFECHA, PQRSFESTADO, PQRSFFECHACREACION, "+
-					"PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, FUNNOMBRE, DEPID "+
+					"PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, FUNNOMBRE, ORDFECHAASIGNACION, FUNCORREO, FUNTELEFONO, DEPID "+
 					"FROM PQRSF NATURAL JOIN PERSONA "+
                     "LEFT OUTER JOIN RADICADO ON PQRSF.RADID=RADICADO.RADID "+
                     "LEFT OUTER JOIN ORDEN ON PQRSF.PQRSFCODIGO = ORDEN.PQRSFCODIGO "+
@@ -89,6 +89,9 @@ public class OrdenDAO {
 				orden.setPqrsf(pqrsf);				
 				orden.getFuncionario().setNombre(rs.getString("FUNNOMBRE"));
 				orden.getFuncionario().getDependencia().setId(rs.getInt("DEPID"));
+				orden.setFechaAsignacion(rs.getDate("ORDFECHAASIGNACION"));
+				orden.getFuncionario().setCorreo(rs.getString("FUNCORREO"));
+				orden.getFuncionario().setTelefono(rs.getString("FUNTELEFONO"));
 				
 				ordenes.add(orden);				
 			}
