@@ -61,11 +61,9 @@ public class OrdenDAO {
                     "WHERE PQRSFCODIGO='"+pqrsfCodigo+"' AND PERIDENTIFICACION='"+perIdentificacion+"'";
 		
 		ArrayList<Orden> ordenes=cargarOrdenes(con.executeQueryRS(sql));		
-		if(ordenes!=null && ordenes.size()>0){
-			System.out.println("OK - Orden encontrada");
+		if(ordenes!=null && ordenes.size()>0){			
 			return ordenes.get(0);			
-		}
-		System.out.println("Houston - Orden NO ENCONTRADA");
+		}		
 		return null;
 	}
 

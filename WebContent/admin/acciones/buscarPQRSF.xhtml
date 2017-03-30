@@ -11,46 +11,46 @@
 	<h:body>						
 		<div class="col-lg-12">
         	<div class="box box-danger">
-	            <div class="box-header with-border">			    				        														
-		            <h:form class="form-inline">
-						  <div class="form-group">
-						    <label for="codigo">Código:</label>
-						    <p:inputText id="codigo" value="#{todasPqrsfControl.codigoPqrsf}"/>
-						  </div>
-						  <div class="form-group">
-						    <label for="identificacion">Identificación del solicitante:</label>
-						    <p:inputText id="identificacion" value="#{todasPqrsfControl.identificacionPersona}" />
-						  </div>
-						  <p:commandLink styleClass="btn btn-lg btn-success" 
-						  					action="#{todasPqrsfControl.obtnOrden()}"
-						  					update="datosPqrsf">
-						  	Buscar
-						  	<i class="fa fa-search" />						  						  
-						  </p:commandLink>					  					  					 
-					</h:form>
+	            <div class="box-header with-border">
+	            	<h:panelGroup id="panelBuscarPQRSF">			    				        														
+			            <h:form>
+							  <div class="form-group col-sm-4 col-sm-offset-1">
+							    <label for="codigo">Código:</label>
+							    <p:inputText id="codigo" value="#{todasPqrsfControl.codigoPqrsf}" styleClass="form-control" required="true" requiredMessage="Digite el código de la PQRSF"  />
+							    <p:message for="codigo" />
+							  </div>
+							  <div class="form-group col-sm-4">
+							    <label for="identificacion">Identificación del solicitante:</label>
+							    <p:inputText id="identificacion" value="#{todasPqrsfControl.identificacionPersona}" styleClass="form-control" required="true" requiredMessage="Digite la identificación del solicitante" />
+							    <p:message for="identificacion"/>
+							  </div>
+							  <div class="form-group col-sm-2">
+								  <p:commandLink id="btnBuscar" styleClass="btn btn-lg btn-danger" 
+								  					action="#{todasPqrsfControl.obtnOrden()}"
+								  					update="panelBuscarPQRSF datosPqrsf"
+								  					>
+								  	Buscar
+								  	<i class="fa fa-search" />						  						  
+								  </p:commandLink>					  				
+							  </div>
+							  <p:defaultCommand target="btnBuscar" />	  					 
+						</h:form>
+					</h:panelGroup>
             	</div>
             	<div class="box-body">
-            		<p:panel id="datosPqrsf">
-	            		<p:tabView rendered="#{todasPqrsfControl.orden != null}">
+            		<h:panelGroup id="datosPqrsf">
+	            		<p:tabView rendered="#{todasPqrsfControl.orden != null}" >
 					        <p:tab title="Datos de la PQRSF">
-					            <h:panelGrid columns="2" cellpadding="10">
-					                
-					            </h:panelGrid>
+					        	<ui:include src="/admin/consultas/datosPQRSF.xhtml" />				            
 					        </p:tab>
 					        <p:tab title="Datos del Responsable">
-					            <h:panelGrid columns="2" cellpadding="10">
-					                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
-					                <h:outputText value="Francis Ford Coppola's legendary..." />
-					            </h:panelGrid>
+					            
 					        </p:tab>
 					        <p:tab title="Datos del Solicitante">
-					            <h:panelGrid columns="2" cellpadding="10">
-					                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-					                <h:outputText value="After a break of more than 15 years..." />
-					            </h:panelGrid>
+					            
 					        </p:tab>
 					    </p:tabView>
-				    </p:panel>
+				    </h:panelGroup>
 				</div>
 			</div>
 		</div>												

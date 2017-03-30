@@ -12,7 +12,7 @@ $(document).ready(function () {
 
 //LOGO SCROLL ----------------------------------------------------------------------------/
 
-  $(".logo a").click(function(){
+  $(".logo").click(function(){
     $('html, body').animate({ scrollTop: 0 }, 800);
   });
 

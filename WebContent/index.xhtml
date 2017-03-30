@@ -61,7 +61,7 @@
       <div id="header" class="header">
         <div class="container">
         	<div class="col-sm-3">
-        		<img src="resources/img/logo-s.svg" height="85" width="120" title="Logo" />
+        		<img src="resources/img/logo-s.svg" height="85" width="120" class="logo" />
         	</div>
         	<div class="col-sm-9">        		
         		<nav id="main-nav">
@@ -112,11 +112,12 @@
       </section>
     </section>
     
+    <section id="parallax-1" class="container-fluid parallax fixed" />
 	
     <!-- Crear PQRSF -->
     <section id="crear" class="section-page">
       <section class="container">
-        <h3 class="text-center">Crear PQRSF</h3>
+        <h3 class="text-center ambixo-title">Crear PQRSF</h3>
          <div>
           <div class="col-sm-12">
           		<ui:include src="/admin/acciones/registrarPQRSF.xhtml" />
@@ -124,16 +125,17 @@
         </div>
       </section>
     </section>
-
-    <!-- Parallax 2 -->
+	
+	<section id="parallax-2" class="container-fluid parallax fixed" />
+    <!-- Parallax 2 
     <section id="parallax-2" class="container-fluid parallax fixed" style="background-image: url(resources/parallax/2.jpg)">
       	
     </section>
-    
+    -->
     <!-- Buscar PQRSF -->
     <section id="buscar" class="section-page">
       <section class="container">
-        <h3 class="text-center">Buscar PQRSF</h3>
+        <h3 class="text-center ambixo-title">Buscar PQRSF</h3>
          <div>
           <div class="col-sm-12">
           		<ui:include src="/admin/acciones/buscarPQRSF.xhtml" />
@@ -141,12 +143,9 @@
         </div>
       </section>
     </section>
-
-    <!-- Parallax 1 -->
-    <section id="parallax-1" class="container-fluid parallax fixed" style="background-image: url(resources/img/parallax/1.jpg)">
-      <p class="parallax-text">Just for Ambitious</p>
-    </section>      
-
+    
+    <section id="parallax-3" class="container-fluid parallax fixed" />
+               
     <!-- Portfolio -->
     <section id="portfolio" class="section-page">
         <div class="container">
@@ -220,7 +219,7 @@
     </section>
 
     <!-- Parallax 3 -->
-    <section id="parallax-3" class="container-fluid parallax fixed" style="background-image: url(resources/img/parallax/3.jpg)">
+    <section id="parallax-4" class="container-fluid parallax fixed" style="background-image: url(resources/img/parallax/3.jpg)">
       <p class="parallax-text">Pixel Perfect</p>
     </section>
   
@@ -318,12 +317,12 @@
           </div>
         </div>
     </section>
-
+	<ui:remove>
     <!-- Parallax 5 -->
-    <section id="parallax-7" class="container-fluid parallax fixed" style="background-image: url(img/parallax/7.jpg)">
+    <section id="parallax-5" class="container-fluid parallax fixed" style="background-image: url(img/parallax/7.jpg)">
       <p class="parallax-text">Responsive</p>
     </section>
-
+	</ui:remove>
     <!-- Education -->
     <section id="education" class="section-page">
         <div class="container">
@@ -378,7 +377,7 @@
     </section>
 
     <!-- Parallax Google Maps -->
-    <section id="parallax-9" class="container-fluid parallax fixed"> 
+    <section id="parallax-6" class="container-fluid parallax fixed"> 
       <div id="map-canvas"></div>
       <p class="parallax-text">Made with Bootstrap 3</p>
     </section>  
@@ -449,7 +448,7 @@
     </section>
     
     <!-- Back to Top -->
-    <p class="back-to-top"><i class="fa fa-chevron-up"></i></p>
+    <p class="back-to-top"><i class="fa fa-chevron-up ambixo-home-arrow"></i></p>
     
   </body>
 </html>

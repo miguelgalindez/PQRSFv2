@@ -1,8 +1,10 @@
 package co.edu.unicauca.pqrsfv2.control.consultas;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.ejb.LocalBean;
 import javax.enterprise.context.SessionScoped;
@@ -75,10 +77,13 @@ public class TodasPqrsfControl implements Serializable{
 			return "";					
 	}
 	
-	public void obtnOrden(){
-		System.out.println("Obteniendo Orden");
-		orden=ordenDAO.obtnOrden(codigoPqrsf, identificacionPersona);
-		System.out.println(orden!=null);
+	public void obtnOrden(){		
+		orden=ordenDAO.obtnOrden(codigoPqrsf, identificacionPersona);		
+	}
+	
+	public String formatearFecha(Date fecha){
+		SimpleDateFormat sdf=new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es","es_CO"));
+		return sdf.format(fecha);
 	}
 		
 	public ArrayList<Orden> getOrdenes() {

@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:body>
+			<h:panelGrid columns="1" width="100%">					            
+              <div class="col-sm-offset-2 col-sm-8">
+              	<table class="table table-responsive table-striped table-hover table-bordered">										
+				<tbody>
+					<tr>
+						<td>Estado</td>
+						<td>#{valoresDAO.obtnDescripcion(valoresDAO.estados, todasPqrsfControl.orden.pqrsf.estado)}</td>
+					</tr>
+					
+					<tr style="#{todasPqrsfControl.orden.pqrsf.estado != 2 ? 'display:none;' : '' }" >
+						<td>Fecha de cierre</td>
+						<td>#{todasPqrsfControl.orden.pqrsf.fechaCierre}</td>
+					</tr>
+					
+					<tr>
+						<td>Medio de Recepción</td>
+						<td>#{valoresDAO.obtnDescripcion(valoresDAO.mediosRecepcion, todasPqrsfControl.orden.pqrsf.medioRecepcion)}</td>
+					</tr>
+					<tr>
+						<td>Tipo</td>
+						<td>#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, todasPqrsfControl.orden.pqrsf.tipoPqrsf)}</td>
+					</tr>												
+					<tr>
+						<td>Asunto</td>	
+						<td>												
+							#{todasPqrsfControl.orden.pqrsf.asunto}
+						</td>
+					</tr>
+					<tr>
+						<td>Descripción</td>
+						<td>
+							<p align="justify">#{todasPqrsfControl.orden.pqrsf.descripcion}</p>																										
+						</td>
+						
+					</tr>												
+					<tr>
+						<td>Fecha de creación</td>
+						<td>#{todasPqrsfControl.formatearFecha(todasPqrsfControl.orden.pqrsf.fechaCreacion)}</td>
+					</tr>																							
+				</tbody>
+			</table>
+              </div>
+            </h:panelGrid>
+</h:body>
+</html>
