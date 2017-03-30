@@ -29,12 +29,17 @@ public class TodasPqrsfControl implements Serializable{
 	private ArrayList<Orden> ordenes;
 	private String selectedAction;
 	
+	private String identificacionPersona;
+	private String codigoPqrsf;
+	private Orden orden;
+	
 	public TodasPqrsfControl(){
 		selectedAction="Ver";
+		orden=null;
 	}
 
 	public void cargarTodasPqrf(){		
-		ordenes=ordenDAO.obtnTodasOrdenes(diasParaVencimiento);
+		ordenes=ordenDAO.obtnTodasOrdenes(diasParaVencimiento);		
 	}
 	
 	public void changeSelectedAction(String action){
@@ -69,6 +74,12 @@ public class TodasPqrsfControl implements Serializable{
 		else
 			return "";					
 	}
+	
+	public void obtnOrden(){
+		System.out.println("Obteniendo Orden");
+		orden=ordenDAO.obtnOrden(codigoPqrsf, identificacionPersona);
+		System.out.println(orden!=null);
+	}
 		
 	public ArrayList<Orden> getOrdenes() {
 		return ordenes;
@@ -93,5 +104,29 @@ public class TodasPqrsfControl implements Serializable{
 	public void setDiasParaVencimiento(Integer diasParaVencimiento) {
 		this.diasParaVencimiento = diasParaVencimiento;
 	}
-	
+
+	public String getIdentificacionPersona() {
+		return identificacionPersona;
+	}
+
+	public void setIdentificacionPersona(String identificacionPersona) {
+		this.identificacionPersona = identificacionPersona;
+	}
+
+	public String getCodigoPqrsf() {
+		return codigoPqrsf;
+	}
+
+	public void setCodigoPqrsf(String codigoPqrsf) {
+		this.codigoPqrsf = codigoPqrsf;
+	}
+
+	public Orden getOrden() {
+		return orden;
+	}
+
+	public void setOrden(Orden orden) {
+		this.orden = orden;
+	}
+		
 }

@@ -49,6 +49,25 @@ public class OrdenDAO {
 							
 		return cargarOrdenes(con.executeQueryRS(sql));
 	}
+	
+	public Orden obtnOrden(String pqrsfCodigo, String perIdentificacion){		
+		String sql="SELECT PQRSF.PQRSFCODIGO, PQRSF.TIPPQRSFID, MEDID, PERNOMBRES, PERAPELLIDOS, PQRSFASUNTO, "+
+					"PQRSFDESCRIPCION, RADFECHA, PQRSFESTADO, PQRSFFECHACREACION, "+
+					"PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, FUNNOMBRE, DEPID "+
+					"FROM PQRSF NATURAL JOIN PERSONA "+
+                    "LEFT OUTER JOIN RADICADO ON PQRSF.RADID=RADICADO.RADID "+
+                    "LEFT OUTER JOIN ORDEN ON PQRSF.PQRSFCODIGO = ORDEN.PQRSFCODIGO "+
+                    "LEFT OUTER JOIN FUNCIONARIO ON ORDEN.FUNIDENTIFICACION = FUNCIONARIO.FUNIDENTIFICACION "+
+                    "WHERE PQRSFCODIGO='"+pqrsfCodigo+"' AND PERIDENTIFICACION='"+perIdentificacion+"'";
+		
+		ArrayList<Orden> ordenes=cargarOrdenes(con.executeQueryRS(sql));		
+		if(ordenes!=null && ordenes.size()>0){
+			System.out.println("OK - Orden encontrada");
+			return ordenes.get(0);			
+		}
+		System.out.println("Houston - Orden NO ENCONTRADA");
+		return null;
+	}
 
 	private ArrayList<Orden> cargarOrdenes(ResultSet rs) {
 		ArrayList<Orden> ordenes=new ArrayList<>();

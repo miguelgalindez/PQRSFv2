@@ -77,8 +77,8 @@
 		              </div>
 		              <div class="collapse navbar-collapse">
 		                <ul class="nav navbar-nav">		                	                 
-		                  <li><a href="#services">Crear PQRSF</a></li>
-		                  <li><a href="#portfolio">Buscar PQRSF</a></li>		                  
+		                  <li><a href="#crear">Crear PQRSF</a></li>
+		                  <li><a href="#buscar">Buscar PQRSF</a></li>		                  
 		                  <li><a href="#contact">Contacto</a></li>   
 		                </ul>
 		              </div>
@@ -113,13 +113,13 @@
     </section>
     
 	
-    <!-- Registrar PQRSF -->
-    <section id="services" class="section-page">
+    <!-- Crear PQRSF -->
+    <section id="crear" class="section-page">
       <section class="container">
         <h3 class="text-center">Crear PQRSF</h3>
          <div>
           <div class="col-sm-12">
-          		<ui:include src="#{indexControl.selectedAction}" />
+          		<ui:include src="/admin/acciones/registrarPQRSF.xhtml" />
           </div>
         </div>
       </section>
@@ -127,13 +127,25 @@
 
     <!-- Parallax 2 -->
     <section id="parallax-2" class="container-fluid parallax fixed" style="background-image: url(resources/parallax/2.jpg)">
-      <p class="parallax-text">Usable</p> 
+      	
+    </section>
+    
+    <!-- Buscar PQRSF -->
+    <section id="buscar" class="section-page">
+      <section class="container">
+        <h3 class="text-center">Buscar PQRSF</h3>
+         <div>
+          <div class="col-sm-12">
+          		<ui:include src="/admin/acciones/buscarPQRSF.xhtml" />
+          </div>
+        </div>
+      </section>
     </section>
 
     <!-- Parallax 1 -->
     <section id="parallax-1" class="container-fluid parallax fixed" style="background-image: url(resources/img/parallax/1.jpg)">
       <p class="parallax-text">Just for Ambitious</p>
-    </section>  
+    </section>      
 
     <!-- Portfolio -->
     <section id="portfolio" class="section-page">
