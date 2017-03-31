@@ -65,10 +65,19 @@ public class UserFilter implements Filter {
         ArrayList<String> urlsAnomimas = new ArrayList<String>();       
         urlsAnomimas.add(request.getContextPath()+"/index.html");
         urlsAnomimas.add(request.getContextPath()+"/index.xhtml");
-        urlsAnomimas.add(urlForbidden);       
+        urlsAnomimas.add(urlForbidden);                      
         
-        if(request.getRequestURI().equals(loginURL) || this.contains(urlsAnomimas, request.getRequestURI())){
-    		chain.doFilter(req, res);
+        if(request.getRequestURI().equals(loginURL) || this.contains(urlsAnomimas, request.getRequestURI())
+    		|| (url.indexOf(".css.xhtml") > 0) 																
+    		|| (url.indexOf(".js.xhtml") > 0) 
+    		|| (url.indexOf(".png.xhtml") > 0) 
+    		|| (url.indexOf(".jpg.xhtml") > 0)
+    		|| (url.indexOf(".svg.xhtml") > 0)
+    		|| (url.indexOf(".woff2.xhtml") > 0)
+    		|| (url.indexOf(".woff.xhtml") > 0)
+    		|| (url.indexOf(".ttf.xhtml") > 0)
+    		|| (url.indexOf(".gif.xhtml") > 0)){
+    			chain.doFilter(req, res);
     	}
         else{
         	if (navigationControl.getUsuarioAutenticado()==null && request.getParameter("code") == null){        		        
