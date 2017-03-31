@@ -38,7 +38,11 @@ a:hover {
 
 /* Breadcrups CSS */
 
-.arrow-steps .step {
+.arrow-steps{
+	padding-bottom: 3%;
+}
+
+.arrow-steps .step {	
 	font-size: 14px;
 	text-align: center;
 	color: #666;

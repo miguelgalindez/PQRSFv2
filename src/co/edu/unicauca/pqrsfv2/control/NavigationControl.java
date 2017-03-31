@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import co.edu.unicauca.pqrsfv2.control.acciones.DireccionarPQRSFControl;
 import co.edu.unicauca.pqrsfv2.control.acciones.RadicarPqrsfControl;
-import co.edu.unicauca.pqrsfv2.control.consultas.TodasPqrsfControl;
+import co.edu.unicauca.pqrsfv2.control.consultas.ConsultasControl;
 import co.edu.unicauca.pqrsfv2.dao.UsuarioDAO;
 import co.edu.unicauca.pqrsfv2.modelo.Usuario;
 
@@ -28,15 +28,16 @@ public class NavigationControl implements Serializable {
 	@Inject
 	DireccionarPQRSFControl direccionarPqrsfControl;
 	@Inject
-	TodasPqrsfControl todasPqrsfControl;
+	ConsultasControl consultasControl;
 	private Usuario usuarioAutenticado;
 	private String viewToShow;
 	
+
+	
 	public NavigationControl(){
-		viewToShow="/admin/index.xhtml";
-		
-		// TODO - Falta logica de autenticacion y autorizacion
+		viewToShow="/admin/index.xhtml";		
 		usuarioAutenticado=null;
+							
 	}
 
 	public String getViewToShow() {
@@ -60,20 +61,23 @@ public class NavigationControl implements Serializable {
 				break;
 				
 			case "/admin/consultas/todasPQRSF.xhtml":				
-				todasPqrsfControl.setDiasParaVencimiento(null);
-				todasPqrsfControl.cargarTodasPqrf();
+				consultasControl.setDiasParaVencimiento(null);
+				consultasControl.cargarTodasPqrf();
+				consultasControl.setTituloConsulta("Todas las PQRSFs");
 				break;
 			
 			case "/admin/consultas/pqrsfProximasaVencerse.xhtml":
 				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
-				todasPqrsfControl.setDiasParaVencimiento(3);
-				todasPqrsfControl.cargarTodasPqrf();
+				consultasControl.setDiasParaVencimiento(3);
+				consultasControl.cargarTodasPqrf();
+				consultasControl.setTituloConsulta("PQRSFs próximas a vencerse");
 				break;
 			
 			case "/admin/consultas/pqrsfVencidas.xhtml":
 				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
-				todasPqrsfControl.setDiasParaVencimiento(-1);
-				todasPqrsfControl.cargarTodasPqrf();
+				consultasControl.setDiasParaVencimiento(-1);
+				consultasControl.cargarTodasPqrf();
+				consultasControl.setTituloConsulta("PQRSFs vencidas");
 				break;
 		}		
 	}
@@ -113,6 +117,4 @@ public class NavigationControl implements Serializable {
 	public void setUsuarioAutenticado(Usuario usuarioAutenticado) {
 		this.usuarioAutenticado = usuarioAutenticado;
 	}
-	
-	
 }

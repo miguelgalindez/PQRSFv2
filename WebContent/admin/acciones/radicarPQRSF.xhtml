@@ -8,79 +8,85 @@
 	xmlns:p="http://primefaces.org/ui"
 	>
 			
-	<h:body>		
-		<h:form id="radicarPQRSFForm">
-			<p:dataTable id="pqrsfNR" value="#{radicarPqrsfControl.pqrsfNoRadicadas}"
-						widgetVar="pqrsfNRTable"
-						var="pqrsf" 
-						rows="10"
-						paginator="true"
-						paginatorPosition="bottom"
-						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-	                    rowsPerPageTemplate="5,10,15,20,25,30,35,40,45,50"
-	                    reflow="true"
-	                    sortMode="multiple"
-	                    resizableColumns="true"
-	                    emptyMessage=""
-	                    		                                        	                  
-						>				
-				<f:facet name="header">
-						<h:outputText value="Buscar: " />
-		                <p:inputText id="globalFilter" onkeyup="PF('pqrsfNRTable').filter()" style="width:150px"/>										        
-			        	<p:commandButton id="toggler" type="button" value="Columnas" style="float:right" icon="ui-icon-calculator" />		        
-			        	<p:columnToggler datasource="pqrsfNR" trigger="toggler" />		        
-			        <div class="clear"></div>
-			    </f:facet>
-			 	
-				<p:column headerText="Codigo" sortBy="#{pqrsf.codigo}" width="15%" style="text-align: center;"
-						filterBy="#{pqrsf.codigo}" filterMatchMode="contains">
-					<h:outputText value="#{pqrsf.codigo}" />
-				</p:column>
-				<p:column headerText="Tipo" sortBy="#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, pqrsf.tipoPqrsf)}" 
-							filterBy="#{pqrsf.tipoPqrsf}" filterMatchMode="exact" width="15%" style="text-align: center;">
-					<f:facet name="filter">
-		                <p:selectOneMenu onchange="PF('pqrsfNRTable').filter()" >
-		                    <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
-		                    <f:selectItems value="#{valoresDAO.tiposPqrsf.entrySet()}" var="tipo"
-								itemValue="#{tipo.key}" itemLabel="#{tipo.value}"/>
-		                </p:selectOneMenu>
-		            </f:facet>
-					<h:outputText value="#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, pqrsf.tipoPqrsf)}" />
-				</p:column>			
-				<p:column headerText="Fecha" sortBy="#{pqrsf.fechaCreacion}" width="20%" style="text-align: center;"
-							filterBy="#{pqrsf.fechaCreacion}" filterMatchMode="exact">
-					<f:facet name="filter">						
-					    <p:calendar  pattern="dd-MMMM-yyyy" locale="es" effect="fold">
-					        <p:ajax event="dateSelect" oncomplete="PF('pqrsfNRTable').filter()" update="pqrsfNR"/>
-					        <p:ajax event="change" execute="@this" oncomplete="PF('pqrsfNRTable').filter()" update="pqrsfNR"/>					        					                                	
-					    </p:calendar>					    
-					</f:facet>
-					<h:outputText value="#{pqrsf.fechaCreacion}" >
-						<f:convertDateTime pattern="dd-MMMM-yyyy" locale="es"/>
-					</h:outputText>
-				</p:column>
-				<p:column headerText="Solicitante" sortBy="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}" width="35%"
-						filterBy="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}" filterMatchMode="contains" style="text-align: center;">
-					<h:outputText value="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}"/>
-				</p:column>
-				
-				<p:column headerText="Acciones" width="15%">
-					<p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-search" title="Ver"
-										actionListener="#{radicarPqrsfControl.changeSelectedAction('Ver')}" >						
-		                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
-		            </p:commandButton>
-		            <p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-print" title="Imprimir"
-		            					actionListener="#{radicarPqrsfControl.changeSelectedAction('Imprimir')}">
-		                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
-		            </p:commandButton>
-		            <p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-registered" title="Radicar"
-		            					actionListener="#{radicarPqrsfControl.changeSelectedAction('Radicar')}">
-		                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
-		            </p:commandButton>					
-				</p:column>
-			</p:dataTable>						
-		</h:form>
-		
+	<h:body>
+		<div class="col-lg-12">
+	        	<div class="box box-danger">
+		            <div class="box-header with-border">
+		            	<h1 align="center" >Radicar PQRSF</h1>           	
+		            </div>
+		            <div class="box-body">		
+						<h:form id="radicarPQRSFForm">
+							<p:dataTable id="pqrsfNR" value="#{radicarPqrsfControl.pqrsfNoRadicadas}"
+										widgetVar="pqrsfNRTable"
+										var="pqrsf" 
+										rows="10"
+										paginator="true"
+										paginatorPosition="bottom"
+										paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						                   rowsPerPageTemplate="5,10,15,20,25,30,35,40,45,50"
+						                   reflow="true"
+						                   sortMode="multiple"
+						                   resizableColumns="true"
+						                   emptyMessage=""
+						                   		                                        	                  
+										>				
+								<f:facet name="header">																			       
+							        	<p:commandButton id="toggler" type="button" value="Columnas" style="float:left" icon="ui-icon-calculator" />		        
+							        	<p:columnToggler datasource="pqrsfNR" trigger="toggler" />		        
+							        <div class="clear"></div>
+							    </f:facet>
+							 	
+								<p:column headerText="Codigo" sortBy="#{pqrsf.codigo}" width="15%" style="text-align: center;"
+										filterBy="#{pqrsf.codigo}" filterMatchMode="contains">
+									<h:outputText value="#{pqrsf.codigo}" />
+								</p:column>
+								<p:column headerText="Tipo" sortBy="#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, pqrsf.tipoPqrsf)}" 
+											filterBy="#{pqrsf.tipoPqrsf}" filterMatchMode="exact" width="15%" style="text-align: center;">
+									<f:facet name="filter">
+						                <p:selectOneMenu onchange="PF('pqrsfNRTable').filter()" >
+						                    <f:selectItem itemLabel="Todos" itemValue="#{null}" noSelectionOption="true" />
+						                    <f:selectItems value="#{valoresDAO.tiposPqrsf.entrySet()}" var="tipo"
+												itemValue="#{tipo.key}" itemLabel="#{tipo.value}"/>
+						                </p:selectOneMenu>
+						            </f:facet>
+									<h:outputText value="#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, pqrsf.tipoPqrsf)}" />
+								</p:column>			
+								<p:column headerText="Fecha" sortBy="#{pqrsf.fechaCreacion}" width="20%" style="text-align: center;"
+											filterBy="#{pqrsf.fechaCreacion}" filterMatchMode="exact">
+									<f:facet name="filter">						
+									    <p:calendar  pattern="dd-MMMM-yyyy" locale="es" effect="fold">
+									        <p:ajax event="dateSelect" oncomplete="PF('pqrsfNRTable').filter()" update="pqrsfNR"/>
+									        <p:ajax event="change" execute="@this" oncomplete="PF('pqrsfNRTable').filter()" update="pqrsfNR"/>					        					                                	
+									    </p:calendar>					    
+									</f:facet>
+									<h:outputText value="#{pqrsf.fechaCreacion}" >
+										<f:convertDateTime pattern="dd-MMMM-yyyy" locale="es"/>
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Solicitante" sortBy="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}" width="35%"
+										filterBy="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}" filterMatchMode="contains" style="text-align: center;">
+									<h:outputText value="#{pqrsf.persona.nombres} #{pqrsf.persona.apellidos}"/>
+								</p:column>
+								
+								<p:column headerText="Acciones" width="15%">
+									<p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-search" title="Ver"
+														actionListener="#{radicarPqrsfControl.changeSelectedAction('Ver')}" >						
+						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
+						            </p:commandButton>
+						            <p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-print" title="Imprimir"
+						            					actionListener="#{radicarPqrsfControl.changeSelectedAction('Imprimir')}">
+						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
+						            </p:commandButton>
+						            <p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-registered" title="Radicar"
+						            					actionListener="#{radicarPqrsfControl.changeSelectedAction('Radicar')}">
+						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
+						            </p:commandButton>					
+								</p:column>
+							</p:dataTable>						
+						</h:form>
+					</div>
+				</div>
+			</div>
 		<p:outputPanel id="modalRespuestaPanel">
 			<ui:include src="/template/modalRespuesta.xhtml" />
 		</p:outputPanel>	

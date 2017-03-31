@@ -13,29 +13,29 @@
 				<tbody>
 					<tr>
 						<td>Nombre del responsable</td>
-						<td>#{todasPqrsfControl.orden.funcionario.nombre}</td>
+						<td>#{consultasControl.orden.funcionario.nombre}</td>
 					</tr>
 					
 					<tr>
 						<td>Fecha de asignación</td>	
 						<td>												
-							#{todasPqrsfControl.formatearFecha(todasPqrsfControl.orden.fechaAsignacion)}
+							#{consultasControl.formatearFecha(consultasControl.orden.fechaAsignacion)}
 						</td>
 					</tr>
 					
 					<tr>
 						<td>Dependencia</td>
-						<td>#{valoresDAO.obtnDescripcion(valoresDAO.dependencias, todasPqrsfControl.orden.funcionario.dependencia.id)}</td>
+						<td>#{valoresDAO.obtnDescripcion(valoresDAO.dependencias, consultasControl.orden.funcionario.dependencia.id)}</td>
 					</tr>	
 					
 					<tr>
 						<td>Correo funcionario</td>
-						<td>#{todasPqrsfControl.orden.funcionario.correo}</td>
+						<td>#{consultasControl.orden.funcionario.correo}</td>
 					</tr>
 					
 					<tr>
 						<td>Teléfono funcionario</td>
-						<td>#{todasPqrsfControl.orden.funcionario.telefono}</td>
+						<td>#{consultasControl.orden.funcionario.telefono}</td>
 					</tr>
 																																						
 				</tbody>

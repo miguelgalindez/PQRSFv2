@@ -16,17 +16,17 @@
 			            <h:form>
 							  <div class="form-group col-sm-4 col-sm-offset-1">
 							    <label for="codigo">Código:</label>
-							    <p:inputText id="codigo" value="#{todasPqrsfControl.codigoPqrsf}" styleClass="form-control" required="true" requiredMessage="Digite el código de la PQRSF"  />
+							    <p:inputText id="codigo" value="#{consultasControl.codigoPqrsf}" styleClass="form-control" required="true" requiredMessage="Digite el código de la PQRSF"  />
 							    <p:message for="codigo" />
 							  </div>
 							  <div class="form-group col-sm-4">
 							    <label for="identificacion">Identificación del solicitante:</label>
-							    <p:inputText id="identificacion" value="#{todasPqrsfControl.identificacionPersona}" styleClass="form-control" required="true" requiredMessage="Digite la identificación del solicitante" />
+							    <p:inputText id="identificacion" value="#{consultasControl.identificacionPersona}" styleClass="form-control" required="true" requiredMessage="Digite la identificación del solicitante" />
 							    <p:message for="identificacion"/>
 							  </div>
 							  <div class="form-group col-sm-2">
 								  <p:commandLink id="btnBuscar" styleClass="btn btn-lg btn-danger" 
-								  					action="#{todasPqrsfControl.obtnOrden()}"
+								  					action="#{consultasControl.obtnOrden()}"
 								  					update="panelBuscarPQRSF datosPqrsf"
 								  					>
 								  	Buscar
@@ -39,7 +39,7 @@
             	</div>
             	<div class="box-body">
             		<h:panelGroup id="datosPqrsf">
-	            		<p:tabView rendered="#{todasPqrsfControl.orden != null}" >
+	            		<p:tabView rendered="#{consultasControl.orden != null}" >
 					        <p:tab title="Datos de la PQRSF">
 					        	<ui:include src="/admin/consultas/datosPQRSF.xhtml" />				            
 					        </p:tab>

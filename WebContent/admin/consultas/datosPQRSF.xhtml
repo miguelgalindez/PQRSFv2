@@ -13,38 +13,38 @@
 				<tbody>
 					<tr>
 						<td>Estado</td>
-						<td>#{valoresDAO.obtnDescripcion(valoresDAO.estados, todasPqrsfControl.orden.pqrsf.estado)}</td>
+						<td>#{valoresDAO.obtnDescripcion(valoresDAO.estados, consultasControl.orden.pqrsf.estado)}</td>
 					</tr>
 					
-					<tr style="#{todasPqrsfControl.orden.pqrsf.estado != 2 ? 'display:none;' : '' }" >
+					<tr style="#{consultasControl.orden.pqrsf.estado != 2 ? 'display:none;' : '' }" >
 						<td>Fecha de cierre</td>
-						<td>#{todasPqrsfControl.orden.pqrsf.fechaCierre}</td>
+						<td>#{consultasControl.orden.pqrsf.fechaCierre}</td>
 					</tr>
 					
 					<tr>
 						<td>Medio de Recepción</td>
-						<td>#{valoresDAO.obtnDescripcion(valoresDAO.mediosRecepcion, todasPqrsfControl.orden.pqrsf.medioRecepcion)}</td>
+						<td>#{valoresDAO.obtnDescripcion(valoresDAO.mediosRecepcion, consultasControl.orden.pqrsf.medioRecepcion)}</td>
 					</tr>
 					<tr>
 						<td>Tipo</td>
-						<td>#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, todasPqrsfControl.orden.pqrsf.tipoPqrsf)}</td>
+						<td>#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, consultasControl.orden.pqrsf.tipoPqrsf)}</td>
 					</tr>												
 					<tr>
 						<td>Asunto</td>	
 						<td>												
-							#{todasPqrsfControl.orden.pqrsf.asunto}
+							#{consultasControl.orden.pqrsf.asunto}
 						</td>
 					</tr>
 					<tr>
 						<td>Descripción</td>
 						<td>
-							<p align="justify">#{todasPqrsfControl.orden.pqrsf.descripcion}</p>																										
+							<p align="justify">#{consultasControl.orden.pqrsf.descripcion}</p>																										
 						</td>
 						
 					</tr>												
 					<tr>
 						<td>Fecha de creación</td>
-						<td>#{todasPqrsfControl.formatearFecha(todasPqrsfControl.orden.pqrsf.fechaCreacion)}</td>
+						<td>#{consultasControl.formatearFecha(consultasControl.orden.pqrsf.fechaCreacion)}</td>
 					</tr>																							
 				</tbody>
 			</table>

@@ -18,7 +18,7 @@ import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 @SessionScoped
 @LocalBean
 @Named
-public class TodasPqrsfControl implements Serializable{
+public class ConsultasControl implements Serializable{
 
 	/**
 	 * 
@@ -30,12 +30,13 @@ public class TodasPqrsfControl implements Serializable{
 	private Integer diasParaVencimiento;
 	private ArrayList<Orden> ordenes;
 	private String selectedAction;
+	private String tituloConsulta;
 	
 	private String identificacionPersona;
 	private String codigoPqrsf;
 	private Orden orden;
 	
-	public TodasPqrsfControl(){
+	public ConsultasControl(){
 		selectedAction="Ver";
 		orden=null;
 	}
@@ -133,5 +134,12 @@ public class TodasPqrsfControl implements Serializable{
 	public void setOrden(Orden orden) {
 		this.orden = orden;
 	}
-		
+
+	public String getTituloConsulta() {
+		return tituloConsulta;
+	}
+
+	public void setTituloConsulta(String tituloConsulta) {
+		this.tituloConsulta = tituloConsulta;
+	}		
 }
