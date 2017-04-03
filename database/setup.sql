@@ -1222,7 +1222,6 @@ COMMIT;
 
 -- PACKAGE CON PROCEDIMIENTOS Y FUNCIONES
 
-
 create or replace PACKAGE BODY PKG_PQRSFV2 AS
 
   FUNCTION GENERAR_CODIGO_PQRSF RETURN VARCHAR2 AS     
@@ -1265,7 +1264,7 @@ create or replace PACKAGE BODY PKG_PQRSFV2 AS
                                usuarioQueRadica IN VARCHAR2, fechaRadicado IN DATE) AS
                                
             radicadoActual RADICADO.RADID%TYPE;                        
-      BEGIN
+  BEGIN
             SELECT RADID INTO radicadoActual FROM PQRSF WHERE PQRSFCODIGO=codigoPqrsf;
             IF(radicadoActual IS NULL) THEN
                 INSERT INTO RADICADO(RADID, PQRSFCODIGO, USUUSUARIO, RADFECHA)
@@ -1274,7 +1273,9 @@ create or replace PACKAGE BODY PKG_PQRSFV2 AS
                 UPDATE PQRSF SET RADID=idRadicado 
                             WHERE PQRSFCODIGO=codigoPqrsf;
             END IF;                            
-      END REGISTRAR_RADICADO;
+  END REGISTRAR_RADICADO;
+      
+      
       
   PROCEDURE DIRECCIONAR_PQRSF(usuarioQueDirecciona IN VARCHAR2, codigoPqrsf IN VARCHAR2,
                               fechaVencimientoPqrsf IN DATE, idFuncionario IN VARCHAR2) AS
@@ -1285,8 +1286,30 @@ create or replace PACKAGE BODY PKG_PQRSFV2 AS
                                 codigoPqrsf, idFuncionario, SYSDATE, 0);
             UPDATE PQRSF SET PQRSFESTADO=1, PQRSFFECHAVENCIMIENTO=fechaVencimientoPqrsf 
                           WHERE PQRSFCODIGO=codigoPqrsf;            
-  END DIRECCIONAR_PQRSF;                        
+  END DIRECCIONAR_PQRSF; 
+  
+  
+  PROCEDURE GENERAR_INDICADORES(numeroPqrsfVencidas OUT NUMBER,
+                                diasParaVencimiento IN NUMBER,
+                                numeroPqrsfProximasVencerse OUT NUMBER, 
+                                numeroPqrsfSinRadicar OUT NUMBER, 
+                                numeroPqrsfSinDireccionar OUT NUMBER, 
+                                numeroPqrsfAtendidas OUT NUMBER, 
+                                numeroPqrsfEnTramite OUT NUMBER, 
+                                numeroPqrsfPendientes OUT NUMBER) AS
+  BEGIN
+      SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfVencidas FROM PQRSF WHERE PQRSFESTADO!=2 AND SYSDATE>PQRSFFECHAVENCIMIENTO;
+      SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfProximasVencerse FROM PQRSF WHERE PQRSFESTADO!=2 AND PQRSFFECHAVENCIMIENTO-SYSDATE<=3 AND PQRSFFECHAVENCIMIENTO-SYSDATE>=0;
+      SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfSinRadicar FROM PQRSF WHERE RADID IS NULL;
+      SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfSinDireccionar FROM PQRSF WHERE RADID IS NOT NULL AND PQRSFESTADO=0;
+      SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfAtendidas FROM PQRSF WHERE PQRSFESTADO=2;
+      SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfEnTramite FROM PQRSF WHERE PQRSFESTADO=1;
+      SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfPendientes FROM PQRSF WHERE PQRSFESTADO=0;
+      
+  END GENERAR_INDICADORES;
 
 END PKG_PQRSFV2;
+
+--------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------
