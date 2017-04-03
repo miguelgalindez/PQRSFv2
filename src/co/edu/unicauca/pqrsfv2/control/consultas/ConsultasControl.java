@@ -27,14 +27,24 @@ public class ConsultasControl implements Serializable{
 	
 	@Inject
 	OrdenDAO ordenDAO;
+	// para la vista de todasPQRSF
 	private Integer diasParaVencimiento;
 	private ArrayList<Orden> ordenes;
 	private String selectedAction;
 	private String tituloConsulta;
-	
+	// para la vista de Buscar PQRSF
 	private String identificacionPersona;
 	private String codigoPqrsf;
 	private Orden orden;
+	// para los indicadores del index
+	private int numeroVencidas;
+	private int numeroPqrsfProximasVencerse;
+	private int numeroPqrsfSinRadicar;
+	private int numeroPqrsfSinDireccionar;
+	private int numeroPqrsfAtendidas;
+	private int numeroPqrsfEnTramite;
+	private int numeroPqrsfPendientes;
+	
 	
 	public ConsultasControl(){
 		selectedAction="Ver";
@@ -76,6 +86,20 @@ public class ConsultasControl implements Serializable{
 		}
 		else
 			return "";					
+	}
+	
+	public void cargarIndicadores(){
+		boolean success=ordenDAO.cargarIndicadores(numeroVencidas, numeroPqrsfProximasVencerse, numeroPqrsfSinRadicar, numeroPqrsfSinDireccionar, 
+									numeroPqrsfAtendidas, numeroPqrsfEnTramite, numeroPqrsfPendientes);
+		if(success==false){
+			numeroVencidas=0;
+			numeroPqrsfProximasVencerse=0;
+			numeroPqrsfSinRadicar=0;
+			numeroPqrsfSinDireccionar=0;
+			numeroPqrsfAtendidas=0;
+			numeroPqrsfEnTramite=0;
+			numeroPqrsfPendientes=0;
+		}
 	}
 	
 	public void obtnOrden(){		
@@ -141,5 +165,61 @@ public class ConsultasControl implements Serializable{
 
 	public void setTituloConsulta(String tituloConsulta) {
 		this.tituloConsulta = tituloConsulta;
-	}		
+	}
+
+	public int getNumeroVencidas() {
+		return numeroVencidas;
+	}
+
+	public void setNumeroVencidas(int numeroVencidas) {
+		this.numeroVencidas = numeroVencidas;
+	}
+
+	public int getNumeroPqrsfProximasVencerse() {
+		return numeroPqrsfProximasVencerse;
+	}
+
+	public void setNumeroPqrsfProximasVencerse(int numeroPqrsfProximasVencerse) {
+		this.numeroPqrsfProximasVencerse = numeroPqrsfProximasVencerse;
+	}
+
+	public int getNumeroPqrsfSinRadicar() {
+		return numeroPqrsfSinRadicar;
+	}
+
+	public void setNumeroPqrsfSinRadicar(int numeroPqrsfSinRadicar) {
+		this.numeroPqrsfSinRadicar = numeroPqrsfSinRadicar;
+	}
+
+	public int getNumeroPqrsfSinDireccionar() {
+		return numeroPqrsfSinDireccionar;
+	}
+
+	public void setNumeroPqrsfSinDireccionar(int numeroPqrsfSinDireccionar) {
+		this.numeroPqrsfSinDireccionar = numeroPqrsfSinDireccionar;
+	}
+
+	public int getNumeroPqrsfAtendidas() {
+		return numeroPqrsfAtendidas;
+	}
+
+	public void setNumeroPqrsfAtendidas(int numeroPqrsfAtendidas) {
+		this.numeroPqrsfAtendidas = numeroPqrsfAtendidas;
+	}
+
+	public int getNumeroPqrsfEnTramite() {
+		return numeroPqrsfEnTramite;
+	}
+
+	public void setNumeroPqrsfEnTramite(int numeroPqrsfEnTramite) {
+		this.numeroPqrsfEnTramite = numeroPqrsfEnTramite;
+	}
+
+	public int getNumeroPqrsfPendientes() {
+		return numeroPqrsfPendientes;
+	}
+
+	public void setNumeroPqrsfPendientes(int numeroPqrsfPendientes) {
+		this.numeroPqrsfPendientes = numeroPqrsfPendientes;
+	}	
 }

@@ -35,9 +35,8 @@ public class NavigationControl implements Serializable {
 
 	
 	public NavigationControl(){
-		viewToShow="/admin/index.xhtml";		
-		usuarioAutenticado=null;
-							
+		this.changeViewToShow("/admin/index.xhtml");		
+		usuarioAutenticado=null;						
 	}
 
 	public String getViewToShow() {
@@ -52,6 +51,9 @@ public class NavigationControl implements Serializable {
 		this.viewToShow = viewToShow;
 		
 		switch(viewToShow){
+		case "/admin/index.xhtml": 
+				consultasControl.cargarIndicadores();
+				break;
 			case "/admin/acciones/radicarPQRSF.xhtml":
 				radicarPqrsfControl.cargarPqrsfNoRadicadas();
 				break;

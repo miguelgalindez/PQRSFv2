@@ -104,4 +104,12 @@ public class OrdenDAO {
 		}
 		return ordenes;
 	}
+
+	public boolean cargarIndicadores(int numeroPqrsfVencidas, int numeroPqrsfProximasVencerse, int numeroPqrsfSinRadicar,
+			int numeroPqrsfSinDireccionar, int numeroPqrsfAtendidas, int numeroPqrsfEnTramite,
+			int numeroPqrsfPendientes) {
+		
+		return con.ejecutarProcedimientoIndicadores(numeroPqrsfVencidas, numeroPqrsfProximasVencerse, numeroPqrsfSinRadicar, numeroPqrsfSinDireccionar, numeroPqrsfAtendidas, numeroPqrsfEnTramite, numeroPqrsfPendientes);
+		
+	}
 }

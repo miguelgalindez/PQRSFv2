@@ -9,18 +9,10 @@
     <param-name>javax.faces.PROJECT_STAGE</param-name>
     <param-value>Development</param-value>
   </context-param>
-
-<!-- 
   <context-param>
     <param-name>primefaces.THEME</param-name>
-    <param-value>bootstrap</param-value>
+    <param-value>glass-x</param-value>
   </context-param>
-   -->
-  	<context-param>
-		<param-name>primefaces.THEME</param-name>
-		<param-value>glass-x</param-value>
-	</context-param>
-  
   <welcome-file-list>
     <welcome-file>index.xhtml</welcome-file>
   </welcome-file-list>
@@ -36,6 +28,30 @@
   <listener>
     <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
   </listener>
+  <mime-mapping>
+    <extension>ttf</extension>
+    <mime-type>application/x-font-ttf</mime-type>
+  </mime-mapping>
+  <mime-mapping>
+    <extension>woff</extension>
+    <mime-type>application/x-font-woff</mime-type>
+  </mime-mapping>
+  <mime-mapping>
+    <extension>woff2</extension>
+    <mime-type>application/x-font-woff2</mime-type>
+  </mime-mapping>
+  <mime-mapping>
+    <extension>eot</extension>
+    <mime-type>application/x-font-eot</mime-type>
+  </mime-mapping>
+  <filter>
+    <filter-name>userFilter</filter-name>
+    <filter-class>co.edu.unicauca.pqrsfv2.util.UserFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>userFilter</filter-name>
+    <url-pattern>*.xhtml</url-pattern>
+  </filter-mapping>
   <servlet>
     <servlet-name>Faces Servlet</servlet-name>
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -43,31 +59,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>.xhtml</url-pattern>
     <url-pattern>*.xhtml</url-pattern>
-    <url-pattern>*.xml</url-pattern>
   </servlet-mapping>
-  	<mime-mapping>
-		<extension>ttf</extension>
-		<mime-type>application/x-font-ttf</mime-type>
-	</mime-mapping>
-	<mime-mapping>
-		<extension>woff</extension>
-		<mime-type>application/x-font-woff</mime-type>
-	</mime-mapping>
-	<mime-mapping>
-		<extension>woff2</extension>
-		<mime-type>application/x-font-woff2</mime-type>
-	</mime-mapping>
-	<mime-mapping>
-		<extension>eot</extension>
-		<mime-type>application/x-font-eot</mime-type>
-	</mime-mapping>
-	<filter>
-	    <filter-name>userFilter</filter-name>
-	    <filter-class>co.edu.unicauca.pqrsfv2.util.UserFilter</filter-class>
-	</filter>
-	<filter-mapping>
-	    <filter-name>userFilter</filter-name>
-	    <url-pattern>*.xhtml</url-pattern>
-	</filter-mapping>
 </web-app>

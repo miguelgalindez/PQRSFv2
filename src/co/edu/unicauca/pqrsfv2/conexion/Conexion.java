@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 import javax.sql.DataSource;
 
+import jdk.nashorn.internal.codegen.types.Type;
+
 /**
  * Clase encargada de la capa de datos, interctua entre la aplicación y la base
  * de datos
@@ -151,8 +153,48 @@ public class Conexion implements HttpSessionBindingListener {
 		return successCall;
 	}
 	
+	public boolean ejecutarProcedimientoIndicadores(int numeroPqrsfVencidas, int numeroPqrsfProximasVencerse, int numeroPqrsfSinRadicar,
+			int numeroPqrsfSinDireccionar, int numeroPqrsfAtendidas, int numeroPqrsfEnTramite,
+			int numeroPqrsfPendientes) {
+		
+		iniciarDataSource();		
+		String sql=getCallSignature(false, "PKG_PQRSFV2", "GENERAR_INDICADORES", 8);
+		boolean successCall = false;
+
+		try {
+			conn = driverManagerDataSource.getConnection();			
+			cs = conn.prepareCall(sql);
+			cs.registerOutParameter(1, Types.NUMERIC);
+			// 3 dias para vencimiento
+			cs.setInt(2, 3);
+			cs.registerOutParameter(3, Types.NUMERIC);
+			cs.registerOutParameter(4, Types.NUMERIC);
+			cs.registerOutParameter(5, Types.NUMERIC);
+			cs.registerOutParameter(6, Types.NUMERIC);
+			cs.registerOutParameter(7, Types.NUMERIC);
+			cs.registerOutParameter(8, Types.NUMERIC);
+		
+			cs.execute();
+			
+			numeroPqrsfVencidas=cs.getInt(1);
+			numeroPqrsfProximasVencerse=cs.getInt(3);
+			numeroPqrsfSinRadicar=cs.getInt(4);
+			numeroPqrsfSinDireccionar=cs.getInt(5);
+			numeroPqrsfAtendidas=cs.getInt(6);
+			numeroPqrsfEnTramite=cs.getInt(7);
+			numeroPqrsfPendientes=cs.getInt(8);
+			successCall=true;
+		} catch (SQLException e) {
+			System.err.println("Error llamando al procedimiento almacenado utilizando conexion.executeCall");
+			e.printStackTrace();						
+		} finally {
+			this.clean();
+		}
+		return successCall;
+	}
+	
 	private void applyParameters(CallableStatement cs, ArrayList<Object> parametros, ArrayList<Integer> tipos, boolean isFunction){		
-		try{
+		try{						
 			int aux, initialParameterIndex;			
 			if(isFunction)
 				initialParameterIndex=2;
