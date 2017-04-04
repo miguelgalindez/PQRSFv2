@@ -1303,13 +1303,12 @@ create or replace PACKAGE BODY PKG_PQRSFV2 AS
       SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfSinRadicar FROM PQRSF WHERE RADID IS NULL;
       SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfSinDireccionar FROM PQRSF WHERE RADID IS NOT NULL AND PQRSFESTADO=0;
       SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfAtendidas FROM PQRSF WHERE PQRSFESTADO=2;
-      SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfEnTramite FROM PQRSF WHERE PQRSFESTADO=1;
+      SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfEnTramite FROM PQRSF WHERE PQRSFESTADO=1 AND SYSDATE<=PQRSFFECHAVENCIMIENTO;
       SELECT COUNT(PQRSFCODIGO) INTO numeroPqrsfPendientes FROM PQRSF WHERE PQRSFESTADO=0;
       
   END GENERAR_INDICADORES;
 
 END PKG_PQRSFV2;
-
 --------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------
