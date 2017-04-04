@@ -73,13 +73,14 @@
 														actionListener="#{radicarPqrsfControl.changeSelectedAction('Ver')}" >						
 						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
 						            </p:commandButton>
-						            <p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-print" title="Imprimir"
-						            					actionListener="#{radicarPqrsfControl.changeSelectedAction('Imprimir')}">
-						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
+						            <p:commandButton update="radicarPQRSFPanel" icon="fa fa-print" title="Imprimir"
+						            					action="#{radicarPqrsfControl.imprimirDatosPQRSF}">
+						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />						                
 						            </p:commandButton>
 						            <p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-registered" title="Radicar"
 						            					actionListener="#{radicarPqrsfControl.changeSelectedAction('Radicar')}">
 						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
+						                
 						            </p:commandButton>					
 								</p:column>
 							</p:dataTable>						

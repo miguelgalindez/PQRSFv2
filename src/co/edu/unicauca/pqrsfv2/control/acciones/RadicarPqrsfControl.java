@@ -1,18 +1,23 @@
 package co.edu.unicauca.pqrsfv2.control.acciones;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import javax.ejb.LocalBean;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
-
 import co.edu.unicauca.pqrsfv2.control.ModalRespuestaControl;
 import co.edu.unicauca.pqrsfv2.control.NavigationControl;
 import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
+import co.edu.unicauca.pqrsfv2.dao.ValoresDAO;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 import co.edu.unicauca.pqrsfv2.modelo.Radicado;
+import co.edu.unicauca.pqrsfv2.util.DocxManipulator;
 
 @SessionScoped
 @LocalBean
@@ -30,6 +35,10 @@ public class RadicarPqrsfControl implements Serializable{
 	NavigationControl navigationControl;
 	@Inject
 	ModalRespuestaControl modalRespuestaControl;
+	@Inject
+	ValoresDAO valoresDAO;
+	@Inject
+	DocxManipulator docxManipulator;
 	private ArrayList<Pqrsf> pqrsfNoRadicadas;
 	private Pqrsf selectedPqrsf;
 	private String selectedAction;
@@ -56,7 +65,7 @@ public class RadicarPqrsfControl implements Serializable{
 		modalRespuestaControl.operacionExitosa(success);
 		if(success){
 			ctx.execute("PF('dialog').hide();");			
-			modalRespuestaControl.configurar("Operación exitosa", "La PQRSF ha sido radicada satisfactoriamente");						
+			modalRespuestaControl.configurar("OperaciÃ³n exitosa", "La PQRSF ha sido radicada satisfactoriamente");						
 			pqrsfNoRadicadas.remove(selectedPqrsf);
 			inicializarDatos();			
 		}
@@ -65,6 +74,25 @@ public class RadicarPqrsfControl implements Serializable{
 		
 		ctx.execute("$('#modalRespuesta').modal('toggle');");
 		
+	}
+	
+	public void imprimirDatosPQRSF(){
+		
+		Map<String,String> datos=new HashMap<>();
+		SimpleDateFormat sdf=new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es","es_CO"));
+		datos.put("#{pqrsfFechaCreacion}", sdf.format(selectedPqrsf.getFechaCreacion()));
+		datos.put("#{tipperDescripcion}", valoresDAO.obtnDescripcion(valoresDAO.getTiposPersona(), selectedPqrsf.getPersona().getTipoIdentificacion()));
+		datos.put("#{tipideDescripcion}", valoresDAO.obtnDescripcion(valoresDAO.getTiposIdentificacion(), selectedPqrsf.getPersona().getTipoIdentificacion()));
+		datos.put("#{perIdentificacion}", selectedPqrsf.getPersona().getIdentificacion());
+		datos.put("#{perNombres}", selectedPqrsf.getPersona().getNombres());
+		datos.put("#{perApellidos}", selectedPqrsf.getPersona().getApellidos());
+		datos.put("#{perCorreo}", selectedPqrsf.getPersona().getEmail());
+		datos.put("#{perTelefono}", selectedPqrsf.getPersona().getTelefono());
+		datos.put("#{perCelular}", selectedPqrsf.getPersona().getCelular());
+		datos.put("#{perDireccion}", selectedPqrsf.getPersona().getDireccion());
+		datos.put("#{munNombre}", valoresDAO.obtnNombreMunicipio(selectedPqrsf.getPersona().getMunicipio()));
+		
+		docxManipulator.generateAndSendDocx(selectedPqrsf.getCodigo(), datos);
 	}
 	
 	private void inicializarDatos() {
