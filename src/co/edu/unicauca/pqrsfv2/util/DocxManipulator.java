@@ -222,32 +222,28 @@ public class DocxManipulator {
     private void sendDOCXResponse(File generatedFile, String fileName) throws IOException {
     	System.out.println("Sending File "+generatedFile +"\tFilename "+fileName);
         FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = facesContext.getExternalContext();
-        HttpServletResponse response = (HttpServletResponse) externalContext
-                .getResponse();
+        ExternalContext ec = facesContext.getExternalContext();
+        
+        ec.responseReset();
+        ec.setResponseContentType("application/msword");
+        ec.setResponseContentLength((int)generatedFile.length());
+        ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+                             
+        
 
-        BufferedInputStream input = null;
-        BufferedOutputStream output = null;
-
-        response.reset();
-        response.setHeader("Content-Type", "application/msword");
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        response.setHeader("Content-Length",String.valueOf(generatedFile.length()));
-
-        input = new BufferedInputStream(new FileInputStream(generatedFile), 10240);
-        output = new BufferedOutputStream(response.getOutputStream(), 10240);
+        BufferedInputStream input = new BufferedInputStream(new FileInputStream(generatedFile), 10240);
+        OutputStream output = ec.getResponseOutputStream();
 
         byte[] buffer = new byte[10240];
         for (int length; (length = input.read(buffer)) > 0;) {
             output.write(buffer, 0, length);
-        }
-
+        }                         
+        
         output.flush();
         input.close();
         output.close();
-
-        // Inform JSF not to proceed with rest of life cycle
         facesContext.responseComplete();
+        
     }
 
 
