@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import javax.ejb.LocalBean;
@@ -37,7 +38,7 @@ public class ConsultasControl implements Serializable{
 	private String codigoPqrsf;
 	private Orden orden;
 	// para los indicadores del index
-	private int numeroVencidas;
+	private int numeroPqrsfVencidas;
 	private int numeroPqrsfProximasVencerse;
 	private int numeroPqrsfSinRadicar;
 	private int numeroPqrsfSinDireccionar;
@@ -89,16 +90,16 @@ public class ConsultasControl implements Serializable{
 	}
 	
 	public void cargarIndicadores(){
-		boolean success=ordenDAO.cargarIndicadores(numeroVencidas, numeroPqrsfProximasVencerse, numeroPqrsfSinRadicar, numeroPqrsfSinDireccionar, 
-									numeroPqrsfAtendidas, numeroPqrsfEnTramite, numeroPqrsfPendientes);
-		if(success==false){
-			numeroVencidas=0;
-			numeroPqrsfProximasVencerse=0;
-			numeroPqrsfSinRadicar=0;
-			numeroPqrsfSinDireccionar=0;
-			numeroPqrsfAtendidas=0;
-			numeroPqrsfEnTramite=0;
-			numeroPqrsfPendientes=0;
+		HashMap<String, Integer> indicadores=ordenDAO.cargarIndicadores();
+		if(indicadores!=null){
+			
+			numeroPqrsfVencidas=indicadores.get("numeroPqrsfVencidas");
+			numeroPqrsfProximasVencerse=indicadores.get("numeroPqrsfProximasVencerse");
+			numeroPqrsfSinRadicar=indicadores.get("numeroPqrsfSinRadicar");
+			numeroPqrsfSinDireccionar=indicadores.get("numeroPqrsfSinDireccionar");
+			numeroPqrsfAtendidas=indicadores.get("numeroPqrsfAtendidas");
+			numeroPqrsfEnTramite=indicadores.get("numeroPqrsfEnTramite");
+			numeroPqrsfPendientes=indicadores.get("numeroPqrsfPendientes");
 		}
 	}
 	
@@ -167,12 +168,13 @@ public class ConsultasControl implements Serializable{
 		this.tituloConsulta = tituloConsulta;
 	}
 
-	public int getNumeroVencidas() {
-		return numeroVencidas;
+	
+	public int getNumeroPqrsfVencidas() {
+		return numeroPqrsfVencidas;
 	}
 
-	public void setNumeroVencidas(int numeroVencidas) {
-		this.numeroVencidas = numeroVencidas;
+	public void setNumeroPqrsfVencidas(int numeroPqrsfVencidas) {
+		this.numeroPqrsfVencidas = numeroPqrsfVencidas;
 	}
 
 	public int getNumeroPqrsfProximasVencerse() {

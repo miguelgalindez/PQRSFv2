@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
@@ -105,11 +107,8 @@ public class OrdenDAO {
 		return ordenes;
 	}
 
-	public boolean cargarIndicadores(int numeroPqrsfVencidas, int numeroPqrsfProximasVencerse, int numeroPqrsfSinRadicar,
-			int numeroPqrsfSinDireccionar, int numeroPqrsfAtendidas, int numeroPqrsfEnTramite,
-			int numeroPqrsfPendientes) {
-		
-		return con.ejecutarProcedimientoIndicadores(numeroPqrsfVencidas, numeroPqrsfProximasVencerse, numeroPqrsfSinRadicar, numeroPqrsfSinDireccionar, numeroPqrsfAtendidas, numeroPqrsfEnTramite, numeroPqrsfPendientes);
+	public HashMap<String, Integer> cargarIndicadores() {		
+		return con.ejecutarProcedimientoIndicadores();
 		
 	}
 }

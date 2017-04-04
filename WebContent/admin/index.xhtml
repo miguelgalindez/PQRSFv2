@@ -9,24 +9,28 @@
 	>
 			
 	<h:body>
+		<h:form>
 		<div class="col-lg-4 col-lg-offset-2 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red" onclick="location.href='/admin/consultas/vencimientoPQRSF/0';">
+          <!-- small box -->          
+          <div class="small-box bg-red">
             <div class="inner">
-              <h3>#{consultasControl.numeroVencidas}</h3>
+              <h3>#{consultasControl.numeroPqrsfVencidas}</h3>
               <p>PQRSFs vencidas</p>
             </div>
             <div class="icon">
               <i class="fa fa-times whiteIcons"></i>
             </div>
-            <a href="/admin/consultas/vencimientoPQRSF/0" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+            <h:commandLink action="#{navigationControl.changeViewToShow('/admin/consultas/pqrsfVencidas.xhtml')}" styleClass="small-box-footer">
+            	Más información 
+            	<i class="fa fa-arrow-circle-right"></i>
+            </h:commandLink>            
           </div>
         </div>
 
         <!-- ./col -->
         <div class="col-lg-4 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-orange" onclick="location.href='/admin/consultas/vencimientoPQRSF/8';">
+          <div class="small-box bg-orange">
             <div class="inner">
               <h3>#{consultasControl.numeroPqrsfProximasVencerse}</h3>
 
@@ -35,13 +39,17 @@
             <div class="icon">
               <i class="fa fa-exclamation-triangle whiteIcons"></i>
             </div>
-            <a href="/admin/consultas/vencimientoPQRSF/8" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+            <h:commandLink action="#{navigationControl.changeViewToShow('/admin/consultas/pqrsfProximasaVencerse.xhtml')}" styleClass="small-box-footer">
+            	Más información
+            	<i class="fa fa-arrow-circle-right"></i>
+            </h:commandLink>
+            
           </div>
         </div>
 
         <div class="col-lg-4 col-lg-offset-2 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-black" onclick="location.href='/admin/radicarPQRSF';">
+          <div class="small-box bg-black">
             <div class="inner">
               <h3>#{consultasControl.numeroPqrsfSinRadicar}</h3>
 
@@ -50,13 +58,16 @@
             <div class="icon">
               <i class="fa fa-tags whiteIcons"></i>
             </div>
-            <a href="#" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+            <h:commandLink action="#{navigationControl.changeViewToShow('/admin/acciones/radicarPQRSF.xhtml')}" styleClass="small-box-footer">
+            	Más información
+            	<i class="fa fa-arrow-circle-right"></i>
+            </h:commandLink>
           </div>
         </div>
 
         <div class="col-lg-4 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-black" onclick="location.href='/admin/direccionarPqrsf';">
+          <div class="small-box bg-black">
             <div class="inner">
               <h3>#{consultasControl.numeroPqrsfSinDireccionar}</h3>
 
@@ -65,7 +76,10 @@
             <div class="icon">
               <i class="fa fa-map-signs whiteIcons"></i>
             </div>
-            <a href="#" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+            <h:commandLink action="#{navigationControl.changeViewToShow('/admin/acciones/direccionarPQRSF.xhtml')}" styleClass="small-box-footer">
+            	Más información
+            	<i class="fa fa-arrow-circle-right"></i>
+            </h:commandLink>
           </div>
         </div>
 
@@ -115,5 +129,6 @@
             <a href="#" class="small-box-footer">Mas información <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+        </h:form>
 	</h:body>	
 </html>

@@ -3,6 +3,7 @@ package co.edu.unicauca.pqrsfv2.control;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,10 +34,10 @@ public class NavigationControl implements Serializable {
 	private String viewToShow;
 	
 
-	
-	public NavigationControl(){
-		this.changeViewToShow("/admin/index.xhtml");		
-		usuarioAutenticado=null;						
+	@PostConstruct
+	public void init(){
+		this.changeViewToShow("/admin/index.xhtml");
+		usuarioAutenticado=null;
 	}
 
 	public String getViewToShow() {
