@@ -80,19 +80,21 @@ public class RadicarPqrsfControl implements Serializable{
 		
 		Map<String,String> datos=new HashMap<>();
 		SimpleDateFormat sdf=new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es","es_CO"));
-		datos.put("#{pqrsfFechaCreacion}", sdf.format(selectedPqrsf.getFechaCreacion()));
-		datos.put("#{tipperDescripcion}", valoresDAO.obtnDescripcion(valoresDAO.getTiposPersona(), selectedPqrsf.getPersona().getTipoIdentificacion()));
-		datos.put("#{tipideDescripcion}", valoresDAO.obtnDescripcion(valoresDAO.getTiposIdentificacion(), selectedPqrsf.getPersona().getTipoIdentificacion()));
-		datos.put("#{perIdentificacion}", selectedPqrsf.getPersona().getIdentificacion());
-		datos.put("#{perNombres}", selectedPqrsf.getPersona().getNombres());
-		datos.put("#{perApellidos}", selectedPqrsf.getPersona().getApellidos());
-		datos.put("#{perCorreo}", selectedPqrsf.getPersona().getEmail());
-		datos.put("#{perTelefono}", selectedPqrsf.getPersona().getTelefono());
-		datos.put("#{perCelular}", selectedPqrsf.getPersona().getCelular());
-		datos.put("#{perDireccion}", selectedPqrsf.getPersona().getDireccion());
-		datos.put("#{munNombre}", valoresDAO.obtnNombreMunicipio(selectedPqrsf.getPersona().getMunicipio()));
+		datos.put("pqrsfFechaCreacion", sdf.format(selectedPqrsf.getFechaCreacion()));
+		datos.put("tipperDescripcion", valoresDAO.obtnDescripcion(valoresDAO.getTiposPersona(), selectedPqrsf.getPersona().getTipoIdentificacion()));
+		datos.put("tipideDescripcion", valoresDAO.obtnDescripcion(valoresDAO.getTiposIdentificacion(), selectedPqrsf.getPersona().getTipoIdentificacion()));
+		datos.put("perIdentificacion", selectedPqrsf.getPersona().getIdentificacion());
+		datos.put("perNombres", selectedPqrsf.getPersona().getNombres());
+		datos.put("perApellidos", selectedPqrsf.getPersona().getApellidos());
+		datos.put("perCorreo", selectedPqrsf.getPersona().getEmail());
+		datos.put("perTelefono", selectedPqrsf.getPersona().getTelefono());
+		datos.put("perCelular", selectedPqrsf.getPersona().getCelular());
+		datos.put("perDireccion", selectedPqrsf.getPersona().getDireccion());
+		datos.put("munNombre", valoresDAO.obtnNombreMunicipio(selectedPqrsf.getPersona().getMunicipio()));
+		// TODO - obtener departamento
+		datos.put("deptoNombre", null);
 		
-		docxManipulator.generateAndSendDocx(selectedPqrsf.getCodigo(), datos);
+		docxManipulator.generateAndSendDocx("radicarPqrsfImprimir.docx", datos);
 	}
 	
 	private void inicializarDatos() {

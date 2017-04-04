@@ -8,6 +8,7 @@ import java.sql.Types;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
+import co.edu.unicauca.pqrsfv2.modelo.Persona;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 
 @Stateless
@@ -21,8 +22,8 @@ public class PqrsfDAO {
 	}
 	
 	public ArrayList<Pqrsf> obtnNoRadicadas() {
-		String sql="SELECT PQRSFCODIGO, PERNOMBRES, PERAPELLIDOS, TIPPQRSFID, "+ 
-					"PQRSFASUNTO, PQRSFDESCRIPCION, MEDID, PQRSFFECHACREACION "+ 
+		String sql="SELECT PQRSFCODIGO, TIPPQRSFID, TIPPERID, TIPIDEID, PERIDENTIFICACION, PERNOMBRES, PERAPELLIDOS, PERCORREO, "+ 
+					"PERTELEFONO, PERCELULAR, PERDIRECCION, MUNID, PQRSFASUNTO, PQRSFDESCRIPCION, MEDID, PQRSFFECHACREACION "+ 
 					"FROM PQRSF NATURAL JOIN PERSONA WHERE RADID IS NULL";
 
 		return cargarNoRadicadas(con.executeQueryRS(sql));		
@@ -34,16 +35,26 @@ public class PqrsfDAO {
 		try {
 			while(rs.next()){
 				Pqrsf pqrsf=new Pqrsf();				
-				
+				Persona persona=new Persona();
 				pqrsf.setCodigo(rs.getString("PQRSFCODIGO"));
-				pqrsf.getPersona().setNombres(rs.getString("PERNOMBRES"));
-				pqrsf.getPersona().setApellidos(rs.getString("PERAPELLIDOS"));								
+				pqrsf.setTipoPqrsf(rs.getInt("TIPPQRSFID"));
+				persona.setTipoPersona(rs.getInt("TIPPERID"));
+				persona.setTipoIdentificacion(rs.getInt("TIPIDEID"));
+				persona.setIdentificacion(rs.getString("PERIDENTIFICACION"));
+				persona.setNombres(rs.getString("PERNOMBRES"));
+				persona.setApellidos(rs.getString("PERAPELLIDOS"));
+				persona.setEmail(rs.getString("PERCORREO"));
+				persona.setTelefono(rs.getString("PERTELEFONO"));
+				persona.setCelular(rs.getString("PERCELULAR"));
+				persona.setDireccion(rs.getString("PERDIRECCION"));
+				persona.setMunicipio(rs.getInt("MUNID"));
 				pqrsf.setTipoPqrsf(rs.getInt("TIPPQRSFID"));
 				pqrsf.setAsunto(rs.getString("PQRSFASUNTO"));
 				pqrsf.setDescripcion(rs.getString("PQRSFDESCRIPCION"));
 				pqrsf.setMedioRecepcion(rs.getInt("MEDID"));
 				pqrsf.setFechaCreacion(rs.getDate("PQRSFFECHACREACION"));
 				
+				pqrsf.setPersona(persona);
 				pqrsfNoRadicadas.add(pqrsf);
 			}
 		} catch (SQLException e) {

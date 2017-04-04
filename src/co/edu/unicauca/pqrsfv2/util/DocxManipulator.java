@@ -30,8 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 @Stateless
 @LocalBean
 public class DocxManipulator {
-	// TODO - Ojo parametrizar estas rutas 
-    private String MAIN_DOCUMENT_PATH = "E:\\workspace\\PQRSFv2\\docTemplates\\radicarPqrsfImprimir.docx";
+
+    private String MAIN_DOCUMENT_PATH = "word\\document.xml";
     private String TEMPLATE_DIRECTORY_ROOT = "E:\\workspace\\PQRSFv2\\docTemplates\\";
 
 
@@ -52,8 +52,8 @@ public class DocxManipulator {
         String templateLocation = TEMPLATE_DIRECTORY_ROOT + templateName;
 
         String userTempDir = UUID.randomUUID().toString();
-        userTempDir = TEMPLATE_DIRECTORY_ROOT + userTempDir + "/";
-
+        userTempDir = TEMPLATE_DIRECTORY_ROOT + userTempDir + "\\";
+        
         try {
 
             // Unzip .docx file
@@ -69,7 +69,7 @@ public class DocxManipulator {
             sendDOCXResponse(new File(userTempDir + templateName), templateName);
 
             // Clean temp data
-            deleteTempData(new File(userTempDir));
+            //deleteTempData(new File(userTempDir));
         } 
         catch (IOException ioe) {
             System.out.println(ioe.getMessage());
@@ -91,18 +91,18 @@ public class DocxManipulator {
      *            Destination directory
      * @throws IOException
      */
-    private void unzip(File zipfile, File directory) throws IOException {
-
+    private void unzip(File zipfile, File directory) throws IOException {    	
         ZipFile zfile = new ZipFile(zipfile);
         Enumeration<? extends ZipEntry> entries = zfile.entries();
 
         while (entries.hasMoreElements()) {
           ZipEntry entry = entries.nextElement();
-          File file = new File(directory, entry.getName());
-          if (entry.isDirectory()) {
+          File file = new File(directory, entry.getName().replace("/", "\\"));
+                  
+          if (entry.isDirectory()) {        	   
             file.mkdirs();
           } 
-          else {
+          else {        	  
             file.getParentFile().mkdirs();
             InputStream in = zfile.getInputStream(entry);
             try {
@@ -110,7 +110,6 @@ public class DocxManipulator {
             } 
             finally {
               in.close();
-              zfile.close();
             }
           }
         }
@@ -150,8 +149,8 @@ public class DocxManipulator {
             if(docxTemplate.contains(pair.getKey())){
                 if(pair.getValue() != null)
                     docxTemplate = docxTemplate.replace(pair.getKey(), pair.getValue());
-                else
-                    docxTemplate = docxTemplate.replace(pair.getKey(), "NEDOSTAJE");
+                else               	
+                	docxTemplate = docxTemplate.replace(pair.getKey(), "No registra");                                   
             }
         }
 
@@ -193,7 +192,7 @@ public class DocxManipulator {
               String name = base.relativize(kid.toURI()).getPath();
               if (kid.isDirectory()) {
                 queue.push(kid);
-                name = name.endsWith("/") ? name : name + "/";
+                name = name.endsWith("\\") ? name : name + "\\";
                 zout.putNextEntry(new ZipEntry(name));
               } 
               else {
@@ -221,7 +220,7 @@ public class DocxManipulator {
      * @throws IOException
      */
     private void sendDOCXResponse(File generatedFile, String fileName) throws IOException {
-
+    	System.out.println("Sending File "+generatedFile +"\tFilename "+fileName);
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ExternalContext externalContext = facesContext.getExternalContext();
         HttpServletResponse response = (HttpServletResponse) externalContext
@@ -308,7 +307,7 @@ public class DocxManipulator {
         }
       }
 
-      private void copy(InputStream in, File file) throws IOException {
+      private void copy(InputStream in, File file) throws IOException {    	  
         OutputStream out = new FileOutputStream(file);
         try {
           copy(in, out);
