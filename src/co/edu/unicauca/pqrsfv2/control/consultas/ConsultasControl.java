@@ -101,6 +101,15 @@ public class ConsultasControl implements Serializable{
 			numeroPqrsfEnTramite=indicadores.get("numeroPqrsfEnTramite");
 			numeroPqrsfPendientes=indicadores.get("numeroPqrsfPendientes");
 		}
+		else{
+			numeroPqrsfVencidas=0;
+			numeroPqrsfProximasVencerse=0;
+			numeroPqrsfSinRadicar=0;
+			numeroPqrsfSinDireccionar=0;
+			numeroPqrsfAtendidas=0;
+			numeroPqrsfEnTramite=0;
+			numeroPqrsfPendientes=0;
+		}
 	}
 	
 	public void obtnOrden(){		
