@@ -73,10 +73,15 @@
 														actionListener="#{radicarPqrsfControl.changeSelectedAction('Ver')}" >						
 						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
 						            </p:commandButton>
-						            <p:commandButton update="radicarPQRSFPanel" icon="fa fa-print" title="Imprimir"
-						            					action="#{radicarPqrsfControl.imprimirDatosPQRSF}">
-						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />						                
+						            <p:commandButton icon="fa fa-print" title="Imprimir"
+						            					ajax="false"
+						            					onclick="PrimeFaces.monitorDownload(start, stop);">
+						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
+						                <p:fileDownload value="#{radicarPqrsfControl.imprimirPQRSF()}"/>						                
 						            </p:commandButton>
+						            
+						            <p:remoteCommand name="deleteTempDir" actionListener="#{radicarPqrsfControl.deleteTempDir()}" />
+						            
 						            <p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-registered" title="Radicar"
 						            					actionListener="#{radicarPqrsfControl.changeSelectedAction('Radicar')}">
 						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
@@ -85,6 +90,10 @@
 								</p:column>
 							</p:dataTable>						
 						</h:form>
+						
+						<p:dialog modal="true" widgetVar="statusDialog" header="Estado de la descarga" draggable="false" closable="false" resizable="false">
+						    <p:graphicImage library="img" name="ajaxloadingbar.gif" />
+						</p:dialog>
 					</div>
 				</div>
 			</div>
@@ -101,4 +110,14 @@
 			</p:dialog>
 		</h:panelGroup> 
 	</h:body>
+	<h:outputScript>	
+		function start() {
+		    PF('statusDialog').show();
+		}
+		 
+		function stop() {
+		    PF('statusDialog').hide();
+		    deleteTempDir();
+		}
+	</h:outputScript>
 </html>

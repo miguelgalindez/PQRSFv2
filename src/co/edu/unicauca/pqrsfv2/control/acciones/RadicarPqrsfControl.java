@@ -1,5 +1,9 @@
 package co.edu.unicauca.pqrsfv2.control.acciones;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +15,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
+import org.primefaces.model.DefaultStreamedContent;
 import co.edu.unicauca.pqrsfv2.control.ModalRespuestaControl;
 import co.edu.unicauca.pqrsfv2.control.NavigationControl;
 import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
@@ -44,13 +49,17 @@ public class RadicarPqrsfControl implements Serializable{
 	private String selectedAction;
 	private Radicado radicado;
 	
+	private String tempDir;
+
+	
 	public void changeSelectedAction(String action){
 		selectedAction=action;
 	}
-	
+			
 	public RadicarPqrsfControl(){
 		pqrsfNoRadicadas=new ArrayList<>();
-		inicializarDatos();		
+		tempDir="";
+		inicializarDatos();		       
 	}
 	
 	public void cargarPqrsfNoRadicadas(){
@@ -76,8 +85,7 @@ public class RadicarPqrsfControl implements Serializable{
 		
 	}
 	
-	public void imprimirDatosPQRSF(){
-		
+	public DefaultStreamedContent imprimirPQRSF(){		
 		Map<String,String> datos=new HashMap<>();
 		SimpleDateFormat sdf=new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es","es_CO"));
 		datos.put("pqrsfFechaCreacion", sdf.format(selectedPqrsf.getFechaCreacion()));
@@ -94,13 +102,31 @@ public class RadicarPqrsfControl implements Serializable{
 		// TODO - obtener departamento
 		datos.put("deptoNombre", null);
 		
-		docxManipulator.generateAndSendDocx("radicarPqrsfImprimir.docx", datos);
+		tempDir=docxManipulator.generateDocx("radicarPqrsfImprimir.docx", datos);				
+		
+		if(tempDir!=null){									
+			try {
+				InputStream stream= new FileInputStream(tempDir+"radicarPqrsfImprimir.docx");
+				DefaultStreamedContent file=new DefaultStreamedContent(stream, "application/vnd.openxmlformats-officedocument.wordprocessingml.document", selectedPqrsf.getCodigo()+".docx");							
+				return file;
+			} catch (FileNotFoundException e) {		
+				e.printStackTrace();
+			}				      
+		}		
+		return null;        
 	}
 	
-	private void inicializarDatos() {
+	public void deleteTempDir(){
+		if(tempDir!=null && tempDir.equals("")==false){
+			docxManipulator.deleteTempData(new File(tempDir));
+			tempDir="";
+		}
+	}
+	
+	private void inicializarDatos() {		
 		selectedPqrsf=null;
 		radicado=new Radicado();
-		selectedAction="Radicar";
+		selectedAction="Radicar";		
 	}	
 
 	public ArrayList<Pqrsf> getPqrsfNoRadicadas() {
@@ -134,5 +160,4 @@ public class RadicarPqrsfControl implements Serializable{
 	public void setSelectedAction(String selectedAction) {
 		this.selectedAction = selectedAction;
 	}
-		
 }

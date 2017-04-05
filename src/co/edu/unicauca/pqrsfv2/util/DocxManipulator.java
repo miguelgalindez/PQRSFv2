@@ -1,6 +1,4 @@
 package co.edu.unicauca.pqrsfv2.util;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
@@ -22,17 +20,13 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
-
 
 @Stateless
 @LocalBean
 public class DocxManipulator {
-
-    private String MAIN_DOCUMENT_PATH = "word\\document.xml";
-    private String TEMPLATE_DIRECTORY_ROOT = "E:\\workspace\\PQRSFv2\\docTemplates\\";
+	// TODO - parametrizar rutas
+    private String MAIN_DOCUMENT_PATH = "word/document.xml";
+    private String TEMPLATE_DIRECTORY_ROOT = "E:/docTemplates/";
 
 
     /*    PUBLIC METHODS    */
@@ -47,38 +41,24 @@ public class DocxManipulator {
      *            substitution data
      * @return
      */
-    public Boolean generateAndSendDocx(String templateName, Map<String,String> substitutionData) {
-
+    public String generateDocx(String templateName, Map<String,String> substitutionData) {		
         String templateLocation = TEMPLATE_DIRECTORY_ROOT + templateName;
 
         String userTempDir = UUID.randomUUID().toString();
-        userTempDir = TEMPLATE_DIRECTORY_ROOT + userTempDir + "\\";
+        userTempDir = TEMPLATE_DIRECTORY_ROOT + userTempDir + "/";
         
-        try {
-
-            // Unzip .docx file
-            unzip(new File(templateLocation), new File(userTempDir));       
-
-            // Change data
-            changeData(new File(userTempDir + MAIN_DOCUMENT_PATH), substitutionData);
-
-            // Rezip .docx file
+        try {           
+            unzip(new File(templateLocation), new File(userTempDir));                   
+            changeData(new File(userTempDir + MAIN_DOCUMENT_PATH), substitutionData);       
             zip(new File(userTempDir), new File(userTempDir + templateName));
-
-            // Send HTTP response
-            sendDOCXResponse(new File(userTempDir + templateName), templateName);
-
-            // Clean temp data
-            //deleteTempData(new File(userTempDir));
+            
+            return userTempDir;            
         } 
         catch (IOException ioe) {
             System.out.println(ioe.getMessage());
-            return false;
-        }
-
-        return true;
+            return null;
+        }       
     }
-
 
     /*    PRIVATE METHODS    */
 
@@ -97,7 +77,7 @@ public class DocxManipulator {
 
         while (entries.hasMoreElements()) {
           ZipEntry entry = entries.nextElement();
-          File file = new File(directory, entry.getName().replace("/", "\\"));
+          File file = new File(directory, entry.getName().replace("/", "/"));
                   
           if (entry.isDirectory()) {        	   
             file.mkdirs();
@@ -192,7 +172,7 @@ public class DocxManipulator {
               String name = base.relativize(kid.toURI()).getPath();
               if (kid.isDirectory()) {
                 queue.push(kid);
-                name = name.endsWith("\\") ? name : name + "\\";
+                name = name.endsWith("/") ? name : name + "/";
                 zout.putNextEntry(new ZipEntry(name));
               } 
               else {
@@ -209,44 +189,7 @@ public class DocxManipulator {
           res.close();
         }
       }
-
-    /**
-     * Sends HTTP Response containing .docx file to Client
-     * 
-     * @param generatedFile
-     *            Path to generated .docx file
-     * @param fileName
-     *            File name of generated file that is being presented to user
-     * @throws IOException
-     */
-    private void sendDOCXResponse(File generatedFile, String fileName) throws IOException {
-    	System.out.println("Sending File "+generatedFile +"\tFilename "+fileName);
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ExternalContext ec = facesContext.getExternalContext();
-        
-        ec.responseReset();
-        ec.setResponseContentType("application/msword");
-        ec.setResponseContentLength((int)generatedFile.length());
-        ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-                             
-        
-
-        BufferedInputStream input = new BufferedInputStream(new FileInputStream(generatedFile), 10240);
-        OutputStream output = ec.getResponseOutputStream();
-
-        byte[] buffer = new byte[10240];
-        for (int length; (length = input.read(buffer)) > 0;) {
-            output.write(buffer, 0, length);
-        }                         
-        
-        output.flush();
-        input.close();
-        output.close();
-        facesContext.responseComplete();
-        
-    }
-
-
+    
     /**
      * Deletes directory and all its subdirectories
      * 
@@ -254,32 +197,23 @@ public class DocxManipulator {
      *            Specified directory
      * @throws IOException
      */
-    public void deleteTempData(File file) throws IOException {
+    public void deleteTempData(File file) {
 
         if (file.isDirectory()) {
-
-            // directory is empty, then delete it
-            if (file.list().length == 0)
-                file.delete();
-            else {
-                // list all the directory contents
-                String files[] = file.list();
-
-                for (String temp : files) {
+        	String files[];
+        	while((files=file.list()).length>0){
+        		for (String temp : files) {
                     // construct the file structure
                     File fileDelete = new File(file, temp);
                     // recursive delete
                     deleteTempData(fileDelete);
-                }
-
-                // check the directory again, if empty then delete it
-                if (file.list().length == 0)
-                    file.delete();
-            }
-        } else {
-            // if file, then delete it
-            file.delete();
-        }
+                }        		
+        	}
+        	// Cuando el directorio esté vacio, entonces eliminarlo
+        	file.delete();        	
+        
+        } else        	
+            file.delete();                    
     }
 
     private void copy(InputStream in, OutputStream out) throws IOException {
