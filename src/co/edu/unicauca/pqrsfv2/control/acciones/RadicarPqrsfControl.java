@@ -87,9 +87,8 @@ public class RadicarPqrsfControl implements Serializable{
 	
 	public DefaultStreamedContent imprimirPQRSF(){		
 		Map<String,String> datos=new HashMap<>();
-		SimpleDateFormat sdf=new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es","es_CO"));
-		datos.put("pqrsfFechaCreacion", sdf.format(selectedPqrsf.getFechaCreacion()));
-		datos.put("tipperDescripcion", valoresDAO.obtnDescripcion(valoresDAO.getTiposPersona(), selectedPqrsf.getPersona().getTipoIdentificacion()));
+		SimpleDateFormat sdf=new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es","es_CO"));		
+		datos.put("tipperDescripcion", valoresDAO.obtnDescripcion(valoresDAO.getTiposPersona(), selectedPqrsf.getPersona().getTipoPersona()));
 		datos.put("tipideDescripcion", valoresDAO.obtnDescripcion(valoresDAO.getTiposIdentificacion(), selectedPqrsf.getPersona().getTipoIdentificacion()));
 		datos.put("perIdentificacion", selectedPqrsf.getPersona().getIdentificacion());
 		datos.put("perNombres", selectedPqrsf.getPersona().getNombres());
@@ -98,9 +97,14 @@ public class RadicarPqrsfControl implements Serializable{
 		datos.put("perTelefono", selectedPqrsf.getPersona().getTelefono());
 		datos.put("perCelular", selectedPqrsf.getPersona().getCelular());
 		datos.put("perDireccion", selectedPqrsf.getPersona().getDireccion());
-		datos.put("munNombre", valoresDAO.obtnNombreMunicipio(selectedPqrsf.getPersona().getMunicipio()));
-		// TODO - obtener departamento
-		datos.put("deptoNombre", null);
+		datos.put("munNombre", selectedPqrsf.getPersona().getMunicipio().getNombre());
+		datos.put("deptoNombre", valoresDAO.obtnDescripcion(valoresDAO.getDepartamentos(), selectedPqrsf.getPersona().getMunicipio().getIdDepartamento()));
+		datos.put("pqrsfCodigo", selectedPqrsf.getCodigo());
+		datos.put("pqrsfFechaCreacion", sdf.format(selectedPqrsf.getFechaCreacion()));
+		datos.put("tipPqrsfDescripcion", valoresDAO.obtnDescripcion(valoresDAO.getTiposPqrsf(), selectedPqrsf.getTipoPqrsf()));
+		datos.put("medDescripcion", valoresDAO.obtnDescripcion(valoresDAO.getMediosRecepcion(), selectedPqrsf.getMedioRecepcion()));
+		datos.put("pqrsfAsunto", selectedPqrsf.getAsunto());
+		datos.put("pqrsfDescripcion", selectedPqrsf.getDescripcion());
 		
 		tempDir=docxManipulator.generateDocx("radicarPqrsfImprimir.docx", datos);				
 		

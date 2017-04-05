@@ -20,13 +20,18 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
+import javax.swing.plaf.synth.SynthSplitPaneUI;
 
 @Stateless
 @LocalBean
 public class DocxManipulator {
-	// TODO - parametrizar rutas
+	
+    private String TEMPLATE_DIRECTORY = "docTemplates/";
+    
+    //TODO - Configurar esta ruta en un archivo properties
+    private String TEMP_DIRECTORY="E:/TEMP/";
     private String MAIN_DOCUMENT_PATH = "word/document.xml";
-    private String TEMPLATE_DIRECTORY_ROOT = "E:/docTemplates/";
 
 
     /*    PUBLIC METHODS    */
@@ -42,13 +47,20 @@ public class DocxManipulator {
      * @return
      */
     public String generateDocx(String templateName, Map<String,String> substitutionData) {		
-        String templateLocation = TEMPLATE_DIRECTORY_ROOT + templateName;
+        String templateLocation = TEMPLATE_DIRECTORY + templateName;     
+        
+        InputStream stream = FacesContext.getCurrentInstance().getExternalContext()
+        	    .getResourceAsStream(templateLocation);
+        
+        System.out.println("Template Location "+templateLocation);
+        
+        File template= new File(classLoader.getResource(templateLocation).getFile());
 
         String userTempDir = UUID.randomUUID().toString();
-        userTempDir = TEMPLATE_DIRECTORY_ROOT + userTempDir + "/";
+        userTempDir = TEMP_DIRECTORY + userTempDir + "/";
         
         try {           
-            unzip(new File(templateLocation), new File(userTempDir));                   
+            unzip(template, new File(userTempDir));                   
             changeData(new File(userTempDir + MAIN_DOCUMENT_PATH), substitutionData);       
             zip(new File(userTempDir), new File(userTempDir + templateName));
             
