@@ -8,6 +8,7 @@ import java.sql.Types;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
+import co.edu.unicauca.pqrsfv2.modelo.Municipio;
 import co.edu.unicauca.pqrsfv2.modelo.Persona;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 
@@ -23,8 +24,9 @@ public class PqrsfDAO {
 	
 	public ArrayList<Pqrsf> obtnNoRadicadas() {
 		String sql="SELECT PQRSFCODIGO, TIPPQRSFID, TIPPERID, TIPIDEID, PERIDENTIFICACION, PERNOMBRES, PERAPELLIDOS, PERCORREO, "+ 
-					"PERTELEFONO, PERCELULAR, PERDIRECCION, MUNID, PQRSFASUNTO, PQRSFDESCRIPCION, MEDID, PQRSFFECHACREACION "+ 
-					"FROM PQRSF NATURAL JOIN PERSONA WHERE RADID IS NULL";
+					"PERTELEFONO, PERCELULAR, PERDIRECCION, MUNNOMBRE, DEPTOID, PQRSFASUNTO, PQRSFDESCRIPCION, MEDID, PQRSFFECHACREACION "+ 
+					"FROM PQRSF NATURAL JOIN PERSONA NATURAL JOIN MUNICIPIO "+
+					"WHERE RADID IS NULL";
 
 		return cargarNoRadicadas(con.executeQueryRS(sql));		
 	}
@@ -36,6 +38,7 @@ public class PqrsfDAO {
 			while(rs.next()){
 				Pqrsf pqrsf=new Pqrsf();				
 				Persona persona=new Persona();
+				Municipio municipio=new Municipio();
 				pqrsf.setCodigo(rs.getString("PQRSFCODIGO"));
 				pqrsf.setTipoPqrsf(rs.getInt("TIPPQRSFID"));
 				persona.setTipoPersona(rs.getInt("TIPPERID"));
@@ -47,13 +50,15 @@ public class PqrsfDAO {
 				persona.setTelefono(rs.getString("PERTELEFONO"));
 				persona.setCelular(rs.getString("PERCELULAR"));
 				persona.setDireccion(rs.getString("PERDIRECCION"));
-				persona.setMunicipio(rs.getInt("MUNID"));
+				municipio.setNombre(rs.getString("MUNNOMBRE"));
+				municipio.setIdDepartamento(rs.getInt("DEPTOID"));
 				pqrsf.setTipoPqrsf(rs.getInt("TIPPQRSFID"));
 				pqrsf.setAsunto(rs.getString("PQRSFASUNTO"));
 				pqrsf.setDescripcion(rs.getString("PQRSFDESCRIPCION"));
 				pqrsf.setMedioRecepcion(rs.getInt("MEDID"));
 				pqrsf.setFechaCreacion(rs.getDate("PQRSFFECHACREACION"));
 				
+				persona.setMunicipio(municipio);
 				pqrsf.setPersona(persona);
 				pqrsfNoRadicadas.add(pqrsf);
 			}
@@ -128,7 +133,7 @@ public class PqrsfDAO {
 		parameters.add(pqrsf.getPersona().getDireccion()); parametersTypes.add(Types.VARCHAR);
 		parameters.add(pqrsf.getPersona().getTelefono()); parametersTypes.add(Types.VARCHAR);
 		parameters.add(pqrsf.getPersona().getCelular()); parametersTypes.add(Types.VARCHAR);
-		parameters.add(pqrsf.getPersona().getMunicipio()); parametersTypes.add(Types.NUMERIC);
+		parameters.add(pqrsf.getPersona().getMunicipio().getId()); parametersTypes.add(Types.NUMERIC);
 		parameters.add(pqrsf.getMedioRecepcion()); parametersTypes.add(Types.NUMERIC);
 		parameters.add(pqrsf.getTipoPqrsf()); parametersTypes.add(Types.NUMERIC);
 		parameters.add(pqrsf.getAsunto()); parametersTypes.add(Types.VARCHAR);

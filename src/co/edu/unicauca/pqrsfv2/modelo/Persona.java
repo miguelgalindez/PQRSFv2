@@ -35,11 +35,11 @@ public class Persona implements Serializable{
 	@NotNull @Size(min=4, max=128)
 	private String direccion;
 	
-	@NotNull @Max(value=9999)
-	private Integer municipio;
+	@NotNull
+	private Municipio municipio;
 	
 	public Persona(){
-		municipio=null;
+		municipio=new Municipio();
 		tipoPersona=tipoIdentificacion=null;
 	}
 			
@@ -115,13 +115,11 @@ public class Persona implements Serializable{
 		this.direccion = direccion;
 	}
 
-	public Integer getMunicipio() {
+	public Municipio getMunicipio() {
 		return municipio;
 	}
 
-	public void setMunicipio(Integer municipio) {
+	public void setMunicipio(Municipio municipio) {
 		this.municipio = municipio;
-	}
-	
-	
+	}		
 }

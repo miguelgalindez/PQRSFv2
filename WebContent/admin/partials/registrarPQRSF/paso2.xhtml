@@ -16,7 +16,7 @@ xmlns:p="http://primefaces.org/ui"
 			<p:selectOneMenu id="departamento"
 								value="#{registrarPqrsfControl.departamento}"															
 								styleClass="form-control"
-								required="#{registrarPqrsfControl.persona.municipio == null}"
+								required="#{registrarPqrsfControl.persona.municipio.id == null}"
 								requiredMessage="Especifique el departamento de su docimicilio">
 								
 					<f:selectItems value="#{valoresDAO.departamentos.entrySet()}" var="tipo"
@@ -31,7 +31,7 @@ xmlns:p="http://primefaces.org/ui"
 		<p:outputLabel for="municipio" styleClass="control-label col-sm-3" value="Municipio" />
 		<div class="col-sm-7">
 			<p:selectOneMenu id="municipio"
-								value="#{registrarPqrsfControl.persona.municipio}"
+								value="#{registrarPqrsfControl.persona.municipio.id}"
 								required="true"
 								requiredMessage="Especifique el municipio de su domicilio"
 								disabled="#{registrarPqrsfControl.departamento == null}"
