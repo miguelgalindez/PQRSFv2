@@ -21,16 +21,16 @@ import java.util.zip.ZipOutputStream;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.faces.context.FacesContext;
-import javax.swing.plaf.synth.SynthSplitPaneUI;
+import javax.servlet.ServletContext;
 
 @Stateless
 @LocalBean
 public class DocxManipulator {
 	
-    private String TEMPLATE_DIRECTORY = "docTemplates/";
+    private String TEMPLATE_DIRECTORY = "/resources/docTemplates/";
     
     //TODO - Configurar esta ruta en un archivo properties
-    private String TEMP_DIRECTORY="E:/TEMP/";
+    private String TEMP_DIRECTORY="C:/TEMP/";
     private String MAIN_DOCUMENT_PATH = "word/document.xml";
 
 
@@ -46,30 +46,30 @@ public class DocxManipulator {
      *            substitution data
      * @return
      */
-    public String generateDocx(String templateName, Map<String,String> substitutionData) {		
-        String templateLocation = TEMPLATE_DIRECTORY + templateName;     
-        
-        InputStream stream = FacesContext.getCurrentInstance().getExternalContext()
-        	    .getResourceAsStream(templateLocation);
-        
-        System.out.println("Template Location "+templateLocation);
-        
-        File template= new File(classLoader.getResource(templateLocation).getFile());
-
-        String userTempDir = UUID.randomUUID().toString();
-        userTempDir = TEMP_DIRECTORY + userTempDir + "/";
-        
-        try {           
-            unzip(template, new File(userTempDir));                   
+    public String generateDocx(String templateName, Map<String,String> substitutionData) {		            
+        /* Como getRealPath nunca funcionara con los contenedores de Servlets que no expanden el war
+         * Entonces se obtiene la ruta de manera adecuada siguiendo las recomendaciones dadas en:
+         * 			http://stackoverflow.com/questions/4340653/file-path-to-resource-in-our-war-web-inf-folder
+         */        
+        ServletContext context = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();        
+        try {
+			String templateLocation=context.getResource(TEMPLATE_DIRECTORY + templateName).getFile();
+			if(templateLocation.startsWith("/"))
+				templateLocation.replaceFirst("/", "");
+						
+			String userTempDir = UUID.randomUUID().toString();
+	        userTempDir = TEMP_DIRECTORY + userTempDir + "/";
+	        
+			unzip(new File(templateLocation), new File(userTempDir));                   
             changeData(new File(userTempDir + MAIN_DOCUMENT_PATH), substitutionData);       
             zip(new File(userTempDir), new File(userTempDir + templateName));
             
-            return userTempDir;            
-        } 
-        catch (IOException ioe) {
-            System.out.println(ioe.getMessage());
-            return null;
-        }       
+            return userTempDir;
+			
+		} catch (IOException e1) {			
+			e1.printStackTrace();
+			return null;
+		}        	                                                 
     }
 
     /*    PRIVATE METHODS    */
