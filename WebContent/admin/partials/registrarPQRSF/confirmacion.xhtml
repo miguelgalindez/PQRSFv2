@@ -37,6 +37,10 @@
 					<td>#{registrarPqrsfControl.persona.apellidos}</td>
 				</tr>
 				<tr>
+					<td>Departamento de residencia</td>
+					<td>#{valoresDAO.obtnDescripcion(valoresDAO.departamentos, registrarPqrsfControl.departamento)}</td>
+				</tr>
+				<tr>
 					<td>Municipio de residencia</td>
 					<td>#{valoresDAO.obtnNombreMunicipio(registrarPqrsfControl.persona.municipio.id)}</td>
 				</tr>

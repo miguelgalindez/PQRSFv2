@@ -16,12 +16,14 @@ xmlns:p="http://primefaces.org/ui"
 			<p:selectOneMenu id="departamento"
 								value="#{registrarPqrsfControl.departamento}"															
 								styleClass="form-control"
-								required="#{registrarPqrsfControl.persona.municipio.id == null}"
-								requiredMessage="Especifique el departamento de su docimicilio">
-								
+								required="#{registrarPqrsfControl.persona.municipio.id == null || registrarPqrsfControl.departamento == null}"
+								requiredMessage="Especifique el departamento de su docimicilio"
+								filter="true"
+								filterMatchMode="contains">
+					<f:selectItem itemValue="#{null}" itemLabel="Seleccione..."/>			
 					<f:selectItems value="#{valoresDAO.departamentos.entrySet()}" var="tipo"
 								itemValue="#{tipo.key}" itemLabel="#{tipo.value}"/>													
-					<p:ajax update="municipio"/>					
+					<p:ajax update="municipio @this"/>					
 			</p:selectOneMenu>
 			<p:message for="departamento" />
 		</div>
@@ -35,9 +37,14 @@ xmlns:p="http://primefaces.org/ui"
 								required="true"
 								requiredMessage="Especifique el municipio de su domicilio"
 								disabled="#{registrarPqrsfControl.departamento == null}"
-								styleClass="form-control">
+								styleClass="form-control"
+								filter="true"
+								filterMatchMode="contains"															
+								>
+					<f:selectItem itemValue="#{null}" itemLabel="Seleccione..."/>
 					<f:selectItems value="#{valoresDAO.obtnMunicipios(registrarPqrsfControl.departamento).entrySet()}" var="tipo"
-								itemValue="#{tipo.key}" itemLabel="#{tipo.value}"/>					
+								itemValue="#{tipo.key}" itemLabel="#{tipo.value}"/>	
+					<p:ajax update="departamento"/>				
 			</p:selectOneMenu>
 			<p:message for="municipio" />
 		</div>

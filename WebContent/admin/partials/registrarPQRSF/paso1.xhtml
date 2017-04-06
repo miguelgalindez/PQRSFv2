@@ -8,21 +8,7 @@ xmlns:f="http://xmlns.jcp.org/jsf/core"
 xmlns:p="http://primefaces.org/ui"
 >
 
-<h:body>
-	<div class="form-group">
-		<p:outputLabel for="tipoSolicitante" styleClass="control-label col-sm-3" value="Tipo solicitante"/>					                  
-		<div class="col-sm-7">
-				<p:selectOneMenu id="tipoSolicitante" 
-				value="#{registrarPqrsfControl.persona.tipoPersona}" 
-				styleClass="form-control" 
-				required="true">							                  																	   														
-				<f:selectItems value="#{valoresDAO.tiposPersona.entrySet()}" var="tipo" 
-     							itemValue="#{tipo.key}" itemLabel="#{tipo.value}" />					                  											                  						
-			</p:selectOneMenu>
-			<p:message for="tipoSolicitante"/>					                    	
-		</div>							                  	
-	</div>
-
+<h:body>	
 	<div class="form-group">
 		<p:outputLabel for="tipoIdentificacion" styleClass="control-label col-sm-3" value="Tipos de Identificación"/>					                  	
 		<div class="col-sm-7">
@@ -30,6 +16,7 @@ xmlns:p="http://primefaces.org/ui"
 				value="#{registrarPqrsfControl.persona.tipoIdentificacion}"
 				required="true"
 				styleClass="form-control">
+				<f:selectItem itemValue="#{null}" itemLabel="Seleccione..."/>
 				<f:selectItems value="#{valoresDAO.tiposIdentificacion.entrySet()}" var="tipo" 
      							itemValue="#{tipo.key}" itemLabel="#{tipo.value}" />
 			</p:selectOneMenu>
@@ -49,7 +36,22 @@ xmlns:p="http://primefaces.org/ui"
 			</p:inputText>
 			<p:message for="identificacion"/>					                    
 		</div>							                  	
-	</div>		               
+	</div>	
+	
+	<div class="form-group">
+		<p:outputLabel for="tipoSolicitante" styleClass="control-label col-sm-3" value="Tipo solicitante"/>					                  
+		<div class="col-sm-7">
+				<p:selectOneMenu id="tipoSolicitante" 
+				value="#{registrarPqrsfControl.persona.tipoPersona}" 
+				styleClass="form-control" 
+				required="true">
+				<f:selectItem itemValue="#{null}" itemLabel="Seleccione..."/>							                  																	   														
+				<f:selectItems value="#{valoresDAO.tiposPersona.entrySet()}" var="tipo" 
+     							itemValue="#{tipo.key}" itemLabel="#{tipo.value}" />					                  											                  						
+			</p:selectOneMenu>
+			<p:message for="tipoSolicitante"/>					                    	
+		</div>							                  	
+	</div>	               
 
 	<div class="form-group">					                	
 		<p:outputLabel for="nombres" styleClass="control-label col-sm-3" value="Nombres" ></p:outputLabel>

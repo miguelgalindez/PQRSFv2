@@ -13,7 +13,9 @@
 					<p:selectOneMenu id="dependencia"
 										value="#{direccionarPQRSFControl.idDependenciaSeleccionada}"
 										required="#{direccionarPQRSFControl.orden.funcionario.identificacion == null || direccionarPQRSFControl.idDependenciaSeleccionada == null}"										
-										styleClass="form-control" >
+										styleClass="form-control" 
+										filter="true"
+										filterMatchMode="contains">
 						<f:selectItem itemValue="#{null}" itemLabel="Seleccione..."/>
 						<f:selectItems value="#{valoresDAO.dependencias.entrySet()}" var="dep"
 										itemValue="#{dep.key}" itemLabel="#{dep.value}" />
@@ -30,7 +32,9 @@
 										value="#{direccionarPQRSFControl.orden.funcionario.identificacion}"
 										disabled="#{direccionarPQRSFControl.idDependenciaSeleccionada == null}"
 										required="true"
-										styleClass="form-control" >
+										styleClass="form-control" 
+										filter="true"
+										filterMatchMode="contains">
 						<f:selectItem itemValue="#{null}" itemLabel="Seleccione..."/>
 						<f:selectItems value="#{direccionarPQRSFControl.obtnFuncionarios(direccionarPQRSFControl.idDependenciaSeleccionada).entrySet()}" var="fun"
 											itemValue="#{fun.key}" itemLabel="#{fun.value}"/>
@@ -64,7 +68,7 @@
 						<p:commandLink actionListener="#{direccionarPQRSFControl.direccionarPQRSF()}"
 										styleClass="btn btn-lg btn-success" update="modalRespuestaPanel @form">		        	
 					            <i class="fa fa-registered"/> 				            				           
-					            <span>Radicar</span>			            			           
+					            <span>Direccionar</span>			            			           
 				        </p:commandLink>				        				        												 					
 					</div>
 				</div>														                 
