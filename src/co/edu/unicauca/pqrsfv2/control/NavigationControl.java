@@ -49,9 +49,8 @@ public class NavigationControl implements Serializable {
 	}
 	
 	public void changeViewToShow(String viewToShow) {		
-		this.viewToShow = viewToShow;
-		
-		switch(viewToShow){
+		this.viewToShow = viewToShow;		
+		switch(viewToShow){		
 		case "/admin/index.xhtml": 
 				consultasControl.cargarIndicadores();
 				break;

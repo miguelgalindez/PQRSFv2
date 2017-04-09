@@ -73,7 +73,9 @@
 						                    <f:converter converterId="javax.faces.Integer" />
 						                </p:spinner>
 						            </f:facet>
-								<h:outputText value="#{consultasControl.obtnLeyendaDiasParaVencimiento(orden.pqrsf)} "/>
+						        <h:outputText rendered="#{orden.pqrsf.estado==1}" value="#{consultasControl.obtnLeyendaDiasParaVencimiento(orden.pqrsf)}" />
+						        <h:outputText rendered="#{orden.pqrsf.estado==2}" value="#{orden.pqrsf.fe}" />    
+								<h:outputText value="#{orden.pqrsf.fechaVencimiento==null ? 'Falta radicar' : } "/>
 							</p:column>
 							
 							<p:column rendered="#{consultasControl.diasParaVencimiento lt 0}" headerText="Responsable" sortBy="#{orden.funcionario.nombre}"
