@@ -47,9 +47,9 @@
 		          </a>
 		          <ul class="treeview-menu">		          
 		            <li>
-		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/consultas/todasPQRSF.xhtml')}">		        				            
+		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/consultas/pqrsfAtendidas.xhtml')}">		        				            
 			            	<i class="fa fa-circle-o"></i>
-			        		Todas las PQRSFs
+			        		PQRSFs por estado
 			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
 		          		</h:commandLink>
 					</li>
@@ -67,6 +67,13 @@
 			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
 		          		</h:commandLink>
 		            </li>
+		            <li>
+		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/consultas/todasPQRSF.xhtml')}">		        				            
+			            	<i class="fa fa-circle-o"></i>
+			        		Todas las PQRSFs
+			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
+		          		</h:commandLink>
+					</li>
 		          </ul>
 		        </li>
 		

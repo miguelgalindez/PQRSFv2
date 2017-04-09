@@ -121,3 +121,18 @@ a:hover {
 .arrow-steps .step.current:after {
 	border-left: 17px solid #23468c;	
 }
+
+.centered-y{
+	position:relative;	
+	margin:0 auto;	
+}
+
+.centered-x{
+	position:relative;	
+	margin: auto 0;	
+}
+
+.centered-xy{
+	position:relative;	
+	margin: auto auto;	
+}

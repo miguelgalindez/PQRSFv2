@@ -63,23 +63,32 @@ public class NavigationControl implements Serializable {
 				break;
 				
 			case "/admin/consultas/todasPQRSF.xhtml":				
-				consultasControl.setDiasParaVencimiento(null);
-				consultasControl.cargarTodasPqrf();
-				consultasControl.setTituloConsulta("Todas las PQRSFs");
+				consultasControl.obtnTodasOrdenes();								
 				break;
 			
-			case "/admin/consultas/pqrsfProximasaVencerse.xhtml":
+			case "/admin/consultas/pqrsfAtendidas.xhtml":								
+				consultasControl.cargarOrdenesPorEstado(2);
 				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
-				consultasControl.setDiasParaVencimiento(3);
-				consultasControl.cargarTodasPqrf();
-				consultasControl.setTituloConsulta("PQRSFs próximas a vencerse");
 				break;
 			
-			case "/admin/consultas/pqrsfVencidas.xhtml":
+			case "/admin/consultas/pqrsfEnTramite.xhtml":				
+				consultasControl.cargarOrdenesPorEstado(1);				
 				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
-				consultasControl.setDiasParaVencimiento(-1);
-				consultasControl.cargarTodasPqrf();
-				consultasControl.setTituloConsulta("PQRSFs vencidas");
+				break;
+				
+			case "/admin/consultas/pqrsfPendientes.xhtml":								
+				consultasControl.cargarOrdenesPorEstado(0);				
+				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
+				break;
+			
+			case "/admin/consultas/pqrsfProximasaVencerse.xhtml":								
+				consultasControl.cargarOrdenesPorVencimiento(3);				
+				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
+				break;
+			
+			case "/admin/consultas/pqrsfVencidas.xhtml":								
+				consultasControl.cargarOrdenesPorVencimiento(-1);				
+				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
 				break;
 		}		
 	}
@@ -119,4 +128,6 @@ public class NavigationControl implements Serializable {
 	public void setUsuarioAutenticado(Usuario usuarioAutenticado) {
 		this.usuarioAutenticado = usuarioAutenticado;
 	}
+	
+	
 }

@@ -11,11 +11,20 @@
 	<h:body>
 		<div class="col-lg-12">
 	       	<div class="box box-danger">
-	            <div class="box-header with-border">
-	            	<h1 align="center" >#{consultasControl.tituloConsulta}</h1>           	
-	            </div>
-	            <div class="box-body">		
-					<h:form id="TodasPqrsfForm">
+	       		<h:form id="TodasPqrsfForm">
+		            <div class="box-header with-border">
+		            	<h1 align="center" >#{consultasControl.tituloConsulta}</h1>
+		            	<p:panelGrid rendered="#{consultasControl.esConsultaPorEstado}" columns="2" styleClass="centered-xy">
+			            	<p:outputLabel value="Cambiar de estado: " />
+			            	<p:selectOneMenu id="selectEstado" value="#{consultasControl.estadoSeleccionado}">
+			            		<f:selectItems value="#{valoresDAO.estados.entrySet()}" var="estado" 
+			            						itemValue="#{estado.key}" itemLabel="#{estado.value}"/>
+			            		<p:ajax listener="#{consultasControl.cargarOrdenesPorEstado(null)}" 
+			            				process="selectEstado" update="@form" partialSubmit="true" />		            		
+			            	</p:selectOneMenu>
+			            </p:panelGrid>
+		            </div>
+	            	<div class="box-body">							
 						<p:dataTable id="todasPqrsfTable" value="#{consultasControl.ordenes}"
 									widgetVar="todasPqrsf"
 									var="orden" 
@@ -52,7 +61,7 @@
 								<h:outputText value="#{valoresDAO.obtnDescripcion(valoresDAO.tiposPqrsf, orden.pqrsf.tipoPqrsf)}" />
 							</p:column>
 							
-							<p:column headerText="#{consultasControl.diasParaVencimiento lt 0 ? 'Último estado' : 'Estado'}" 
+							<p:column rendered="#{consultasControl.esConsultaPorEstado==false}" headerText="Estado" 
 										sortBy="#{valoresDAO.obtnDescripcion(valoresDAO.estados, orden.pqrsf.estado)}" 
 										filterBy="#{orden.pqrsf.estado}" filterMatchMode="exact" style="text-align: center;">
 								<f:facet name="filter">
@@ -65,7 +74,7 @@
 								<h:outputText value="#{valoresDAO.obtnDescripcion(valoresDAO.estados, orden.pqrsf.estado)}" />
 							</p:column>							
 							
-							<p:column rendered="#{consultasControl.diasParaVencimiento==null || consultasControl.diasParaVencimiento ge 0}" headerText="Vencimiento" sortBy="#{consultasControl.obtnDiasParaVencimiento(orden.pqrsf)}"
+							<p:column rendered="#{consultasControl.esConsultaPorVencimiento}" headerText="Vencimiento" sortBy="#{consultasControl.obtnDiasParaVencimiento(orden.pqrsf)}"
 											filterBy="#{consultasControl.obtnDiasParaVencimiento(orden.pqrsf)}" filterMatchMode="exact" 
 											style="text-align: center;">												
 									<f:facet name="filter">
@@ -74,11 +83,12 @@
 						                </p:spinner>
 						            </f:facet>
 						        <h:outputText rendered="#{orden.pqrsf.estado==1}" value="#{consultasControl.obtnLeyendaDiasParaVencimiento(orden.pqrsf)}" />
-						        <h:outputText rendered="#{orden.pqrsf.estado==2}" value="#{orden.pqrsf.fe}" />    
-								<h:outputText value="#{orden.pqrsf.fechaVencimiento==null ? 'Falta radicar' : } "/>
+						        <h:outputText rendered="#{orden.pqrsf.estado==2}" value="Ya fue atendida" />    
+								<h:outputText rendered="#{orden.pqrsf.estado==0 and orden.pqrsf.radicado.fecha == null}" value="Falta radicar" />
+								<h:outputText rendered="#{orden.pqrsf.estado==0 and orden.pqrsf.radicado.fecha != null}" value="Falta direccionar" />
 							</p:column>
 							
-							<p:column rendered="#{consultasControl.diasParaVencimiento lt 0}" headerText="Responsable" sortBy="#{orden.funcionario.nombre}"
+							<p:column rendered="#{consultasControl.esConsultaPorVencimiento}" headerText="Responsable" sortBy="#{orden.funcionario.nombre}"
 									filterBy="#{orden.funcionario.nombre}" filterMatchMode="contains" style="text-align: center;">
 								<h:outputText value="#{orden.funcionario.nombre}"/>
 							</p:column>
@@ -127,9 +137,9 @@
 					                <f:setPropertyActionListener value="#{orden.pqrsf}" target="#{direccionarPQRSFControl.selectedPqrsf}" />
 					            </p:commandButton>		            				
 							</p:column>
-						</p:dataTable>						
-					</h:form>
-				</div>
+						</p:dataTable>											
+					</div>
+				</h:form>
 			</div>
 		</div>
 		<p:outputPanel id="modalRespuestaPanel">

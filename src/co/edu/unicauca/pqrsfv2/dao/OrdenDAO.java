@@ -34,21 +34,49 @@ public class OrdenDAO {
 		return con.executeProcedure("DIRECCIONAR_PQRSF", parameters, parametersTypes);
 	}
 
-	public ArrayList<Orden> obtnTodasOrdenes(Integer diasParaVencimiento) {
+	public ArrayList<Orden> obtnOrdenesPorVencimiento(int diasParaVencimiento) {
 		String sql="SELECT PQRSF.PQRSFCODIGO, PQRSF.TIPPQRSFID, MEDID, PERNOMBRES, PERAPELLIDOS, PQRSFASUNTO, "+
 		        "PQRSFDESCRIPCION, RADFECHA, PQRSFESTADO, PQRSFFECHACREACION, "+
 		        "PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, FUNNOMBRE, ORDFECHAASIGNACION, FUNCORREO, FUNTELEFONO, DEPID "+      
 		        "FROM PQRSF NATURAL JOIN PERSONA "+
 		                    "LEFT OUTER JOIN RADICADO ON PQRSF.RADID=RADICADO.RADID "+
 		                    "LEFT OUTER JOIN ORDEN ON PQRSF.PQRSFCODIGO = ORDEN.PQRSFCODIGO "+
-		                    "LEFT OUTER JOIN FUNCIONARIO ON ORDEN.FUNIDENTIFICACION = FUNCIONARIO.FUNIDENTIFICACION ";
-		if(diasParaVencimiento!=null){
+		                    "LEFT OUTER JOIN FUNCIONARIO ON ORDEN.FUNIDENTIFICACION = FUNCIONARIO.FUNIDENTIFICACION ";		                    
+				
 			if(diasParaVencimiento<0)
 				sql+="WHERE PQRSFESTADO!=2 AND PQRSFFECHAVENCIMIENTO-SYSDATE<0";
 			else
 				sql+="WHERE PQRSFESTADO!=2 AND PQRSFFECHAVENCIMIENTO-SYSDATE<="+diasParaVencimiento+" AND PQRSFFECHAVENCIMIENTO-SYSDATE>=0";
-		}			
-							
+						
+		return cargarOrdenes(con.executeQueryRS(sql));
+	}
+	
+	public ArrayList<Orden> obtnOrdenesPorEstado(int estado) {
+		String sql="SELECT PQRSF.PQRSFCODIGO, PQRSF.TIPPQRSFID, MEDID, PERNOMBRES, PERAPELLIDOS, PQRSFASUNTO, "+
+		        "PQRSFDESCRIPCION, RADFECHA, PQRSFESTADO, PQRSFFECHACREACION, "+
+		        "PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, FUNNOMBRE, ORDFECHAASIGNACION, FUNCORREO, FUNTELEFONO, DEPID "+      
+		        "FROM PQRSF NATURAL JOIN PERSONA "+
+		                    "LEFT OUTER JOIN RADICADO ON PQRSF.RADID=RADICADO.RADID "+
+		                    "LEFT OUTER JOIN ORDEN ON PQRSF.PQRSFCODIGO = ORDEN.PQRSFCODIGO "+
+		                    "LEFT OUTER JOIN FUNCIONARIO ON ORDEN.FUNIDENTIFICACION = FUNCIONARIO.FUNIDENTIFICACION "+
+				"WHERE PQRSFESTADO="+estado;
+		
+		// si se van a consultar las que estan en tramite que no se incluyan las que ya estan vencidas
+		if(estado==1)
+			sql+= " AND PQRSFFECHAVENCIMIENTO-SYSDATE>=0";
+		
+		return cargarOrdenes(con.executeQueryRS(sql));
+	}
+	
+	public ArrayList<Orden> obtnTodasOrdenes(){
+		String sql="SELECT PQRSF.PQRSFCODIGO, PQRSF.TIPPQRSFID, MEDID, PERNOMBRES, PERAPELLIDOS, PQRSFASUNTO, "+
+		        "PQRSFDESCRIPCION, RADFECHA, PQRSFESTADO, PQRSFFECHACREACION, "+
+		        "PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, FUNNOMBRE, ORDFECHAASIGNACION, FUNCORREO, FUNTELEFONO, DEPID "+      
+		        "FROM PQRSF NATURAL JOIN PERSONA "+
+		                    "LEFT OUTER JOIN RADICADO ON PQRSF.RADID=RADICADO.RADID "+
+		                    "LEFT OUTER JOIN ORDEN ON PQRSF.PQRSFCODIGO = ORDEN.PQRSFCODIGO "+
+		                    "LEFT OUTER JOIN FUNCIONARIO ON ORDEN.FUNIDENTIFICACION = FUNCIONARIO.FUNIDENTIFICACION ";				
+				
 		return cargarOrdenes(con.executeQueryRS(sql));
 	}
 	
@@ -111,4 +139,5 @@ public class OrdenDAO {
 		return con.ejecutarProcedimientoIndicadores();
 		
 	}
+	
 }

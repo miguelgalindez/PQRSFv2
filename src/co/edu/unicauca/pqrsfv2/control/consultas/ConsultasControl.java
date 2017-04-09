@@ -28,11 +28,15 @@ public class ConsultasControl implements Serializable{
 	
 	@Inject
 	OrdenDAO ordenDAO;
-	// para la vista de todasPQRSF
-	private Integer diasParaVencimiento;
+	// para la vista de todasPQRSF	
 	private ArrayList<Orden> ordenes;
 	private String selectedAction;
 	private String tituloConsulta;
+	private boolean esConsultaPorEstado;
+	private int estadoSeleccionado;
+	private boolean esConsultaPorVencimiento;
+	private boolean esConsultaDeTodas;
+	
 	// para la vista de Buscar PQRSF
 	private String identificacionPersona;
 	private String codigoPqrsf;
@@ -51,9 +55,39 @@ public class ConsultasControl implements Serializable{
 		selectedAction="Ver";
 		orden=null;
 	}
-
-	public void cargarTodasPqrf(){		
-		ordenes=ordenDAO.obtnTodasOrdenes(diasParaVencimiento);		
+	
+	
+	public void cargarOrdenesPorVencimiento(int diasParaVencimiento){
+		this.esConsultaPorVencimiento();		
+		ordenes=ordenDAO.obtnOrdenesPorVencimiento(diasParaVencimiento);
+		if(diasParaVencimiento==-1)
+			this.setTituloConsulta("PQRSFs vencidas");
+		else
+			this.setTituloConsulta("PQRSFs próximas a vencerse");
+	}
+	
+	public void cargarOrdenesPorEstado(Integer estado){
+		this.esConsultaPorEstado();
+		if(estado!=null)
+			estadoSeleccionado=estado;		
+		ordenes=ordenDAO.obtnOrdenesPorEstado(estadoSeleccionado);
+		switch (estadoSeleccionado) {
+			case 0:
+				this.setTituloConsulta("PQRSFs Pendientes");
+				break;
+			case 1:
+				this.setTituloConsulta("PQRSFs en Trámite");
+				break;
+			case 2:
+				this.setTituloConsulta("PQRSFs Atendidas");
+				break;
+		}
+	}	
+	
+	public void obtnTodasOrdenes(){
+		this.esConsultaDeTodas();
+		this.setTituloConsulta("Todas las PQRSFs");
+		ordenes=ordenDAO.obtnTodasOrdenes();
 	}
 	
 	public void changeSelectedAction(String action){
@@ -135,14 +169,6 @@ public class ConsultasControl implements Serializable{
 
 	public void setSelectedAction(String selectedAction) {
 		this.selectedAction = selectedAction;
-	}
-
-	public Integer getDiasParaVencimiento() {
-		return diasParaVencimiento;
-	}
-
-	public void setDiasParaVencimiento(Integer diasParaVencimiento) {
-		this.diasParaVencimiento = diasParaVencimiento;
 	}
 
 	public String getIdentificacionPersona() {
@@ -232,5 +258,46 @@ public class ConsultasControl implements Serializable{
 
 	public void setNumeroPqrsfPendientes(int numeroPqrsfPendientes) {
 		this.numeroPqrsfPendientes = numeroPqrsfPendientes;
-	}	
+	}
+
+
+	public boolean getEsConsultaPorEstado() {
+		return esConsultaPorEstado;
+	}
+
+
+	public void esConsultaPorEstado() {
+		esConsultaPorEstado=true;
+		esConsultaDeTodas=esConsultaPorVencimiento=false;
+	}
+
+
+	public boolean getEsConsultaPorVencimiento() {
+		return esConsultaPorVencimiento;
+	}
+
+
+	public void esConsultaPorVencimiento() {
+		esConsultaPorVencimiento=true;
+		esConsultaDeTodas=esConsultaPorEstado=false;
+	}
+
+
+	public boolean getEsConsultaDeTodas() {
+		return esConsultaDeTodas;
+	}
+
+	public void esConsultaDeTodas() {
+		esConsultaDeTodas=true;
+		esConsultaPorEstado=esConsultaPorVencimiento=false;
+	}
+
+	public int getEstadoSeleccionado() {
+		return estadoSeleccionado;
+	}
+
+	public void setEstadoSeleccionado(int estadoSeleccionado) {
+		this.estadoSeleccionado = estadoSeleccionado;
+	}
+		
 }
