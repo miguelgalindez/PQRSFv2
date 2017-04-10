@@ -92,6 +92,20 @@ public class RegistrarPqrsfControl implements Serializable{
 		RequestContext.getCurrentInstance().execute("PF('wiz').back();");
 		
 	}
+	
+	public void buscarPersona(){
+		if(persona.getTipoIdentificacion()!=null && persona.getIdentificacion()!=null && persona.getIdentificacion().equals("")==false){
+			int tipoIdentificacion=persona.getTipoIdentificacion();
+			String identificacion=persona.getIdentificacion();
+			persona=new Persona();
+			persona.setTipoIdentificacion(tipoIdentificacion);
+			persona.setIdentificacion(identificacion);
+			personaDAO.buscarPersona(persona);
+			this.departamento=persona.getMunicipio().getIdDepartamento();
+		}			
+		else
+			System.out.println("\tAun no");
+	}
 		
 	public Pqrsf getPqrsf() {
 		return pqrsf;

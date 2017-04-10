@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
+import co.edu.unicauca.pqrsfv2.modelo.Persona;
 
 @Stateless
 @LocalBean
@@ -70,5 +71,29 @@ public class PersonaDAO {
 			con.clean();
 		}		
 		return "";
+	}
+
+	public void buscarPersona(Persona persona) {
+		String sql="SELECT MUNID, DEPTOID, TIPPERID, PERNOMBRES, PERAPELLIDOS, PERCORREO, PERDIRECCION, PERTELEFONO, PERCELULAR"
+				+ " FROM PERSONA NATURAL JOIN MUNICIPIO" 
+				+ " WHERE TIPIDEID="+persona.getTipoIdentificacion()+" AND PERIDENTIFICACION='"+persona.getIdentificacion()+"'";
+		ResultSet rs=con.executeQueryRS(sql);
+		
+		try {
+			if(rs.next()){				
+				persona.getMunicipio().setId(rs.getInt("MUNID"));
+				persona.getMunicipio().setIdDepartamento(rs.getInt("DEPTOID"));
+				persona.setTipoPersona(rs.getInt("TIPPERID"));
+				persona.setNombres(rs.getString("PERNOMBRES"));
+				persona.setApellidos(rs.getString("PERAPELLIDOS"));
+				persona.setEmail(rs.getString("PERCORREO"));
+				persona.setDireccion(rs.getString("PERDIRECCION"));
+				persona.setTelefono(rs.getString("PERTELEFONO"));
+				persona.setCelular(rs.getString("PERCELULAR"));
+			}			
+		} catch (SQLException e) {
+			System.err.println("Error al intentar recuperar la información de la persona: tipID: "+persona.getTipoIdentificacion()+" ID: "+persona.getIdentificacion());
+			e.printStackTrace();
+		}
 	}	
 }

@@ -19,6 +19,7 @@ xmlns:p="http://primefaces.org/ui"
 				<f:selectItem itemValue="#{null}" itemLabel="Seleccione..."/>
 				<f:selectItems value="#{valoresDAO.tiposIdentificacion.entrySet()}" var="tipo" 
      							itemValue="#{tipo.key}" itemLabel="#{tipo.value}" />
+     			<p:ajax listener="#{registrarPqrsfControl.buscarPersona()}" update="@form" />
 			</p:selectOneMenu>
 			<p:message for="tipoIdentificacion"/>					                    
 		</div>							                  	
@@ -32,7 +33,8 @@ xmlns:p="http://primefaces.org/ui"
 				required="true"
 				styleClass="form-control">
 				<f:validateRegex pattern="^[0-9]+$"/>
-				<f:validateLength minimum="4" maximum="20"/>						                  								                  		
+				<f:validateLength minimum="4" maximum="20"/>
+				<p:ajax listener="#{registrarPqrsfControl.buscarPersona()}" update="@form" />						                  								                  		
 			</p:inputText>
 			<p:message for="identificacion"/>					                    
 		</div>							                  	
