@@ -95,5 +95,8 @@ public class PersonaDAO {
 			System.err.println("Error al intentar recuperar la información de la persona: tipID: "+persona.getTipoIdentificacion()+" ID: "+persona.getIdentificacion());
 			e.printStackTrace();
 		}
+		finally{
+			con.clean();
+		}
 	}	
 }

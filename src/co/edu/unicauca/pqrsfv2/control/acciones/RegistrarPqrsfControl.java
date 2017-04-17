@@ -102,9 +102,7 @@ public class RegistrarPqrsfControl implements Serializable{
 			persona.setIdentificacion(identificacion);
 			personaDAO.buscarPersona(persona);
 			this.departamento=persona.getMunicipio().getIdDepartamento();
-		}			
-		else
-			System.out.println("\tAun no");
+		}					
 	}
 		
 	public Pqrsf getPqrsf() {
