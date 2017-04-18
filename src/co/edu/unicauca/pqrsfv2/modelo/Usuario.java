@@ -17,6 +17,11 @@ public class Usuario implements Serializable{
 	private String rol;
 	private Date fechaInicio;
 	private Date fechaFin;
+	
+	public Usuario(String username) {
+		this.username=username;
+	}
+	
 	public String getUsername() {
 		return username;
 	}

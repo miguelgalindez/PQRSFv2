@@ -147,7 +147,9 @@ public class ConsultasControl implements Serializable{
 	}
 	
 	public void obtnOrden(){		
-		orden=ordenDAO.obtnOrden(codigoPqrsf, identificacionPersona);		
+		orden=ordenDAO.buscarOrden(codigoPqrsf, identificacionPersona);
+		System.out.println("Codigo "+codigoPqrsf+" ID: "+ identificacionPersona);
+		if(orden==null) System.out.println("Orden no encontrada");
 	}
 	
 	public String formatearFecha(Date fecha){

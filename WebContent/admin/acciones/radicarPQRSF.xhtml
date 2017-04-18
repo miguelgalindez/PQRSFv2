@@ -70,8 +70,8 @@
 								
 								<p:column headerText="Acciones" width="15%">
 									<p:commandButton update="radicarPQRSFPanel" oncomplete="PF('dialog').show()" icon="fa fa-search" title="Ver"
-														actionListener="#{radicarPqrsfControl.changeSelectedAction('Ver')}" >						
-						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
+														action="#{radicarPqrsfControl.changeSelectedAction('Ver')}">						
+						                <f:setPropertyActionListener value="#{pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />						                						               
 						            </p:commandButton>
 						            <p:commandButton icon="fa fa-print" title="Imprimir"
 						            					ajax="false"

@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:body>
+	<h:panelGrid columns="1" width="100%">					            
+		<div class="col-sm-offset-2 col-sm-8">
+           	<table class="table table-responsive table-striped table-hover table-bordered">									
+				<tbody>
+				
+					<tr>
+						<td>Tipo de peticionario</td>
+						<td>#{valoresDAO.obtnDescripcion(valoresDAO.tiposPersona, consultasControl.orden.pqrsf.persona.tipoPersona)}</td>
+					</tr>						
+					<tr>
+						<td>Tipo de Identificación</td>
+						<td>#{valoresDAO.obtnDescripcion(valoresDAO.tiposIdentificacion, consultasControl.orden.pqrsf.persona.tipoIdentificacion)}</td>
+					</tr>					
+					
+					<tr>
+						<td>Identificación</td>
+						<td>#{consultasControl.orden.pqrsf.persona.identificacion}</td>
+					</tr>														
+					
+					<tr>
+						<td>Nombres</td>
+						<td>#{consultasControl.orden.pqrsf.persona.nombres}</td>
+					</tr>
+					
+					<tr>
+						<td>Apellidos</td>
+						<td>#{consultasControl.orden.pqrsf.persona.apellidos}</td>
+					</tr>
+					
+					<tr>
+						<td>Correo</td>
+						<td>#{consultasControl.orden.pqrsf.persona.email}</td>
+					</tr>					
+					
+					<tr>
+						<td>Departamento de Residencia</td>
+						<td>#{valoresDAO.obtnDescripcion(valoresDAO.departamentos, consultasControl.orden.pqrsf.persona.municipio.idDepartamento)}</td>
+					</tr>
+					
+					<tr>
+						<td>Municipio de Residencia</td>
+						<td>#{valoresDAO.obtnNombreMunicipio(consultasControl.orden.pqrsf.persona.municipio.id)}</td>
+					</tr>
+					
+					<tr>
+						<td>Dirección de Residencia</td>
+						<td>#{consultasControl.orden.pqrsf.persona.direccion}</td>
+					</tr>
+					
+					<tr>
+						<td>Teléfono</td>
+						<td>#{consultasControl.orden.pqrsf.persona.telefono}</td>
+					</tr>														
+					
+					<tr>
+						<td>Celular</td>
+						<td>#{consultasControl.orden.pqrsf.persona.celular}</td>
+					</tr>																															
+				</tbody>
+			</table>
+		</div>
+	</h:panelGrid>
+</h:body>
+</html>

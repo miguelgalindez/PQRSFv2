@@ -15,9 +15,12 @@ public class Radicado implements Serializable{
 	@NotNull
 	private String id;
 	@NotNull
-	private Date fecha;
-	
+	private Date fecha;	
 	private Usuario usuarioQueRadica;
+	
+	public Radicado(){
+		id=null;
+	}
 	
 	public String getId() {
 		return id;

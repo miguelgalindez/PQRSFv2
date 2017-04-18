@@ -5,7 +5,26 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
 
-	<h:body>		
-			<p:outputLabel value="Modal Ver en construccion" />		
+	<h:body>				
+       	<p:tabView rendered="#{consultasControl.orden != null}" >
+	      
+	        <p:tab title="Datos de la PQRSF">
+	        	<ui:include src="/admin/partials/buscarPQRSF/datosPQRSF.xhtml" />				            
+	        </p:tab>
+	        
+	        <p:tab rendered="#{consultasControl.orden.pqrsf.radicado.id != null}" title="Datos del radicado">
+	            <ui:include src="/admin/partials/buscarPQRSF/datosRadicado.xhtml" />
+	        </p:tab>
+	        
+	        
+	        <p:tab rendered="#{consultasControl.orden.pqrsf.estado > 0}" title="Datos del Responsable">
+	            <ui:include src="/admin/partials/buscarPQRSF/datosResponsable.xhtml" />
+	        </p:tab>
+	        
+	        <p:tab title="Datos del Peticionario">
+	            <ui:include src="/admin/partials/buscarPQRSF/datosPeticionario.xhtml" />
+	        </p:tab>
+	        
+	    </p:tabView>	    	
 	</h:body>
 </html>

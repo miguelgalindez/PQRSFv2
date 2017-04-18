@@ -26,7 +26,7 @@ public class UsuarioDAO {
 		if(rs!=null){
 			try {
 				if(rs.next()){				
-					usuario=new Usuario();					
+					usuario=new Usuario(username);					
 					usuario.setRol(rs.getString("USUROL"));
 					usuario.setFechaInicio(rs.getDate("USUFECHAINICIO"));
 					usuario.setFechaFin(rs.getDate("USUFECHAFIN"));								

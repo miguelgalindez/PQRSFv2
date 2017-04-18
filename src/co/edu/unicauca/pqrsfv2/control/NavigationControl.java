@@ -106,8 +106,7 @@ public class NavigationControl implements Serializable {
 			Date now=new Date();		
 			if(usuario!=null && now.after(usuario.getFechaInicio())){		
 				Date fechaFin=usuario.getFechaFin();
-				if(fechaFin==null || now.before(fechaFin)){
-					usuario.setUsername(username);
+				if(fechaFin==null || now.before(fechaFin)){					
 					usuario.setNombre(name);						
 					usuario.setFoto(picture);				
 					usuario.setEnlace(link);

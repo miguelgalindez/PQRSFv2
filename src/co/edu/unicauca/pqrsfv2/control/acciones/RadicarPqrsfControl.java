@@ -18,6 +18,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 import co.edu.unicauca.pqrsfv2.control.ModalRespuestaControl;
 import co.edu.unicauca.pqrsfv2.control.NavigationControl;
+import co.edu.unicauca.pqrsfv2.control.consultas.ConsultasControl;
 import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
 import co.edu.unicauca.pqrsfv2.dao.ValoresDAO;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
@@ -44,6 +45,9 @@ public class RadicarPqrsfControl implements Serializable{
 	ValoresDAO valoresDAO;
 	@Inject
 	DocxManipulator docxManipulator;
+	@Inject
+	ConsultasControl consultasControl;
+	
 	private ArrayList<Pqrsf> pqrsfNoRadicadas;
 	private Pqrsf selectedPqrsf;
 	private String selectedAction;
@@ -54,6 +58,11 @@ public class RadicarPqrsfControl implements Serializable{
 	
 	public void changeSelectedAction(String action){
 		selectedAction=action;
+		if(action.equals("Ver")){
+			consultasControl.setCodigoPqrsf(selectedPqrsf.getCodigo());
+			consultasControl.setIdentificacionPersona(selectedPqrsf.getPersona().getIdentificacion());
+			consultasControl.obtnOrden();
+		}
 	}
 			
 	public RadicarPqrsfControl(){

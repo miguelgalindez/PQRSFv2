@@ -32,13 +32,13 @@ public class Pqrsf implements Serializable{
 	public Pqrsf(){
 		persona=new Persona();
 		radicado=new Radicado();
-		fechaVencimiento=null;
-	}
+		fechaVencimiento=null;			
+	}	
 	
 	public Integer getTipoPqrsf() {
 		return tipoPqrsf;
 	}
-	public void setTipoPqrsf(Integer tipoPqrsf) {
+	public void setTipoPqrsf(Integer tipoPqrsf) {		
 		this.tipoPqrsf = tipoPqrsf;
 	}
 	public Integer getMedioRecepcion() {
