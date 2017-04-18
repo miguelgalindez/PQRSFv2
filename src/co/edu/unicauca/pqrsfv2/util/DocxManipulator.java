@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URI;
+import java.net.URLDecoder;
 import java.util.Deque;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -54,9 +55,12 @@ public class DocxManipulator {
         ServletContext context = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();        
         try {
 			String templateLocation=context.getResource(TEMPLATE_DIRECTORY + templateName).getFile();
+			System.out.println(templateLocation);			
+						
 			if(templateLocation.startsWith("/"))
 				templateLocation.replaceFirst("/", "");
-						
+			templateLocation=URLDecoder.decode(templateLocation, "UTF-8");
+			System.out.println("Despues "+templateLocation);
 			String userTempDir = UUID.randomUUID().toString();
 	        userTempDir = TEMP_DIRECTORY + userTempDir + "/";
 	        
