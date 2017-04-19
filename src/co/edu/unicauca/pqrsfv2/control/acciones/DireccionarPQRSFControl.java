@@ -10,6 +10,7 @@ import org.primefaces.context.RequestContext;
 
 import co.edu.unicauca.pqrsfv2.control.ModalRespuestaControl;
 import co.edu.unicauca.pqrsfv2.control.NavigationControl;
+import co.edu.unicauca.pqrsfv2.control.consultas.ConsultasControl;
 import co.edu.unicauca.pqrsfv2.dao.DependenciaDAO;
 import co.edu.unicauca.pqrsfv2.dao.OrdenDAO;
 import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
@@ -35,6 +36,8 @@ public class DireccionarPQRSFControl implements Serializable{
 	private NavigationControl navigationControl;
 	@Inject
 	private ModalRespuestaControl modalRespuestaControl;
+	@Inject
+	private ConsultasControl consultasControl;
 	private ArrayList<Pqrsf> pqrsfNoDireccionadas;
 	private Pqrsf selectedPqrsf;
 	private Orden orden;
@@ -51,7 +54,7 @@ public class DireccionarPQRSFControl implements Serializable{
 	}
 
 	public void changeSelectedAction(String action){
-		selectedAction=action;
+		selectedAction=action;		
 	}
 	
 	public HashMap<Integer, String> obtnFuncionarios(Integer idDependencia){
@@ -76,7 +79,7 @@ public class DireccionarPQRSFControl implements Serializable{
 		
 		if(success){
 			ctx.execute("PF('dialog').hide();");			
-			modalRespuestaControl.configurar("Operación exitosa", "La PQRSF ha sido direccionada satisfactoriamente");
+			modalRespuestaControl.configurar("Operaciï¿½n exitosa", "La PQRSF ha sido direccionada satisfactoriamente");
 			// Para que funcionen las Tablas de las Consultas (todas, proximas y vencidas)
 			selectedPqrsf.setEstado(1);
 			pqrsfNoDireccionadas.remove(selectedPqrsf);
@@ -111,7 +114,7 @@ public class DireccionarPQRSFControl implements Serializable{
 	}
 
 	public void setSelectedAction(String selectedAction) {
-		this.selectedAction = selectedAction;
+		this.selectedAction = selectedAction;		
 	}
 
 	public Pqrsf getSelectedPqrsf() {
@@ -120,6 +123,10 @@ public class DireccionarPQRSFControl implements Serializable{
 
 	public void setSelectedPqrsf(Pqrsf selectedPqrsf) {
 		this.selectedPqrsf = selectedPqrsf;
+		if(selectedAction.equals("Ver")){
+			consultasControl.setCodigoPqrsf(selectedPqrsf.getCodigo());
+			consultasControl.obtnOrdenPorCodigoPqrsf();
+		}
 	}
 
 	public Orden getOrden() {

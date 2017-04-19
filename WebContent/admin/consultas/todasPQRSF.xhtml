@@ -115,26 +115,27 @@
 							
 							<p:column headerText="Acciones">
 								<p:commandButton update="actionsPanel" oncomplete="PF('dialog').show()" icon="fa fa-search" title="Ver"
-													actionListener="#{consultasControl.changeSelectedAction('Ver')}" >						
-					                <f:setPropertyActionListener value="#{orden.pqrsf}" target="#{direccionarPQRSFControl.selectedPqrsf}" />
-					            </p:commandButton>
+														actionListener="#{consultasControl.changeSelectedAction('Ver')}">						
+						                <f:setPropertyActionListener value="#{orden.pqrsf}" target="#{consultasControl.selectedPqrsf}" />						                						               
+					            </p:commandButton>					         
 					            
-					            <p:commandButton update="actionsPanel" oncomplete="PF('dialog').show()" icon="fa fa-print" title="Imprimir"
-					            					actionListener="#{consultasControl.changeSelectedAction('Imprimir')}"
-					            					rendered="#{orden.pqrsf.radicado.fecha == null}">
-					                <f:setPropertyActionListener value="#{orden.pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
-					            </p:commandButton>
+					            <p:commandButton icon="fa fa-print" title="Imprimir"
+						            					ajax="false"
+						            					onclick="PrimeFaces.monitorDownload(start, stop);">
+						                <f:setPropertyActionListener value="#{orden.pqrsf}" target="#{consultasControl.selectedPqrsf}" />
+						                <p:fileDownload value="#{consultasControl.imprimirPqrsf()}"/>						                
+						            </p:commandButton>
 					            
 					            <p:commandButton update="actionsPanel" oncomplete="PF('dialog').show()" icon="fa fa-registered" title="Radicar"
 					            					actionListener="#{consultasControl.changeSelectedAction('Radicar')}"
 					            					rendered="#{orden.pqrsf.radicado.fecha == null}">
-					                <f:setPropertyActionListener value="#{orden.pqrsf}" target="#{radicarPqrsfControl.selectedPqrsf}" />
+					                <f:setPropertyActionListener value="#{orden.pqrsf}" target="#{consultasControl.selectedPqrsf}" />
 					            </p:commandButton>
 					            
 					            <p:commandButton update="actionsPanel" oncomplete="PF('dialog').show()" icon="fa fa-map-signs" title="Direccionar"
 					            					actionListener="#{consultasControl.changeSelectedAction('Direccionar')}"
 					            					rendered="#{orden.pqrsf.radicado.fecha != null and orden.pqrsf.estado==0}">
-					                <f:setPropertyActionListener value="#{orden.pqrsf}" target="#{direccionarPQRSFControl.selectedPqrsf}" />
+					                <f:setPropertyActionListener value="#{orden.pqrsf}" target="#{consultasControl.selectedPqrsf}" />
 					            </p:commandButton>		            				
 							</p:column>
 						</p:dataTable>											
@@ -147,7 +148,7 @@
 		</p:outputPanel>	
 							
 		<p:outputPanel autoUpdate="false" id="actionsPanel">								
-			<p:dialog header="Direccionar PQRSF" widgetVar="dialog" showEffect="fade" hideEffect="fade" width="600" height="250" 
+			<p:dialog header="#{consultasControl.selectedAction} PQRSF" widgetVar="dialog" showEffect="fade" hideEffect="fade" responsive="true" 
 					resizable="false" modal="true"  appendToBody="true" visible="#{facesContext.validationFailed}">								      
 			       		
 			       		<ui:include src="/admin/partials/modal#{consultasControl.selectedAction}.xhtml" />            	                		 		         	        

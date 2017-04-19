@@ -12,6 +12,10 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.model.DefaultStreamedContent;
+
+import co.edu.unicauca.pqrsfv2.control.acciones.DireccionarPQRSFControl;
+import co.edu.unicauca.pqrsfv2.control.acciones.RadicarPqrsfControl;
 import co.edu.unicauca.pqrsfv2.dao.OrdenDAO;
 import co.edu.unicauca.pqrsfv2.modelo.Orden;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
@@ -28,7 +32,11 @@ public class ConsultasControl implements Serializable{
 	
 	@Inject
 	OrdenDAO ordenDAO;
-	// para la vista de todasPQRSF	
+	// para la vista de todasPQRSF
+	@Inject
+	RadicarPqrsfControl radicarPqrsfControl; 
+	@Inject
+	DireccionarPQRSFControl direccionarPqrsfControl; 
 	private ArrayList<Orden> ordenes;
 	private String selectedAction;
 	private String tituloConsulta;
@@ -36,6 +44,8 @@ public class ConsultasControl implements Serializable{
 	private int estadoSeleccionado;
 	private boolean esConsultaPorVencimiento;
 	private boolean esConsultaDeTodas;
+	private Pqrsf selectedPqrsf;
+	
 	
 	// para la vista de Buscar PQRSF
 	private String identificacionPersona;
@@ -147,9 +157,11 @@ public class ConsultasControl implements Serializable{
 	}
 	
 	public void obtnOrden(){		
-		orden=ordenDAO.buscarOrden(codigoPqrsf, identificacionPersona);
-		System.out.println("Codigo "+codigoPqrsf+" ID: "+ identificacionPersona);
-		if(orden==null) System.out.println("Orden no encontrada");
+		orden=ordenDAO.buscarOrden(codigoPqrsf, identificacionPersona);		
+	}
+	
+	public void obtnOrdenPorCodigoPqrsf(){		
+		orden=ordenDAO.buscarOrden(codigoPqrsf, null);		
 	}
 	
 	public String formatearFecha(Date fecha){
@@ -301,5 +313,32 @@ public class ConsultasControl implements Serializable{
 	public void setEstadoSeleccionado(int estadoSeleccionado) {
 		this.estadoSeleccionado = estadoSeleccionado;
 	}
+
+	public Pqrsf getSelectedPqrsf() {
+		return selectedPqrsf;
+	}
+
+	public void setSelectedPqrsf(Pqrsf selectedPqrsf) {
+		this.selectedPqrsf = selectedPqrsf;
 		
+		switch(selectedAction){
+			case "Ver":
+				codigoPqrsf=selectedPqrsf.getCodigo();				
+				this.obtnOrdenPorCodigoPqrsf();
+				break;					
+			
+			case "Radicar":
+				radicarPqrsfControl.setSelectedPqrsf(selectedPqrsf);				
+				break;
+			
+			case "Direccionar":
+				direccionarPqrsfControl.setSelectedPqrsf(selectedPqrsf);
+				break;				
+		}
+	}
+	
+	public DefaultStreamedContent imprimirPqrsf(){
+		radicarPqrsfControl.setSelectedPqrsf(selectedPqrsf);
+		return radicarPqrsfControl.imprimirPQRSF();
+	}	
 }

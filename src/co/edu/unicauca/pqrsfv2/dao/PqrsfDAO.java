@@ -73,7 +73,7 @@ public class PqrsfDAO {
 	}
 	
 	public ArrayList<Pqrsf> obtnNoDireccionadas() {
-		String sql="SELECT PQRSFCODIGO, PERNOMBRES, PERAPELLIDOS, TIPPQRSFID, "+ 
+		String sql="SELECT PQRSFCODIGO, PERIDENTIFICACION, PERNOMBRES, PERAPELLIDOS, TIPPQRSFID, "+ 
 				"PQRSFASUNTO, PQRSFDESCRIPCION, MEDID, PQRSFFECHACREACION, RADFECHA "+ 
 				"FROM PQRSF NATURAL JOIN PERSONA NATURAL JOIN RADICADO "+
 				"WHERE RADID IS NOT NULL AND PQRSFESTADO=0";
@@ -85,10 +85,12 @@ public class PqrsfDAO {
 		try {
 			while(rs.next()){
 				Pqrsf pqrsf=new Pqrsf();				
-				
+				Persona persona=new Persona();
 				pqrsf.setCodigo(rs.getString("PQRSFCODIGO"));
-				pqrsf.getPersona().setNombres(rs.getString("PERNOMBRES"));
-				pqrsf.getPersona().setApellidos(rs.getString("PERAPELLIDOS"));								
+				persona.setIdentificacion(rs.getString("PERIDENTIFICACION"));
+				persona.setNombres(rs.getString("PERNOMBRES"));
+				persona.setApellidos(rs.getString("PERAPELLIDOS"));
+				pqrsf.setPersona(persona);
 				pqrsf.setTipoPqrsf(rs.getInt("TIPPQRSFID"));
 				pqrsf.setAsunto(rs.getString("PQRSFASUNTO"));
 				pqrsf.setDescripcion(rs.getString("PQRSFDESCRIPCION"));

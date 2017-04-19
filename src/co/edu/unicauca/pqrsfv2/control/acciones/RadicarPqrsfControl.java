@@ -57,12 +57,7 @@ public class RadicarPqrsfControl implements Serializable{
 
 	
 	public void changeSelectedAction(String action){
-		selectedAction=action;
-		if(action.equals("Ver")){
-			consultasControl.setCodigoPqrsf(selectedPqrsf.getCodigo());
-			consultasControl.setIdentificacionPersona(selectedPqrsf.getPersona().getIdentificacion());
-			consultasControl.obtnOrden();
-		}
+		selectedAction=action;		
 	}
 			
 	public RadicarPqrsfControl(){
@@ -156,6 +151,10 @@ public class RadicarPqrsfControl implements Serializable{
 
 	public void setSelectedPqrsf(Pqrsf selectedPqrsf) {
 		this.selectedPqrsf = selectedPqrsf;
+		if(selectedAction.equals("Ver")){
+			consultasControl.setCodigoPqrsf(selectedPqrsf.getCodigo());			
+			consultasControl.obtnOrdenPorCodigoPqrsf();
+		}
 	}
 
 	public Radicado getRadicado() {
