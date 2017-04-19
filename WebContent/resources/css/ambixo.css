@@ -16,6 +16,16 @@ body {
 	color: #000;
 }
 
+#datos-secretaria{
+	background: url('../img/back-login.png') no-repeat;
+	background-size:100% 100%;	
+	width: 100%;
+	padding: 8%;	
+	display: flex;
+  	align-items: center;
+  	justify-content: center
+}
+
 .ambixo-title{
 	margin-top: 5%;
     margin-bottom: 5%;
