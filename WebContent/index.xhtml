@@ -38,6 +38,7 @@
     <script src="resources/js/jquery.localscroll-1.2.7-min.js"></script>
     <script src="resources/js/jquery.scrollTo-min.js"></script>
     <script src="resources/js/ambixo.js"></script>
+    <script src="resources/js/googleMap.js"></script>
     <h:outputScript library="js" name="steps.js"></h:outputScript>
     
     <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
@@ -376,14 +377,19 @@
     <section id="contact" class="section-page">
       <div class="container">
         <h3 class="text-center" style="color:white;">Contacto</h3>
-        	<div class="col-sm-7">
-	         	<div id="datos-secretaria">         	
-	        		<img src="resources/img/logo-s.svg" height="85" width="120" class="logo"/> <br/>
-	        		<p align="justify" >Actualmente, la gestión de las Peticiones, Quejas, Reclamos y Sugerencias está a cargo de la Secretaría General; 
-	        		una dependencia adscrita a la Rectoría de la Universidad del Cauca, que se encarga de velar por el cumplimiento de las 
-	        		normas orgánicas y disposiciones que regulan los procedimientos y trámites administrativos, así como de notificar los actos 
-	        		administrativos proferidos por la Institución.</p>
-	         	</div>
+        	<div class="col-sm-12 datos-secretaria">
+        		
+	        		<div class="col-sm-7">	        				         
+			        		<img src="resources/img/logo-s.svg" height="85" width="120" class="logo"/>
+			        		<p align="justify" >Actualmente, la gestión de las Peticiones, Quejas, Reclamos y Sugerencias está a cargo de la Secretaría General; 
+			        		una dependencia adscrita a la Rectoría de la Universidad del Cauca, que se encarga de velar por el cumplimiento de las 
+			        		normas orgánicas y disposiciones que regulan los procedimientos y trámites administrativos, así como de notificar los actos 
+			        		administrativos proferidos por la Institución.</p>
+		         	</div>			        
+		         	<div class="col-sm-offset-1 col-sm-4">	         		
+	         			<div id="map"></div>	         		
+		         	</div>
+         		
          	</div>
       </div>
     </section>
@@ -408,8 +414,7 @@
                   	Horario de atención:<br/>
                   	Lunes a Viernes<br/>
                     8:00am &rarr; 12:00m <br/>
-                    2:00pm &rarr; 6:00pm <br/>
-                    
+                    2:00pm &rarr; 6:00pm <br/>                    
                   </li>
               </ul>
               <ul class="col-xs-3">
@@ -425,6 +430,9 @@
     
     <!-- Back to Top -->
     <p class="back-to-top"><i class="fa fa-chevron-up ambixo-home-arrow"></i></p>
-    
+    <script async="async" defer="defer"
+    	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMQH8oq8AGLcfwMoYVCkRNzALBN0c9V_A&amp;callback=initMap">
+    </script>
   </body>
+  
 </html>

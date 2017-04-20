@@ -16,15 +16,30 @@ body {
 	color: #000;
 }
 
-#datos-secretaria{
-	background: url('../img/back-login.png') no-repeat;
-	background-size:100% 100%;	
+.datos-secretaria{
+	/* background: url('../img/back-login.png') no-repeat; 
+	background-size:100% 100%;	*/
 	width: 100%;
 	padding: 8%;	
-	display: flex;
+	/* display: flex; */
   	align-items: center;
-  	justify-content: center
+  	justify-content: center;
+  	color:#000;
+  	background-color:#eff0f2;border-radius:6px;
+  	margin-top: 5%;
+    margin-bottom: 5%;
 }
+
+.tile{color:#000; position:relative;padding:14px;margin-bottom:20px;text-align:center;background-color:#eff0f2;border-radius:6px}
+
+/* -------------------------------------------------------------- 
+ 	para que los mapas se ajusten al tamaño completo del div */
+
+.angular-google-map-container {
+  width: 100%;
+  height: 100%;
+}
+/* -------------------------------------------------------------- */
 
 .ambixo-title{
 	margin-top: 5%;
@@ -70,7 +85,8 @@ input {
 	font-family: 'Aclonica', sans-serif;
 	margin: 0;
 	font-size: 3.6em;
-    display: inline-block;
+    display:block;
+    margin:auto;
 }
 
 .logo a {
@@ -266,7 +282,7 @@ section h3 {
 section p {
 	font-size: 1.4em;
 	font-weight: 300;
-	line-height: 2;
+	line-height: 1.5;
 }
 
 
@@ -1326,5 +1342,3 @@ section#about-2 .container {
 	}
 
 }
-
-.tile{color:#000; position:relative;padding:14px;margin-bottom:20px;text-align:center;background-color:#eff0f2;border-radius:6px}
