@@ -1,9 +1,10 @@
 function initMap() {
     var directionsService = new google.maps.DirectionsService;
     var directionsDisplay = new google.maps.DirectionsRenderer;
+    var posSecretaria = new google.maps.LatLng(2.4573845, -76.6349535,13);
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 7,
-      center: 'Popayán, Cauca'
+      center: posSecretaria
     });
     directionsDisplay.setMap(map);
     calculateAndDisplayRoute(directionsService, directionsDisplay);    
@@ -24,9 +25,11 @@ function initMap() {
     	      travelMode: 'DRIVING'
     	    }, function(response, status) {
     	      if (status === 'OK') {
+    	    	  console.log('OK');
+    	    	  console.log(response);
     	        directionsDisplay.setDirections(response);
     	      } else {
-    	        window.alert('Directions request failed due to ' + status);
+    	        console.log('Directions request failed due to ' + status);
     	      }
     	    });
           
@@ -41,6 +44,7 @@ function initMap() {
     }
   
   function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+	  console.log('Entro al Handler');
       infoWindow.setPosition(pos);
       infoWindow.setContent(browserHasGeolocation ?
                             'Error: The Geolocation service failed.' :
