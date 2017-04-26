@@ -10,13 +10,15 @@ public class Orden implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private int id;
-	private Pqrsf pqrsf;
+	private int id;	
 	private Funcionario funcionario;
-	private Usuario usuario;
 	private Date fechaAsignacion;
-	private int estado;
-	private Date fechaCierre;
+	private Usuario usuario;
+	private String descripcion;
+	private String respuesta;
+	private Date fechaRespuesta;
+	
+	private int estado;	
 	
 	public Orden(){
 		funcionario=new Funcionario();			
@@ -28,12 +30,7 @@ public class Orden implements Serializable{
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Pqrsf getPqrsf() {
-		return pqrsf;
-	}
-	public void setPqrsf(Pqrsf pqrsf) {
-		this.pqrsf = pqrsf;
-	}
+	
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
@@ -58,10 +55,28 @@ public class Orden implements Serializable{
 	public void setEstado(int estado) {
 		this.estado = estado;
 	}
-	public Date getFechaCierre() {
-		return fechaCierre;
+
+	public String getDescripcion() {
+		return descripcion;
 	}
-	public void setFechaCierre(Date fechaCierre) {
-		this.fechaCierre = fechaCierre;
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public String getRespuesta() {
+		return respuesta;
+	}
+
+	public void setRespuesta(String respuesta) {
+		this.respuesta = respuesta;
+	}
+
+	public Date getFechaRespuesta() {
+		return fechaRespuesta;
+	}
+
+	public void setFechaRespuesta(Date fechaRespuesta) {
+		this.fechaRespuesta = fechaRespuesta;
 	}	
 }

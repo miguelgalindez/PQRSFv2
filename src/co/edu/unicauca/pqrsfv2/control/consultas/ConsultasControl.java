@@ -6,18 +6,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
-
 import javax.ejb.LocalBean;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import org.primefaces.model.DefaultStreamedContent;
-
 import co.edu.unicauca.pqrsfv2.control.acciones.DireccionarPQRSFControl;
 import co.edu.unicauca.pqrsfv2.control.acciones.RadicarPqrsfControl;
-import co.edu.unicauca.pqrsfv2.dao.OrdenDAO;
-import co.edu.unicauca.pqrsfv2.modelo.Orden;
+import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 
 @SessionScoped
@@ -31,13 +27,13 @@ public class ConsultasControl implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	OrdenDAO ordenDAO;
+	PqrsfDAO pqrsfDAO;
 	// para la vista de todasPQRSF
 	@Inject
 	RadicarPqrsfControl radicarPqrsfControl; 
 	@Inject
 	DireccionarPQRSFControl direccionarPqrsfControl; 
-	private ArrayList<Orden> ordenes;
+	private ArrayList<Pqrsf> pqrsfs;
 	private String selectedAction;
 	private String tituloConsulta;
 	private boolean esConsultaPorEstado;
@@ -50,7 +46,7 @@ public class ConsultasControl implements Serializable{
 	// para la vista de Buscar PQRSF
 	private String identificacionPersona;
 	private String codigoPqrsf;
-	private Orden orden;
+	private Pqrsf pqrsf;
 	// para los indicadores del index
 	private int numeroPqrsfVencidas;
 	private int numeroPqrsfProximasVencerse;
@@ -63,24 +59,24 @@ public class ConsultasControl implements Serializable{
 	
 	public ConsultasControl(){
 		selectedAction="Ver";
-		orden=null;
+		pqrsf=null;
 	}
 	
 	
-	public void cargarOrdenesPorVencimiento(int diasParaVencimiento){
+	public void cargarPqrsfsPorVencimiento(int diasParaVencimiento){
 		this.esConsultaPorVencimiento();		
-		ordenes=ordenDAO.obtnOrdenesPorVencimiento(diasParaVencimiento);
+		pqrsfs=pqrsfDAO.obtnPqrsfsPorVencimiento(diasParaVencimiento);
 		if(diasParaVencimiento==-1)
 			this.setTituloConsulta("PQRSFs vencidas");
 		else
 			this.setTituloConsulta("PQRSFs próximas a vencerse");
 	}
 	
-	public void cargarOrdenesPorEstado(Integer estado){
+	public void cargarPqrsfsPorEstado(Integer estado){
 		this.esConsultaPorEstado();
 		if(estado!=null)
 			estadoSeleccionado=estado;		
-		ordenes=ordenDAO.obtnOrdenesPorEstado(estadoSeleccionado);
+		pqrsfs=pqrsfDAO.obtnPqrsfsPorEstado(estadoSeleccionado);
 		switch (estadoSeleccionado) {
 			case 0:
 				this.setTituloConsulta("PQRSFs Pendientes");
@@ -94,10 +90,10 @@ public class ConsultasControl implements Serializable{
 		}
 	}	
 	
-	public void obtnTodasOrdenes(){
+	public void obtnTodasPqrsfs(){
 		this.esConsultaDeTodas();
 		this.setTituloConsulta("Todas las PQRSFs");
-		ordenes=ordenDAO.obtnTodasOrdenes();
+		pqrsfs=pqrsfDAO.obtnTodasPqrsfs();
 	}
 	
 	public void changeSelectedAction(String action){
@@ -134,7 +130,7 @@ public class ConsultasControl implements Serializable{
 	}
 	
 	public void cargarIndicadores(){
-		HashMap<String, Integer> indicadores=ordenDAO.cargarIndicadores();
+		HashMap<String, Integer> indicadores=pqrsfDAO.cargarIndicadores();
 		if(indicadores!=null){
 			
 			numeroPqrsfVencidas=indicadores.get("numeroPqrsfVencidas");
@@ -156,12 +152,12 @@ public class ConsultasControl implements Serializable{
 		}
 	}
 	
-	public void obtnOrden(){		
-		orden=ordenDAO.buscarOrden(codigoPqrsf, identificacionPersona);		
+	public void obtnPqrsf(){		
+		pqrsf=pqrsfDAO.buscarPqrsf(codigoPqrsf, identificacionPersona);		
 	}
 	
-	public void obtnOrdenPorCodigoPqrsf(){		
-		orden=ordenDAO.buscarOrden(codigoPqrsf, null);		
+	public void obtnPqrsfPorCodigo(){		
+		pqrsf=pqrsfDAO.buscarPqrsf(codigoPqrsf, null);		
 	}
 	
 	public String formatearFecha(Date fecha){
@@ -170,14 +166,14 @@ public class ConsultasControl implements Serializable{
 			return sdf.format(fecha);
 		}
 		return "";		
-	}
-		
-	public ArrayList<Orden> getOrdenes() {
-		return ordenes;
+	}		
+
+	public ArrayList<Pqrsf> getPqrsfs() {
+		return pqrsfs;
 	}
 
-	public void setOrdenes(ArrayList<Orden> ordenes) {
-		this.ordenes = ordenes;
+	public void setPqrsfs(ArrayList<Pqrsf> pqrsfs) {
+		this.pqrsfs = pqrsfs;
 	}
 
 	public String getSelectedAction() {
@@ -204,13 +200,14 @@ public class ConsultasControl implements Serializable{
 		this.codigoPqrsf = codigoPqrsf;
 	}
 
-	public Orden getOrden() {
-		return orden;
+	public Pqrsf getPqrsf() {
+		return pqrsf;
 	}
 
-	public void setOrden(Orden orden) {
-		this.orden = orden;
+	public void setPqrsf(Pqrsf pqrsf) {
+		this.pqrsf = pqrsf;
 	}
+
 
 	public String getTituloConsulta() {
 		return tituloConsulta;
@@ -327,7 +324,7 @@ public class ConsultasControl implements Serializable{
 		switch(selectedAction){
 			case "Ver":
 				codigoPqrsf=selectedPqrsf.getCodigo();				
-				this.obtnOrdenPorCodigoPqrsf();
+				this.obtnPqrsfPorCodigo();
 				break;					
 			
 			case "Radicar":

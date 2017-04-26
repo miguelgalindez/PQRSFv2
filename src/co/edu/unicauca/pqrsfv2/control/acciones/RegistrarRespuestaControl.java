@@ -6,7 +6,6 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import co.edu.unicauca.pqrsfv2.dao.OrdenDAO;
 import co.edu.unicauca.pqrsfv2.modelo.Orden;
 
 @SessionScoped

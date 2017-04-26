@@ -9,14 +9,21 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import co.edu.unicauca.pqrsfv2.conexion.Conexion;
 import co.edu.unicauca.pqrsfv2.modelo.Municipio;
+import co.edu.unicauca.pqrsfv2.modelo.Orden;
 import co.edu.unicauca.pqrsfv2.modelo.Persona;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
+import co.edu.unicauca.pqrsfv2.modelo.Radicado;
+import co.edu.unicauca.pqrsfv2.modelo.Usuario;
 
 @Stateless
 @LocalBean
 public class PqrsfDAO {
 		
 	Conexion con;
+	
+	public enum Consulta {
+		BUSCAR_PQRSF, PQRSFS_POR_VENCIMIENTO, PQRSFS_POR_ESTADO, TODAS_PQRSFS
+	}
 	
 	public PqrsfDAO(){
 		con=new Conexion();
@@ -176,5 +183,152 @@ public class PqrsfDAO {
 			con.clean();
 		}		
 		return elementos;
+	}
+	
+	/* ----------------------------------------------------------------------------------------------------------------  */	
+	
+
+	public boolean direccionarPQRSF(Pqrsf pqrsf, String identificacionFuncionarioResponsable, String usernameUsuarioQueRadica) {
+		ArrayList<Object> parameters=new ArrayList<>();
+		ArrayList<Integer> parametersTypes=new ArrayList<>();
+		
+		parameters.add(usernameUsuarioQueRadica); parametersTypes.add(Types.VARCHAR);
+		parameters.add(pqrsf.getCodigo()); parametersTypes.add(Types.VARCHAR);
+		parameters.add(pqrsf.getFechaVencimiento()); parametersTypes.add(Types.DATE);
+		parameters.add(identificacionFuncionarioResponsable); parametersTypes.add(Types.VARCHAR);		
+		
+		return con.executeProcedure("DIRECCIONAR_PQRSF", parameters, parametersTypes);
+	}
+
+	public ArrayList<Pqrsf> obtnPqrsfsPorVencimiento(int diasParaVencimiento) {
+		String sql="SELECT PQRSF.PQRSFCODIGO, PQRSF.TIPPQRSFID, MEDID, PERNOMBRES, PERAPELLIDOS, PQRSFASUNTO, "+
+		        "PQRSFDESCRIPCION, RADFECHA, PQRSFESTADO, PQRSFFECHACREACION, "+
+		        "PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, RADICADO.RADID, RADICADO.USUUSUARIO "+		        
+		        "FROM PQRSF NATURAL JOIN PERSONA "+
+		                    "LEFT OUTER JOIN RADICADO ON PQRSF.RADID=RADICADO.RADID";		                    
+				
+			if(diasParaVencimiento<0)
+				sql+="WHERE PQRSFESTADO!=2 AND SYSDATE>PQRSFFECHAVENCIMIENTO";
+			else
+				sql+="WHERE PQRSFESTADO!=2 AND SYSDATE<=PQRSFFECHAVENCIMIENTO AND PQRSFFECHAVENCIMIENTO-SYSDATE<="+diasParaVencimiento;
+						
+		return cargarPqrsfs(con.executeQueryRS(sql), Consulta.PQRSFS_POR_VENCIMIENTO);
+	}
+	
+	public ArrayList<Pqrsf> obtnPqrsfsPorEstado(int estado) {
+		String sql="SELECT PQRSF.PQRSFCODIGO, PQRSF.TIPPQRSFID, MEDID, PERNOMBRES, PERAPELLIDOS, PQRSFASUNTO, "+
+		        "PQRSFDESCRIPCION, RADFECHA, PQRSFESTADO, PQRSFFECHACREACION, "+
+		        "PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, RADICADO.RADID, RADICADO.USUUSUARIO "+		        
+		        "FROM PQRSF NATURAL JOIN PERSONA "+
+		                    "LEFT OUTER JOIN RADICADO ON PQRSF.RADID=RADICADO.RADID "+		                    
+				"WHERE PQRSFESTADO="+estado;
+		
+		// si se van a consultar las que estan en tramite O PENDIENTES que no se incluyan las que ya estan vencidas
+		if(estado!=2)
+			sql+= " AND SYSDATE<=PQRSFFECHAVENCIMIENTO";
+		
+		return cargarPqrsfs(con.executeQueryRS(sql), Consulta.PQRSFS_POR_ESTADO);
+	}
+	
+	public ArrayList<Pqrsf> obtnTodasPqrsfs(){
+		String sql="SELECT PQRSF.PQRSFCODIGO, PQRSF.TIPPQRSFID, MEDID, PERNOMBRES, PERAPELLIDOS, PQRSFASUNTO, "+
+		        "PQRSFDESCRIPCION, RADFECHA, PQRSFESTADO, PQRSFFECHACREACION, "+
+		        "PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, RADICADO.RADID, RADICADO.USUUSUARIO"+		        
+		        "FROM PQRSF NATURAL JOIN PERSONA "+
+		                    "LEFT OUTER JOIN RADICADO ON PQRSF.RADID=RADICADO.RADID ";		                    			
+				
+		return cargarPqrsfs(con.executeQueryRS(sql), Consulta.TODAS_PQRSFS);
+	}
+	
+	public Pqrsf buscarPqrsf(String pqrsfCodigo, String perIdentificacion){
+		String sql="SELECT PQRSF.PQRSFCODIGO, PQRSF.TIPPQRSFID, MEDID, PERNOMBRES, PERAPELLIDOS, PQRSFASUNTO, "+
+				"TIPPERID, PERIDENTIFICACION, TIPIDEID, PERCORREO, PERDIRECCION, PERTELEFONO, PERCELULAR, PERSONA.MUNID, DEPTOID, "+
+				"PQRSFDESCRIPCION, RADFECHA, PQRSFESTADO, PQRSFFECHACREACION, "+
+				"PQRSFFECHAVENCIMIENTO, PQRSFFECHACIERRE, FUNNOMBRE, ORDFECHAASIGNACION, FUNCORREO, FUNTELEFONO, DEPID, "+
+				"RADICADO.RADID, RADICADO.USUUSUARIO "+
+				"FROM PQRSF NATURAL JOIN PERSONA "+
+				"LEFT OUTER JOIN MUNICIPIO ON PERSONA.MUNID=MUNICIPIO.MUNID "+
+                "LEFT OUTER JOIN RADICADO ON PQRSF.RADID=RADICADO.RADID ";                
+    
+		if(perIdentificacion!=null)
+			sql+="WHERE PQRSF.PQRSFCODIGO='"+pqrsfCodigo+"' AND PERIDENTIFICACION='"+perIdentificacion+"'";			
+		else
+			sql+="WHERE PQRSF.PQRSFCODIGO='"+pqrsfCodigo+"'"; 
+		
+		ArrayList<Pqrsf> pqrsfs=cargarPqrsfs(con.executeQueryRS(sql), Consulta.BUSCAR_PQRSF);		
+		if(pqrsfs!=null && pqrsfs.size()>0){			
+			return pqrsfs.get(0);			
+		}		
+		return null;
+	}
+
+	private ArrayList<Pqrsf> cargarPqrsfs(ResultSet rs, Consulta consulta) {
+		ArrayList<Pqrsf> pqrsfs=new ArrayList<>();
+		
+		try {
+			while(rs.next()){				
+				Pqrsf pqrsf=new Pqrsf();				
+				
+				pqrsf.setCodigo(rs.getString("PQRSFCODIGO"));
+				pqrsf.setTipoPqrsf(rs.getInt("TIPPQRSFID"));
+				pqrsf.setMedioRecepcion(rs.getInt("MEDID"));				
+				pqrsf.setAsunto(rs.getString("PQRSFASUNTO"));
+				pqrsf.setDescripcion(rs.getString("PQRSFDESCRIPCION"));										
+				pqrsf.setEstado(rs.getInt("PQRSFESTADO"));
+				pqrsf.setFechaCreacion(rs.getDate("PQRSFFECHACREACION"));
+				pqrsf.setFechaVencimiento(rs.getDate("PQRSFFECHAVENCIMIENTO"));
+				pqrsf.setFechaCierre(rs.getDate("PQRSFFECHACIERRE"));
+				
+				/* TODO -  algunas pueden requerir por lo menos el nombre y el apellido del solicitante. Revisar el sql que 
+				ejecuta cada funcion de acuerdo con lo que solamente necesite */
+				
+				pqrsfs.add(pqrsf);				
+			}
+		}catch (SQLException e) {
+			System.out.println("ERROR. NO SE PUDO CARGAR LAS PQRSFS");
+			e.printStackTrace();
+			pqrsfs=null;
+		} finally{
+			con.clean();
+		}
+		return pqrsfs;
+	}
+	
+	public Pqrsf cargarDetallesPqrsf(Pqrsf pqrsf){
+		String sql="";
+		/*
+			Persona persona=new Persona();					
+			persona.setTipoPersona(rs.getInt("TIPPERID"));
+			persona.setTipoIdentificacion(rs.getInt("TIPIDEID"));
+			persona.setIdentificacion(rs.getString("PERIDENTIFICACION"));					
+			persona.setNombres(rs.getString("PERNOMBRES"));
+			persona.setApellidos(rs.getString("PERAPELLIDOS"));
+			persona.setEmail(rs.getString("PERCORREO"));
+			persona.setDireccion(rs.getString("PERDIRECCION"));
+			persona.setTelefono(rs.getString("PERTELEFONO"));
+			persona.setCelular(rs.getString("PERCELULAR"));										
+			Municipio municipio=new Municipio();
+			municipio.setId(rs.getInt("MUNID"));
+			municipio.setIdDepartamento(rs.getInt("DEPTOID"));
+			persona.setMunicipio(municipio);					
+			pqrsf.setPersona(persona);
+			
+			Radicado radicado=new Radicado();
+			radicado.setId(rs.getString("RADID"));
+			radicado.setFecha(rs.getDate("RADFECHA"));
+			radicado.setUsuarioQueRadica(new Usuario(rs.getString("USUUSUARIO")));
+			pqrsf.setRadicado(radicado);
+			*/
+		return pqrsf;
+	}
+	
+	private ArrayList<Orden> obtnOrdenesPqrsf(String codigoPqrsf){
+		// TODO - Implementar funcion para obtener las ordenes asociadas a cierta Pqrsf
+		return null;
+	}
+
+	public HashMap<String, Integer> cargarIndicadores() {		
+		return con.ejecutarProcedimientoIndicadores();
+		
 	}
 }
