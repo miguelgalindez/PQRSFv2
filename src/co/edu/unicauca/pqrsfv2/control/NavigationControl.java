@@ -61,6 +61,10 @@ public class NavigationControl implements Serializable {
 			case "/admin/acciones/direccionarPQRSF.xhtml":
 				direccionarPqrsfControl.cargarPQRSFNoDireccionadas();
 				break;
+			
+			case "/admin/acciones/registrarRespuesta.xhtml":
+				direccionarPqrsfControl.cargarPQRSFNoDireccionadas();
+				break;
 				
 			case "/admin/consultas/todasPQRSF.xhtml":				
 				consultasControl.obtnTodasOrdenes();								

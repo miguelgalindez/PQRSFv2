@@ -165,8 +165,11 @@ public class ConsultasControl implements Serializable{
 	}
 	
 	public String formatearFecha(Date fecha){
-		SimpleDateFormat sdf=new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es","es_CO"));
-		return sdf.format(fecha);
+		if(fecha!=null){
+			SimpleDateFormat sdf=new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es","es_CO"));
+			return sdf.format(fecha);
+		}
+		return "";		
 	}
 		
 	public ArrayList<Orden> getOrdenes() {
