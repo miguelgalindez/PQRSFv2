@@ -8,7 +8,20 @@
 -------------------------------------------------------------------------*/
 
 $(document).ready(function () {
-
+	mainSectionPaddingAdjust();
+	window.onresize = function(event) {
+		mainSectionPaddingAdjust();
+	}
+	
+	function mainSectionPaddingAdjust(){
+		var window_height=$(window).height();
+		var header_height = $('.header').height();
+		var tile_height=$(".tile").height();
+		var padding=(window_height-header_height-tile_height)/4;
+		//$('.tile').css('padding-top', padding + 'px');
+		console.log(window_height+" "+header_height+" "+tile_height);
+		console.log(padding);
+	}
 
 //LOGO SCROLL ----------------------------------------------------------------------------/
 
