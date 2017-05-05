@@ -12,7 +12,7 @@
 				<div class="col-sm-9">
 					<p:selectOneMenu id="dependencia"
 										value="#{direccionarPQRSFControl.idDependenciaSeleccionada}"
-										required="#{direccionarPQRSFControl.identificacionFuncionarioResponsable == null || direccionarPQRSFControl.idDependenciaSeleccionada == null}"										
+										required="#{direccionarPQRSFControl.orden.funcionario.identificacion == null || direccionarPQRSFControl.idDependenciaSeleccionada == null}"										
 										styleClass="form-control" 
 										filter="true"
 										filterMatchMode="contains">
@@ -29,7 +29,7 @@
 				<p:outputLabel for="funcionario" styleClass="control-label col-sm-3" value="Funcionario"/>					                  
 				<div class="col-sm-9">
 					<p:selectOneMenu id="funcionario"									
-										value="#{direccionarPQRSFControl.identificacionFuncionarioResponsable}"
+										value="#{direccionarPQRSFControl.orden.funcionario.identificacion}"
 										disabled="#{direccionarPQRSFControl.idDependenciaSeleccionada == null}"
 										required="true"
 										styleClass="form-control" 

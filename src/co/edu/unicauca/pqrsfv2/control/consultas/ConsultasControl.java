@@ -6,14 +6,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+
 import javax.ejb.LocalBean;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
 import org.primefaces.model.DefaultStreamedContent;
+
 import co.edu.unicauca.pqrsfv2.control.acciones.DireccionarPQRSFControl;
 import co.edu.unicauca.pqrsfv2.control.acciones.RadicarPqrsfControl;
-import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
+import co.edu.unicauca.pqrsfv2.dao.OrdenDAO;
+import co.edu.unicauca.pqrsfv2.modelo.Orden;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 
 @SessionScoped
@@ -27,13 +31,13 @@ public class ConsultasControl implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	PqrsfDAO pqrsfDAO;
+	OrdenDAO ordenDAO;
 	// para la vista de todasPQRSF
 	@Inject
 	RadicarPqrsfControl radicarPqrsfControl; 
 	@Inject
 	DireccionarPQRSFControl direccionarPqrsfControl; 
-	private ArrayList<Pqrsf> pqrsfs;
+	private ArrayList<Orden> ordenes;
 	private String selectedAction;
 	private String tituloConsulta;
 	private boolean esConsultaPorEstado;
@@ -46,7 +50,7 @@ public class ConsultasControl implements Serializable{
 	// para la vista de Buscar PQRSF
 	private String identificacionPersona;
 	private String codigoPqrsf;
-	private Pqrsf pqrsf;
+	private Orden orden;
 	// para los indicadores del index
 	private int numeroPqrsfVencidas;
 	private int numeroPqrsfProximasVencerse;
@@ -59,24 +63,24 @@ public class ConsultasControl implements Serializable{
 	
 	public ConsultasControl(){
 		selectedAction="Ver";
-		pqrsf=null;
+		orden=null;
 	}
 	
 	
-	public void cargarPqrsfsPorVencimiento(int diasParaVencimiento){
+	public void cargarOrdenesPorVencimiento(int diasParaVencimiento){
 		this.esConsultaPorVencimiento();		
-		pqrsfs=pqrsfDAO.obtnPqrsfsPorVencimiento(diasParaVencimiento);
+		ordenes=ordenDAO.obtnOrdenesPorVencimiento(diasParaVencimiento);
 		if(diasParaVencimiento==-1)
 			this.setTituloConsulta("PQRSFs vencidas");
 		else
 			this.setTituloConsulta("PQRSFs próximas a vencerse");
 	}
 	
-	public void cargarPqrsfsPorEstado(Integer estado){
+	public void cargarOrdenesPorEstado(Integer estado){
 		this.esConsultaPorEstado();
 		if(estado!=null)
 			estadoSeleccionado=estado;		
-		pqrsfs=pqrsfDAO.obtnPqrsfsPorEstado(estadoSeleccionado);
+		ordenes=ordenDAO.obtnOrdenesPorEstado(estadoSeleccionado);
 		switch (estadoSeleccionado) {
 			case 0:
 				this.setTituloConsulta("PQRSFs Pendientes");
@@ -90,10 +94,10 @@ public class ConsultasControl implements Serializable{
 		}
 	}	
 	
-	public void obtnTodasPqrsfs(){
+	public void obtnTodasOrdenes(){
 		this.esConsultaDeTodas();
 		this.setTituloConsulta("Todas las PQRSFs");
-		pqrsfs=pqrsfDAO.obtnTodasPqrsfs();
+		ordenes=ordenDAO.obtnTodasOrdenes();
 	}
 	
 	public void changeSelectedAction(String action){
@@ -130,7 +134,7 @@ public class ConsultasControl implements Serializable{
 	}
 	
 	public void cargarIndicadores(){
-		HashMap<String, Integer> indicadores=pqrsfDAO.cargarIndicadores();
+		HashMap<String, Integer> indicadores=ordenDAO.cargarIndicadores();
 		if(indicadores!=null){
 			
 			numeroPqrsfVencidas=indicadores.get("numeroPqrsfVencidas");
@@ -152,28 +156,25 @@ public class ConsultasControl implements Serializable{
 		}
 	}
 	
-	public void obtnPqrsf(){		
-		pqrsf=pqrsfDAO.buscarPqrsf(codigoPqrsf, identificacionPersona);		
+	public void obtnOrden(){		
+		orden=ordenDAO.buscarOrden(codigoPqrsf, identificacionPersona);		
 	}
 	
-	public void obtnPqrsfPorCodigo(){		
-		pqrsf=pqrsfDAO.buscarPqrsf(codigoPqrsf, null);		
+	public void obtnOrdenPorCodigoPqrsf(){		
+		orden=ordenDAO.buscarOrden(codigoPqrsf, null);		
 	}
 	
 	public String formatearFecha(Date fecha){
-		if(fecha!=null){
-			SimpleDateFormat sdf=new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es","es_CO"));
-			return sdf.format(fecha);
-		}
-		return "";		
-	}		
-
-	public ArrayList<Pqrsf> getPqrsfs() {
-		return pqrsfs;
+		SimpleDateFormat sdf=new SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new Locale("es","es_CO"));
+		return sdf.format(fecha);
+	}
+		
+	public ArrayList<Orden> getOrdenes() {
+		return ordenes;
 	}
 
-	public void setPqrsfs(ArrayList<Pqrsf> pqrsfs) {
-		this.pqrsfs = pqrsfs;
+	public void setOrdenes(ArrayList<Orden> ordenes) {
+		this.ordenes = ordenes;
 	}
 
 	public String getSelectedAction() {
@@ -200,14 +201,13 @@ public class ConsultasControl implements Serializable{
 		this.codigoPqrsf = codigoPqrsf;
 	}
 
-	public Pqrsf getPqrsf() {
-		return pqrsf;
+	public Orden getOrden() {
+		return orden;
 	}
 
-	public void setPqrsf(Pqrsf pqrsf) {
-		this.pqrsf = pqrsf;
+	public void setOrden(Orden orden) {
+		this.orden = orden;
 	}
-
 
 	public String getTituloConsulta() {
 		return tituloConsulta;
@@ -324,7 +324,7 @@ public class ConsultasControl implements Serializable{
 		switch(selectedAction){
 			case "Ver":
 				codigoPqrsf=selectedPqrsf.getCodigo();				
-				this.obtnPqrsfPorCodigo();
+				this.obtnOrdenPorCodigoPqrsf();
 				break;					
 			
 			case "Radicar":

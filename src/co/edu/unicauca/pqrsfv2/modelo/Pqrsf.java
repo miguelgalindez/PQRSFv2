@@ -1,7 +1,6 @@
 package co.edu.unicauca.pqrsfv2.modelo;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -29,12 +28,11 @@ public class Pqrsf implements Serializable{
 	private Date fechaVencimiento;
 	private Date fechaCierre;
 	private Radicado radicado;
-	private ArrayList<Orden> ordenes;
 	
 	public Pqrsf(){
 		persona=new Persona();
 		radicado=new Radicado();
-		fechaVencimiento=null;		
+		fechaVencimiento=null;			
 	}	
 	
 	public Integer getTipoPqrsf() {
@@ -107,13 +105,5 @@ public class Pqrsf implements Serializable{
 	public void setFechaCierre(Date fechaCierre) {
 		this.fechaCierre = fechaCierre;
 	}
-
-	public ArrayList<Orden> getOrdenes() {
-		return ordenes;
-	}
-
-	public void setOrdenes(ArrayList<Orden> ordenes) {
-		this.ordenes = ordenes;
-	}
-		
+	
 }

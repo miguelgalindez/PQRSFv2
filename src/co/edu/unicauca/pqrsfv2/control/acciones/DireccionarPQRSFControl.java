@@ -12,7 +12,9 @@ import co.edu.unicauca.pqrsfv2.control.ModalRespuestaControl;
 import co.edu.unicauca.pqrsfv2.control.NavigationControl;
 import co.edu.unicauca.pqrsfv2.control.consultas.ConsultasControl;
 import co.edu.unicauca.pqrsfv2.dao.DependenciaDAO;
+import co.edu.unicauca.pqrsfv2.dao.OrdenDAO;
 import co.edu.unicauca.pqrsfv2.dao.PqrsfDAO;
+import co.edu.unicauca.pqrsfv2.modelo.Orden;
 import co.edu.unicauca.pqrsfv2.modelo.Pqrsf;
 
 @SessionScoped
@@ -29,6 +31,8 @@ public class DireccionarPQRSFControl implements Serializable{
 	@Inject
 	private DependenciaDAO dependenciaDAO;
 	@Inject
+	private OrdenDAO ordenDAO;
+	@Inject
 	private NavigationControl navigationControl;
 	@Inject
 	private ModalRespuestaControl modalRespuestaControl;
@@ -36,9 +40,8 @@ public class DireccionarPQRSFControl implements Serializable{
 	private ConsultasControl consultasControl;
 	private ArrayList<Pqrsf> pqrsfNoDireccionadas;
 	private Pqrsf selectedPqrsf;
-	private String selectedAction;
-	
-	private String identificacionFuncionarioResponsable;
+	private Orden orden;
+	private String selectedAction;	
 	private Integer idDependenciaSeleccionada;
 	
 	public DireccionarPQRSFControl(){
@@ -61,14 +64,17 @@ public class DireccionarPQRSFControl implements Serializable{
 			return dependenciaDAO.obtnFuncionarios(idDependencia);
 	}
 	
-	private void inicializarDatos(){		
+	private void inicializarDatos(){
+		orden=new Orden();		
 		selectedAction="Direccionar";			
 		idDependenciaSeleccionada=null;
 	}
 	
 	public void direccionarPQRSF(){
-		RequestContext ctx=RequestContext.getCurrentInstance();				
-		boolean success=pqrsfDAO.direccionarPQRSF(selectedPqrsf, identificacionFuncionarioResponsable, navigationControl.getUsuarioAutenticado().getUsername());
+		RequestContext ctx=RequestContext.getCurrentInstance();
+		orden.setPqrsf(selectedPqrsf);
+		orden.setUsuario(navigationControl.getUsuarioAutenticado());
+		boolean success=ordenDAO.direccionarPQRSF(orden);
 		modalRespuestaControl.operacionExitosa(success);
 		
 		if(success){
@@ -87,6 +93,12 @@ public class DireccionarPQRSFControl implements Serializable{
 		
 		ctx.execute("$('#modalRespuesta').modal('toggle');");			
 		
+	}
+	
+	public void eventoDependenciaCambiada(){
+		if(idDependenciaSeleccionada==null){
+			orden.getFuncionario().setIdentificacion(null);
+		}
 	}
 	
 	public ArrayList<Pqrsf> getPqrsfNoDireccionadas() {
@@ -117,6 +129,14 @@ public class DireccionarPQRSFControl implements Serializable{
 		}
 	}
 
+	public Orden getOrden() {
+		return orden;
+	}
+
+	public void setOrden(Orden orden) {
+		this.orden = orden;
+	}
+
 	public Integer getIdDependenciaSeleccionada() {
 		return idDependenciaSeleccionada;
 	}
@@ -124,14 +144,4 @@ public class DireccionarPQRSFControl implements Serializable{
 	public void setIdDependenciaSeleccionada(Integer idDependenciaSeleccionada) {
 		this.idDependenciaSeleccionada = idDependenciaSeleccionada;
 	}
-
-	public String getIdentificacionFuncionarioResponsable() {
-		return identificacionFuncionarioResponsable;
-	}
-
-	public void setIdentificacionFuncionarioResponsable(String identificacionFuncionarioResponsable) {
-		this.identificacionFuncionarioResponsable = identificacionFuncionarioResponsable;
-	}
-	
-	
 }

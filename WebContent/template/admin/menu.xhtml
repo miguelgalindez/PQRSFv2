@@ -29,7 +29,7 @@
 		      
 		        <li class="header">Panel de control</li>
 		        
-		        <li>
+		        <li class="#{navigationControl.menuSeleccionado.equals('inicio') ? 'active' : ''}">
 		        	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/index.xhtml')}">		        	
 			            <i class="fa fa-dashboard"></i> 
 			            <span>Inicio</span>
@@ -37,7 +37,7 @@
 		          	</h:commandLink>
 		        </li>  
 		
-		        <li class="treeview">
+		        <li class="treeview #{navigationControl.menuSeleccionado.equals('consultas') ? 'active' : ''}">
 		          <a href="#">
 		            <i class="fa fa-search"></i>
 		            <span>Consultas</span>
@@ -46,28 +46,28 @@
 		            </span>
 		          </a>
 		          <ul class="treeview-menu">		          
-		            <li>
+		            <li class="#{navigationControl.subMenuSeleccionado.equals('pqrsfAtendidas') ? 'active' : ''}">
 		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/consultas/pqrsfAtendidas.xhtml')}">		        				            
 			            	<i class="fa fa-circle-o"></i>
 			        		PQRSFs por estado
 			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
 		          		</h:commandLink>
 					</li>
-		            <li>
+		            <li class="#{navigationControl.subMenuSeleccionado.equals('pqrsfProximasaVencerse') ? 'active' : ''}">
 		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/consultas/pqrsfProximasaVencerse.xhtml')}">		        				            
 			            	<i class="fa fa-circle-o"></i>
 			        		PQRSFs próximas a vencerse
 			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
 		          		</h:commandLink>
 					</li>
-		            <li>
+		            <li class="#{navigationControl.subMenuSeleccionado.equals('pqrsfVencidas') ? 'active' : ''}">
 		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/consultas/pqrsfVencidas.xhtml')}">		        				            
 			            	<i class="fa fa-circle-o"></i>
 			        		PQRSFs vencidas
 			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
 		          		</h:commandLink>
 		            </li>
-		            <li>
+		            <li class="#{navigationControl.subMenuSeleccionado.equals('todasPQRSF') ? 'active' : ''}">
 		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/consultas/todasPQRSF.xhtml')}">		        				            
 			            	<i class="fa fa-circle-o"></i>
 			        		Todas las PQRSFs
@@ -77,7 +77,7 @@
 		          </ul>
 		        </li>
 		
-		        <li class="treeview">
+		        <li class="treeview #{navigationControl.menuSeleccionado.equals('acciones') ? 'active' : ''}">
 		          <a href="#">
 		            <i class="fa fa-bolt"></i>
 		            <span>Acciones</span>
@@ -86,31 +86,24 @@
 		            </span>
 		          </a>
 		          <ul class="treeview-menu">		          
-		            <li>
+		            <li class="#{navigationControl.subMenuSeleccionado.equals('registrarPQRSF') ? 'active' : ''}">
 		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/acciones/registrarPQRSF.xhtml')}">		        				            
 			            	<i class="fa fa-circle-o"></i>
 			            	Crear PQRSFs
 			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
 		          		</h:commandLink>
 		            </li>
-		            <li>
+		            <li class="#{navigationControl.subMenuSeleccionado.equals('radicarPQRSF') ? 'active' : ''}">
 		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/acciones/radicarPQRSF.xhtml')}">		        				            
 			            	<i class="fa fa-circle-o"></i>
 			        		Radicar PQRSFs
 			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
 		          		</h:commandLink>
 		            </li>
-		            <li>
+		            <li class="#{navigationControl.subMenuSeleccionado.equals('direccionarPQRSF') ? 'active' : ''}">
 		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/acciones/direccionarPQRSF.xhtml')}">		        				            
 			            	<i class="fa fa-circle-o"></i>
 			        		Direccionar PQRSFs
-			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
-		          		</h:commandLink>
-					</li>
-					<li>
-		            	<h:commandLink action="#{navigationControl.changeViewToShow('/admin/acciones/registrarRespuesta.xhtml')}">		        				            
-			            	<i class="fa fa-circle-o"></i>
-			        		Registrar Respuesta
 			            	<p:ajax event="action" update="contenidoPrincipal" />				            		         
 		          		</h:commandLink>
 					</li>                  

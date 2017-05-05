@@ -176,13 +176,11 @@ create table ORDEN
    ORDID                INTEGER              not null,
    USUUSUARIO           VARCHAR2(64)         not null,
    PQRSFCODIGO          VARCHAR2(8)          not null,
-   ORDDESCRIPCION       VARCHAR2(256)        not null,
    FUNIDENTIFICACION    VARCHAR2(32)         not null,
    ORDFECHAASIGNACION   DATE                 not null,
-   ORDRESPUESTA         VARCHAR2(128),
-   ORDFECHARESPUESTA    DATE,
    ORDESTADO            NUMBER(1)            default 0 not null
-      constraint CKC_ORDESTADO_ORDEN check (ORDESTADO in (0,1)),   
+      constraint CKC_ORDESTADO_ORDEN check (ORDESTADO in (0,1,2)),
+   ORDFECHACIERRE       DATE,
    constraint PK_ORDEN primary key (ORDID)
 );
 

@@ -33,6 +33,8 @@ public class NavigationControl implements Serializable {
 	private Usuario usuarioAutenticado;
 	private String viewToShow;
 	
+	private String menuSeleccionado;
+	private String subMenuSeleccionado;
 
 	@PostConstruct
 	public void init(){
@@ -53,45 +55,65 @@ public class NavigationControl implements Serializable {
 		switch(viewToShow){		
 		case "/admin/index.xhtml": 
 				consultasControl.cargarIndicadores();
+				this.menuSeleccionado="inicio";
+				this.subMenuSeleccionado="";
 				break;
+				
+		case "/admin/acciones/registrarPQRSF.xhtml":
+			this.menuSeleccionado="acciones";
+			this.subMenuSeleccionado="registrarPQRSF";
+			break;
+			
 			case "/admin/acciones/radicarPQRSF.xhtml":
 				radicarPqrsfControl.cargarPqrsfNoRadicadas();
+				this.menuSeleccionado="acciones";
+				this.subMenuSeleccionado="radicarPQRSF";
 				break;
 			
 			case "/admin/acciones/direccionarPQRSF.xhtml":
 				direccionarPqrsfControl.cargarPQRSFNoDireccionadas();
-				break;
-			
-			case "/admin/acciones/registrarRespuesta.xhtml":
-				direccionarPqrsfControl.cargarPQRSFNoDireccionadas();
+				this.menuSeleccionado="acciones";
+				this.subMenuSeleccionado="direccionarPQRSF";
 				break;
 				
 			case "/admin/consultas/todasPQRSF.xhtml":				
-				consultasControl.obtnTodasOrdenes();								
+				consultasControl.obtnTodasOrdenes();
+				this.menuSeleccionado="consultas";
+				this.subMenuSeleccionado="todasPQRSF";
 				break;
 			
 			case "/admin/consultas/pqrsfAtendidas.xhtml":								
 				consultasControl.cargarOrdenesPorEstado(2);
+				this.menuSeleccionado="consultas";
+				this.subMenuSeleccionado="pqrsfAtendidas";
 				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
 				break;
 			
 			case "/admin/consultas/pqrsfEnTramite.xhtml":				
-				consultasControl.cargarOrdenesPorEstado(1);				
+				consultasControl.cargarOrdenesPorEstado(1);
+				this.menuSeleccionado="consultas";
+				this.subMenuSeleccionado="pqrsfEnTramite";
 				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
 				break;
 				
 			case "/admin/consultas/pqrsfPendientes.xhtml":								
-				consultasControl.cargarOrdenesPorEstado(0);				
+				consultasControl.cargarOrdenesPorEstado(0);	
+				this.menuSeleccionado="consultas";
+				this.subMenuSeleccionado="pqrsfPendientes";
 				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
 				break;
 			
 			case "/admin/consultas/pqrsfProximasaVencerse.xhtml":								
-				consultasControl.cargarOrdenesPorVencimiento(3);				
+				consultasControl.cargarOrdenesPorVencimiento(3);
+				this.menuSeleccionado="consultas";
+				this.subMenuSeleccionado="pqrsfProximasaVencerse";
 				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
 				break;
 			
 			case "/admin/consultas/pqrsfVencidas.xhtml":								
-				consultasControl.cargarOrdenesPorVencimiento(-1);				
+				consultasControl.cargarOrdenesPorVencimiento(-1);
+				this.menuSeleccionado="consultas";
+				this.subMenuSeleccionado="pqrsfVencidas";
 				this.viewToShow="/admin/consultas/todasPQRSF.xhtml";
 				break;
 		}		
@@ -131,6 +153,23 @@ public class NavigationControl implements Serializable {
 	public void setUsuarioAutenticado(Usuario usuarioAutenticado) {
 		this.usuarioAutenticado = usuarioAutenticado;
 	}
+
+	public String getMenuSeleccionado() {
+		return menuSeleccionado;
+	}
+
+	public void setMenuSeleccionado(String menuSeleccionado) {
+		this.menuSeleccionado = menuSeleccionado;
+	}
+
+	public String getSubMenuSeleccionado() {
+		return subMenuSeleccionado;
+	}
+
+	public void setSubMenuSeleccionado(String subMenuSeleccionado) {
+		this.subMenuSeleccionado = subMenuSeleccionado;
+	}
+
 	
 	
 }
